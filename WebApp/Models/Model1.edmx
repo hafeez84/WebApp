@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Fname" Type="nchar" MaxLength="15" />
           <Property Name="Lname" Type="nchar" MaxLength="15" />
           <Property Name="Tel" Type="nchar" MaxLength="15" />
@@ -28,7 +28,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Fname" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
           <Property Name="Lname" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
           <Property Name="Tel" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
