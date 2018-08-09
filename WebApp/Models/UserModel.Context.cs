@@ -13,10 +13,10 @@ namespace WebApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class UserContext : DbContext
+    public partial class MyDBUserEntities : DbContext
     {
-        public UserContext()
-            : base("name=UserContext")
+        public MyDBUserEntities()
+            : base("name=MyDBUserEntities")
         {
         }
     

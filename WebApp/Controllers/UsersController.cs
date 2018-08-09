@@ -12,7 +12,7 @@ namespace WebApp.Controllers
 {
     public class UsersController : Controller
     {
-        private UserContext db = new UserContext();
+        private MyDBUserEntities db = new MyDBUserEntities();
 
         // GET: Users
         public ActionResult Index()
@@ -46,11 +46,10 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Fname,Lname,Tel,Email,Address")] User user)
+        public ActionResult Create([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
         {
             if (ModelState.IsValid)
             {
-               
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,7 +78,7 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Fname,Lname,Tel,Email,Address")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
         {
             if (ModelState.IsValid)
             {
