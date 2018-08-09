@@ -79,7 +79,7 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Fname,Lname,Tel,Email,Address")] User user)
+        public ActionResult Edit([Bind(Include = "id,Fname,Lname,Tel,Email,Address")] User user)
         {
             if (ModelState.IsValid)
             {
