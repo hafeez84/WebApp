@@ -1,5 +1,7 @@
 ﻿body {
     margin-top:60px;
+    background-image:url("~/Content/img/bg.jpg");
+    background-attachment:fixed;
 }
 
 /* Set padding to keep content from hitting the edges */
