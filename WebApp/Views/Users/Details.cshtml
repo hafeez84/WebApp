@@ -5,63 +5,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Profile</h2>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Fname)
-        </dt>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
-        <dd>
-            @Html.DisplayFor(model => model.Fname)
-        </dd>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Fname)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Lname)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Fname)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Lname)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Lname)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tel)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Lname)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tel)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Tel)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Tel)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+    </p>

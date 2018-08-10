@@ -17,7 +17,7 @@ namespace WebApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: Users/Details/5
@@ -42,8 +42,6 @@ namespace WebApp.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
@@ -61,6 +59,11 @@ namespace WebApp.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["id"] == null)
+            {
+                TempData["Error"] = "You must be logged in to do this action !";
+                return RedirectToAction("Index", "Account");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -74,8 +77,6 @@ namespace WebApp.Controllers
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
@@ -84,7 +85,7 @@ namespace WebApp.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Users", new { id = user.Id });
             }
             return View(user);
         }
@@ -92,6 +93,11 @@ namespace WebApp.Controllers
         // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["id"] == null)
+            {
+                TempData["Error"] = "You must be logged in to do this action !";
+                return RedirectToAction("Index", "Account");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -112,7 +118,8 @@ namespace WebApp.Controllers
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            Session.Abandon();
+            return RedirectToAction("Index", "Account");
         }
 
         protected override void Dispose(bool disposing)
