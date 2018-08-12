@@ -20,8 +20,8 @@ namespace WebApp.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        // GET: Users/Profile/5
+        public ActionResult Profile(int? id)
         {
             if (id == null)
             {
@@ -35,23 +35,23 @@ namespace WebApp.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
-        public ActionResult Create()
+        // GET: Users/Signup
+        public ActionResult Signup()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Users/Signup
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
+        public ActionResult Signup([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
         {
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
                 db.SaveChanges();
                 Session["id"] = user.Id;
-                return RedirectToAction("Details", "Users", new { id = user.Id });
+                return RedirectToAction("Profile", "Users", new { id = (int) Session["id"] });
             }
 
             return View(user);
@@ -86,7 +86,7 @@ namespace WebApp.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details", "Users", new { id = user.Id });
+                return RedirectToAction("Profile", "Users", new { id = user.Id });
             }
             return View(user);
         }
@@ -116,11 +116,20 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            Session.Abandon();
-            return RedirectToAction("Index", "Account");
+            if (Session["id"] == null)
+            {
+                TempData["Error"] = "You must be logged in to do this action !";
+                return RedirectToAction("Index", "Account");
+            }
+            else
+            {
+                User user = db.Users.Find(id);
+                db.Users.Remove(user);
+                db.SaveChanges();
+                Session.Abandon();
+                return RedirectToAction("Index", "Account");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

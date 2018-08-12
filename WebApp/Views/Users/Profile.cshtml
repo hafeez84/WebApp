@@ -1,20 +1,13 @@
 ﻿@model WebApp.Models.User
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="alert alert-danger alert-dismissible show col-md-10 col-md-offset-1" role="alert">
-        Are you sure you want to delete your Profile?
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-</div>
 
 <div>
+    <h4>Profile</h4>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Fname)
@@ -56,23 +49,14 @@
             @Html.DisplayFor(model => model.Address)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                </div>
-            }
-        </dt>
     </dl>
+    <p>
+        <button class="btn btn-default">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        </button>
+        <button class="btn btn-default">
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        </button>
+    </p>
 </div>
+    

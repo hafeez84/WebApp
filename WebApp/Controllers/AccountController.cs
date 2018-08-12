@@ -18,7 +18,7 @@ namespace WebApp.Controllers
         {
             if (Session["id"] != null)
             {
-                return RedirectToAction("Details", "Users", new { id = (int) Session["id"] });
+                return RedirectToAction("Profile", "Users", new { id = (int) Session["id"] });
             }
             else
             {
@@ -34,8 +34,7 @@ namespace WebApp.Controllers
             if (ud != null)
             {
                 Session["id"] = user.Id;
-                TempData["Success"] = "You have succesfully logged in !";
-                return RedirectToAction("Details", "Users", new { id = ud.Id });
+                return RedirectToAction("Profile", "Users", new { id = ud.Id });
             }
             else
             {
