@@ -21,28 +21,34 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        @if (Session["id"] == null)
+                        @if (Session["u_id"] == null && Session["c_id"] == null)
                         {
                             @Html.ActionLink("Sign up", "Signup", "Users")
                         }
                     </li>
 
                     <li>
-                        @if (Session["id"] == null)
+                        @if (Session["u_id"] == null && Session["c_id"] == null)
                         {
                             @Html.ActionLink("Login", "Index", "Account")
                         }
                     </li>
                     <li>
-                        @if (Session["id"] != null)
+                        @if (Session["c_id"] != null || Session["u_id"] != null)
                         {
                             @Html.ActionLink("Logout", "Logout", "Account")
                         }
                     </li>
                     <li>
-                        @if (Session["id"] != null)
+                        @if (Session["u_id"] != null)
                         {
-                            @Html.ActionLink("Profile", "Profile", new { id = (int)Session["id"] })
+                            @Html.ActionLink("Profile", "Profile", "Users", new { id = (int) Session["u_id"] })
+                        }
+                    </li>
+                    <li>
+                        @if (Session["c_id"] != null)
+                        {
+                            @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int) Session["c_id"] })
                         }
                     </li>
                 </ul>

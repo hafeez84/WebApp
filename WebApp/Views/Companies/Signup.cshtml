@@ -1,0 +1,66 @@
+﻿
+@model WebApp.Models.Company
+
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class=" col-md-3 col-md-offset-9">
+    <div class="well well login">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Sign up</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Cname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name", @required = true } })
+                    @Html.ValidationMessageFor(model => model.Cname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Ctel, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No.", @required = true } })
+                    @Html.ValidationMessageFor(model => model.Ctel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Caddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Address", @required = true } })
+                    @Html.ValidationMessageFor(model => model.Caddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @required = true } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @required = true } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                    <button class="btn btn-default">
+                        @Html.ActionLink("Sign in", "Index", "Account")
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

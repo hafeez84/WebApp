@@ -9,16 +9,21 @@ namespace WebApp.Controllers
 {
     public class AccountController : Controller
     {
-        private MyDBUserEntities db = new MyDBUserEntities();
+        private MyDBUserEntities dbUser = new MyDBUserEntities();
+        private MyDBCompanyEntities dbCompany = new MyDBCompanyEntities();
 
 
 
         // GET: Account
         public ActionResult Index()
         {
-            if (Session["id"] != null)
+            if (Session["u_id"] != null)
             {
-                return RedirectToAction("Profile", "Users", new { id = (int) Session["id"] });
+                return RedirectToAction("Profile", "Users", new { id = (int) Session["u_id"] });
+            }
+            else if (Session["c_id"] != null)
+            {
+                return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
             }
             else
             {
@@ -28,13 +33,20 @@ namespace WebApp.Controllers
 
         [HttpPost]
         public ActionResult Login(User user)
-        {
-            var ud = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+        {   
 
-            if (ud != null)
+            var user_a = dbUser.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+            var company_a = dbCompany.Companies.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+
+            if (user_a != null)
             {
-                Session["id"] = user.Id;
-                return RedirectToAction("Profile", "Users", new { id = ud.Id });
+                Session["u_id"] = user_a.Id;
+                return RedirectToAction("Profile", "Users", new { id = user_a.Id });
+            }
+            else if(company_a != null)
+            {
+                Session["c_id"] = company_a.Id;
+                return RedirectToAction("Profile", "Companies", new { id = company_a.Id });
             }
             else
             {

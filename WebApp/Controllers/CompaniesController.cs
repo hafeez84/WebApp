@@ -10,57 +10,57 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    public class UsersController : Controller
+    public class CompaniesController : Controller
     {
-        private MyDBUserEntities db = new MyDBUserEntities();
+        private MyDBCompanyEntities db = new MyDBCompanyEntities();
 
-        // GET: Users
+        // GET: Companies
         public ActionResult Index()
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return View(db.Companies.ToList());
         }
 
-        // GET: Users/Profile/5
+        // GET: Companies/Details/5
         public ActionResult Profile(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Company company = db.Companies.Find(id);
+            if (company == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(company);
         }
 
-        // GET: Users/Signup
+        // GET: Companies/Create
         public ActionResult Signup()
         {
             return View();
         }
 
-        // POST: Users/Signup
+        // POST: Companies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Signup([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
+        public ActionResult Signup([Bind(Include = "Id,Cname,Ctel,Caddress,Password,Email")] Company company)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
+                db.Companies.Add(company);
                 db.SaveChanges();
-                Session["u_id"] = user.Id;
-                return RedirectToAction("Profile", "Users", new { id = (int) Session["u_id"] });
+                Session["c_id"] = company.Id;
+                return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
             }
 
-            return View(user);
+            return View(company);
         }
 
-        // GET: Users/Edit/5
+        // GET: Companies/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["u_id"] == null)
+            if (Session["c_id"] == null)
             {
                 TempData["Error"] = "You must be logged in to do this action !";
                 return RedirectToAction("Index", "Account");
@@ -69,32 +69,34 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Company company = db.Companies.Find(id);
+            if (company == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(company);
         }
 
-        // POST: Users/Edit/5
+        // POST: Companies/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Cname,Ctel,Caddress,Password,Email")] Company company)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Profile", "Users", new { id = user.Id });
+                return RedirectToAction("Profile", "Companies", new { id = (int) company.Id });
             }
-            return View(user);
+            return View(company);
         }
 
-        // GET: Users/Delete/5
+        // GET: Companies/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["u_id"] == null)
+            if (Session["c_id"] == null)
             {
                 TempData["Error"] = "You must be logged in to do this action !";
                 return RedirectToAction("Index", "Account");
@@ -103,28 +105,28 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Company company = db.Companies.Find(id);
+            if (company == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(company);
         }
 
-        // POST: Users/Delete/5
+        // POST: Companies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["u_id"] == null)
+            if (Session["c_id"] == null)
             {
                 TempData["Error"] = "You must be logged in to do this action !";
                 return RedirectToAction("Index", "Account");
             }
             else
             {
-                User user = db.Users.Find(id);
-                db.Users.Remove(user);
+                Company company = db.Companies.Find(id);
+                db.Companies.Remove(company);
                 db.SaveChanges();
                 Session.Abandon();
                 return RedirectToAction("Index", "Account");

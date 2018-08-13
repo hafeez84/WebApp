@@ -1,0 +1,58 @@
+﻿@model WebApp.Models.Company
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h4>Profile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ctel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ctel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Caddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Caddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+    <p>
+        <button class="btn btn-default">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        </button>
+        <button class="btn btn-default">
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        </button>
+    </p>
+</div>
+
+
+
+
