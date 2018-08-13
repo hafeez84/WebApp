@@ -41,6 +41,10 @@ namespace WebApp.Controllers
         // GET: Companies/Create
         public ActionResult Signup()
         {
+            if (Session["c_id"] != null)
+            {
+                return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
+            }
             return View();
         }
 

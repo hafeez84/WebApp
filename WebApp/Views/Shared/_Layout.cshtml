@@ -16,7 +16,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Shoppin", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Shoppin", "Index", "Products", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -42,13 +42,13 @@
                     <li>
                         @if (Session["u_id"] != null)
                         {
-                            @Html.ActionLink("Profile", "Profile", "Users", new { id = (int) Session["u_id"] })
+                            @Html.ActionLink("Profile", "Profile", "Users", new { id = (int) Session["u_id"] }, null)
                         }
                     </li>
                     <li>
                         @if (Session["c_id"] != null)
                         {
-                            @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int) Session["c_id"] })
+                            @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int) Session["c_id"] }, null)
                         }
                     </li>
                 </ul>
