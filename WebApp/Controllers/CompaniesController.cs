@@ -13,6 +13,7 @@ namespace WebApp.Controllers
     public class CompaniesController : Controller
     {
         private MyDBCompanyEntities db = new MyDBCompanyEntities();
+        private MyDBProductEntities product_db = new MyDBProductEntities();
 
         // GET: Companies
         public ActionResult Index()
@@ -28,6 +29,8 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Company company = db.Companies.Find(id);
+            //var company_products = product_db.Products.Where(x => x.Cid == id); 
+            
             if (company == null)
             {
                 return HttpNotFound();

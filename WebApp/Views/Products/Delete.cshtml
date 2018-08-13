@@ -1,0 +1,65 @@
+﻿@model WebApp.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Pname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pdescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pdescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_at)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created_at)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

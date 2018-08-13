@@ -1,0 +1,59 @@
+﻿@model WebApp.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Pname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pdescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pdescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_at)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created_at)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

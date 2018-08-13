@@ -51,7 +51,7 @@ namespace WebApp.Controllers
                 db.Users.Add(user);
                 db.SaveChanges();
                 Session["u_id"] = user.Id;
-                return RedirectToAction("Profile", "Users", new { id = (int) Session["u_id"] });
+                return RedirectToAction("Index", "Products");
             }
 
             return View(user);

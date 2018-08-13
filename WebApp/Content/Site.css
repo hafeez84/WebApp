@@ -1,8 +1,8 @@
 ﻿body {
-    margin-top:60px;
-    background-image:url("img/bg.jpg");
-    background-attachment:fixed;
-    background-size:cover;
+    margin-top: 60px;
+    /*background-image:url("img/bg.jpg");*/
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 /* Set padding to keep content from hitting the edges */

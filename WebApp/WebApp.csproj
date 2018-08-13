@@ -158,6 +158,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -179,6 +180,24 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CompanyModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>ProductModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>UserModel.tt</DependentUpon>
@@ -220,6 +239,16 @@
       <DependentUpon>CompanyModel.edmx</DependentUpon>
       <LastGenOutput>CompanyModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\ProductModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProductModel.edmx</DependentUpon>
+      <LastGenOutput>ProductModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ProductModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProductModel.edmx</DependentUpon>
+      <LastGenOutput>ProductModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\UserModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UserModel.edmx</DependentUpon>
@@ -248,6 +277,13 @@
     </EntityDeploy>
     <Content Include="Models\CompanyModel.edmx.diagram">
       <DependentUpon>CompanyModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ProductModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProductModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ProductModel.edmx.diagram">
+      <DependentUpon>ProductModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -286,6 +322,11 @@
     <Content Include="Views\Companies\Profile.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
