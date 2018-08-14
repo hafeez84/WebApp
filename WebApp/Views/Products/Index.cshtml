@@ -15,9 +15,9 @@
     </div>
 }
 
-<p>
+<button class="btn btn-info">
     @Html.ActionLink("Create New", "Create")
-</p>
+</button>
 <table class="table">
     <tr>
         <th>
@@ -57,11 +57,60 @@
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @{
+                    if (Session["c_id"] != null)
+                    {
+                        var session_id = (int)Session["c_id"];
+                        if (session_id == item.Cid)
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id });
+                            @Html.ActionLink("Details", "Details", new { id = item.Id });
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id });
+                        }
+                    }
+                }
             </td>
         </tr>
+
     }
 
 </table>
+<div class="row">
+    @foreach (var i in Model)
+    {
+        <div class="col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <img src="..." alt="...">
+                <div class="caption">
+                    <h3>
+                        @Html.DisplayFor(modeli => i.Pname)
+                    </h3>
+                    <sub>
+                        Amount: @Html.DisplayFor(modeli => i.Amount)
+                    </sub>
+                    <p>
+                        @Html.DisplayFor(modeli => i.Pdescription)
+                    </p>
+                </div>
+                <sub>
+                    Uploaded at: @Html.DisplayFor(modeli => i.Created_at)
+                </sub>
+                <hr />
+                <span>
+                    @{
+                        if (Session["c_id"] != null)
+                        {
+                            var session_id = (int)Session["c_id"];
+                            if (session_id == i.Cid)
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = i.Id });
+                                @Html.ActionLink("Details", "Details", new { id = i.Id });
+                                @Html.ActionLink("Delete", "Delete", new { id = i.Id });
+                            }
+                        }
+                    }
+                </span>
+            </div>
+        </div>
+    }
+</div>

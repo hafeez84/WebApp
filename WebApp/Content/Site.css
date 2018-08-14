@@ -20,3 +20,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+a {
+    color:black;
+    padding:inherit;
+    text-decoration:none !important;
+}

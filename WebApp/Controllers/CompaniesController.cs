@@ -28,14 +28,20 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
+            //Company company = db.Companies.Find(id);
             //var company_products = product_db.Products.Where(x => x.Cid == id); 
-            
-            if (company == null)
+            CompanyProductView c_p_view = new CompanyProductView();
+            c_p_view.CompanyView = db.Companies.Find(id);
+            c_p_view.ProductView = product_db.Products.Where(x => x.Cid == id).ToList();
+
+            if (c_p_view.CompanyView == null)
             {
                 return HttpNotFound();
             }
-            return View(company);
+
+            
+
+            return View(c_p_view);
         }
 
         // GET: Companies/Create
@@ -85,8 +91,6 @@ namespace WebApp.Controllers
         }
 
         // POST: Companies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Cname,Ctel,Caddress,Password,Email")] Company company)
@@ -133,12 +137,17 @@ namespace WebApp.Controllers
             else
             {
                 Company company = db.Companies.Find(id);
+                List<Product> prod = product_db.Products.Where(x => x.Cid == company.Id).ToList();
+                foreach(var item in prod)
+                {
+                    product_db.Products.Remove(item);
+                }               
+                product_db.SaveChanges();
                 db.Companies.Remove(company);
                 db.SaveChanges();
                 Session.Abandon();
                 return RedirectToAction("Index", "Account");
             }
-            
         }
 
         protected override void Dispose(bool disposing)

@@ -55,6 +55,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Product product)
         {
+            product.Created_at = DateTime.UtcNow;
             product.Cid = (int) Session["c_id"];
             if (ModelState.IsValid)
             {
@@ -99,8 +100,9 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Pname,Pdescription,Cid,Created_at,Amount")] Product product)
+        public ActionResult Edit( Product product)
         {
+            product.Cid = (int)Session["c_id"];
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;

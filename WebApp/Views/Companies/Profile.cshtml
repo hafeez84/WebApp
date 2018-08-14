@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.Company
+﻿@model WebApp.Models.CompanyProductView
 
 @{
     ViewBag.Title = "Profile";
@@ -7,56 +7,55 @@
 
 
 <div>
-    <h4>Profile</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Cname)
+            @Html.DisplayNameFor(model => model.CompanyView.Cname)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Cname)
+            @Html.DisplayFor(model => model.CompanyView.Cname)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Ctel)
+            @Html.DisplayNameFor(model => model.CompanyView.Ctel)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ctel)
+            @Html.DisplayFor(model => model.CompanyView.Ctel)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Caddress)
+            @Html.DisplayNameFor(model => model.CompanyView.Caddress)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Caddress)
+            @Html.DisplayFor(model => model.CompanyView.Caddress)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.CompanyView.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.CompanyView.Email)
         </dd>
 
     </dl>
     <p>
         <button class="btn btn-default">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = Model.CompanyView.Id })
         </button>
         <button class="btn btn-default">
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+            @Html.ActionLink("Delete", "Delete", new { id = Model.CompanyView.Id})
         </button>
         <button class="btn btn-default">
             @Html.ActionLink("Upload a product", "Create", "Products")
         </button>
     </p>
 </div>
+<hr />
 
-
+@Html.Partial("~/Views/Products/_Company_p.cshtml", Model.ProductView);
 
 
 

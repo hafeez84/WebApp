@@ -181,6 +181,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CompanyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyProductView.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>ProductModel.tt</DependentUpon>
     </Compile>
@@ -327,6 +328,7 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\_Company_p.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
