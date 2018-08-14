@@ -11,21 +11,16 @@ namespace WebApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class User
     {
         public int Id { get; set; }
-        [DisplayName("First Name")]
         public string Fname { get; set; }
-        [DisplayName("Last Name")]
         public string Lname { get; set; }
-        [DisplayName("Tel")]
         public string Tel { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
-        [DataType(DataType.Password)]
         public string Password { get; set; }
+        public byte[] Avatar { get; set; }
     }
 }
