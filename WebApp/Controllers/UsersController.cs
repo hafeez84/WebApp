@@ -44,7 +44,7 @@ namespace WebApp.Controllers
         // POST: Users/Signup
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Signup([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
+        public ActionResult Signup( User user)
         {
             if (ModelState.IsValid)
             {

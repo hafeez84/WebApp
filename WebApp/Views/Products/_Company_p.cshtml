@@ -16,9 +16,6 @@
     </div>
 }
 
-<button class="btn btn-info" >
-    @Html.ActionLink("Create New", "Create")
-</button>
 <table class="table">
     <tr>
         <th>
@@ -59,13 +56,13 @@
             </td>
             <td>
                 <button class="btn btn-default">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @Html.ActionLink("Edit", "Edit", "Products", new { id = item.Id }, null)
                 </button>
                 <button class="btn btn-default">
-                  @Html.ActionLink("Details", "Details", new { id = item.Id })
+                  @Html.ActionLink("Details", "Details", "Products", new { id = item.Id }, null)
                 </button>
                 <button class="btn btn-default">
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Delete", "Delete", "Products", new { id = item.Id }, null)
                 </button>
             </td>
         </tr>

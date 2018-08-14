@@ -56,10 +56,10 @@
 
             <div class="form-group">
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="avatar btn btn-info">
+                    <label class="btn btn-info avatar-label">
                         Upload
-                        @Html.TextBoxFor(model => model.Avatar, new { htmlAttributes = new { @class = "avatar-input", @type = "file", accept = ".png,.jpg,.jpeg,.gif,.tif" } })
-                    </div>
+                        @Html.TextBoxFor(model => model.Avatar, new { @type = "file", accept = ".png,.jpg,.jpeg,.gif,.tif" })
+                    </label>
                     @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
                 </div>
             </div>
