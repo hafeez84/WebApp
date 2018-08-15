@@ -169,6 +169,20 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Brand brand = brand_db.Brands.Where(x => x.P_id == id).FirstOrDefault();
+
+            Category category = category_db.Categories.Where(x => x.Brand_id == brand.Id).FirstOrDefault();
+            category_db.Categories.Remove(category);
+            category_db.SaveChanges();
+
+            
+            brand_db.Brands.Remove(brand);
+            brand_db.SaveChanges();
+
+            Model model = product_model_db.Models.Where(x => x.P_id == id).FirstOrDefault();
+            product_model_db.Models.Remove(model);
+            product_model_db.SaveChanges();
+
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
