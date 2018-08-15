@@ -58,7 +58,7 @@
                 <div class="col-md-10 col-md-offset-1">
                     <label class="btn btn-info avatar-label">
                         Upload
-                        @Html.TextBoxFor(model => model.Avatar, new { @type = "file", accept = ".png,.jpg,.jpeg,.gif,.tif" })
+                        <input accept=".png,.jpg,.jpeg,.gif,.tif" id="Avatar" name="Avatar" type="file" hidden>
                     </label>
                     @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
                 </div>

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
@@ -46,6 +48,14 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Signup( User user)
         {
+
+            //string str = BitConverter.ToString(user.Avatar);
+            //var str1 = str.Split(',').ToList<string>();
+            //var str2 = str1[1];
+            //byte[] img = Convert.FromBase64String(str2);
+            //user.Avatar = img;
+            //string str = Convert.ToBase64String(user.Avatar);
+            //user.Avatar = Convert.FromBase64String(str);
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);

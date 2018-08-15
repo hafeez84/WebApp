@@ -28,8 +28,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Company company = db.Companies.Find(id);
-            //var company_products = product_db.Products.Where(x => x.Cid == id); 
+
             CompanyProductView c_p_view = new CompanyProductView();
             c_p_view.CompanyView = db.Companies.Find(id);
             c_p_view.ProductView = product_db.Products.Where(x => x.Cid == id).ToList();
@@ -38,8 +37,6 @@ namespace WebApp.Controllers
             {
                 return HttpNotFound();
             }
-
-            
 
             return View(c_p_view);
         }

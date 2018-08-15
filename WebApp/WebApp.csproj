@@ -163,6 +163,42 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Brand.cs">
+      <DependentUpon>BrandModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BrandModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BrandModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BrandModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BrandModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BrandModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BrandModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>CategoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoryModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoryModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoryModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoryModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoryModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Company.cs">
       <DependentUpon>CompanyModel.tt</DependentUpon>
     </Compile>
@@ -181,7 +217,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CompanyModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyProductUpload.cs" />
     <Compile Include="Models\CompanyProductView.cs" />
+    <Compile Include="Models\Model.cs">
+      <DependentUpon>ProductModelModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>ProductModel.tt</DependentUpon>
     </Compile>
@@ -199,6 +239,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductModelModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModelModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductModelModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductModelModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModelModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>UserModel.tt</DependentUpon>
@@ -230,6 +285,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\BrandModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BrandModel.edmx</DependentUpon>
+      <LastGenOutput>BrandModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\BrandModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BrandModel.edmx</DependentUpon>
+      <LastGenOutput>BrandModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CategoryModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CategoryModel.edmx</DependentUpon>
+      <LastGenOutput>CategoryModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CategoryModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CategoryModel.edmx</DependentUpon>
+      <LastGenOutput>CategoryModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\CompanyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CompanyModel.edmx</DependentUpon>
@@ -249,6 +324,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProductModel.edmx</DependentUpon>
       <LastGenOutput>ProductModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ProductModelModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProductModelModel.edmx</DependentUpon>
+      <LastGenOutput>ProductModelModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ProductModelModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProductModelModel.edmx</DependentUpon>
+      <LastGenOutput>ProductModelModel.cs</LastGenOutput>
     </Content>
     <Content Include="Models\UserModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -285,6 +370,27 @@
     </EntityDeploy>
     <Content Include="Models\ProductModel.edmx.diagram">
       <DependentUpon>ProductModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ProductModelModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProductModelModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ProductModelModel.edmx.diagram">
+      <DependentUpon>ProductModelModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\BrandModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BrandModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BrandModel.edmx.diagram">
+      <DependentUpon>BrandModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\CategoryModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CategoryModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CategoryModel.edmx.diagram">
+      <DependentUpon>CategoryModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

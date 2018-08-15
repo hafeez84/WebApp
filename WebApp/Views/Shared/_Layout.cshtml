@@ -26,6 +26,12 @@
                             @Html.ActionLink("Sign up", "Signup", "Users")
                         }
                     </li>
+                    <li>
+                        @if (Session["c_id"] == null && Session["u_id"] == null)
+                        {
+                            @Html.ActionLink("Sign up as Company", "Signup", "Companies")
+                        }
+                    </li>
 
                     <li>
                         @if (Session["u_id"] == null && Session["c_id"] == null)

@@ -13,6 +13,9 @@ namespace WebApp.Controllers
     public class ProductsController : Controller
     {
         private MyDBProductEntities db = new MyDBProductEntities();
+        private MyDBCategoryEntities category_db = new MyDBCategoryEntities();
+        private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
+        private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
 
         // GET: Products
         public ActionResult Index()
@@ -53,19 +56,42 @@ namespace WebApp.Controllers
      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product)
+        public ActionResult Create(CompanyProductUpload upload)
         {
-            product.Created_at = DateTime.UtcNow;
-            product.Cid = (int) Session["c_id"];
             if (ModelState.IsValid)
             {
+                Product product = new Product();
+                Brand brand = new Brand();
+                Category category = new Category();
+                Model model = new Model();
 
+                product.Cid = (int)Session["c_id"];
+                product.Created_at = DateTime.UtcNow;
+                product.Amount = upload.ProductM.Amount;
+                product.Pname = upload.ProductM.Pname;
+                product.Pdescription = upload.ProductM.Pdescription;
                 db.Products.Add(product);
                 db.SaveChanges();
+
+                brand.P_id = product.Id;
+                brand.Name = upload.BrandM.Name;
+                brand_db.Brands.Add(brand);
+                brand_db.SaveChanges();
+
+                category.Brand_id = brand.Id;
+                category.Name = upload.CategoryM.Name;
+                category_db.Categories.Add(category);
+                category_db.SaveChanges();
+
+                model.P_id = product.Id;
+                model.Name = upload.ProductModelM.Name;
+                product_model_db.Models.Add(model);
+                product_model_db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            return View(product);
+            return View(upload);
         }
 
         // GET: Products/Edit/5
