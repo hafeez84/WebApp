@@ -10,14 +10,22 @@ namespace WebContract
     {
         [DataMember]
         public int Id { get; set; }
+        [Required]
+        [StringLength(20)]
         [DisplayName("First Name")]
         public string Fname { get; set; }
+        [Required]
+        [StringLength(20)]
         [DisplayName("Last Name")]
         public string Lname { get; set; }
-        [DisplayName("Tel")]
+        [Required]
+        [Phone]
         public string Tel { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public string Address { get; set; }
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public byte[] Avatar { get; set; }

@@ -32,6 +32,7 @@ namespace WebApp.Controllers
             return View(products);
         }
 
+        // Cached these foo 2 mins to not keep connecting db
         [OutputCache(CacheProfile = "Cache2min")]
         public List<Brand> GetBrandlist()
         {
@@ -117,7 +118,6 @@ namespace WebApp.Controllers
 
                 return RedirectToAction("Index");
             }
-
             return View(upload);
         }
 
@@ -149,7 +149,6 @@ namespace WebApp.Controllers
         }
 
         // POST: Products/Edit/5
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit( Product product)

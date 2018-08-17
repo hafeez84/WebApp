@@ -30,3 +30,8 @@ a {
 [hidden] {
     display:none !important;
 }
+
+.user-avatar {
+    width:200px;
+    height:200px;
+}

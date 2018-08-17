@@ -46,16 +46,14 @@ namespace WebApp.Controllers
         // POST: Users/Signup
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Signup( User user)
+        public ActionResult Signup(HttpPostedFileBase Avatar ,[Bind(Exclude = "Avatar")]User user)
         {
 
-            //string str = BitConverter.ToString(user.Avatar);
-            //var str1 = str.Split(',').ToList<string>();
-            //var str2 = str1[1];
-            //byte[] img = Convert.FromBase64String(str2);
-            //user.Avatar = img;
-            //string str = Convert.ToBase64String(user.Avatar);
-            //user.Avatar = Convert.FromBase64String(str);
+            var length = Avatar.InputStream.Length;
+            MemoryStream target = new MemoryStream();
+            Avatar.InputStream.CopyTo(target);
+            user.Avatar = target.ToArray();
+
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
@@ -90,8 +88,13 @@ namespace WebApp.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Fname,Lname,Tel,Email,Address,Password")] User user)
+        public ActionResult Edit(HttpPostedFileBase Avatar, [Bind(Exclude = "Avatar")]User user)
         {
+            var length = Avatar.InputStream.Length;
+            MemoryStream target = new MemoryStream();
+            Avatar.InputStream.CopyTo(target);
+            user.Avatar = target.ToArray();
+
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;

@@ -1,5 +1,4 @@
 ﻿@model WebApp.Models.User
-
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +6,15 @@
 
 
 <div>
-    <h4>Profile</h4>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-2">
+            @if (Model.Avatar.Length > 0)
+            {
+                <img src="data:image;base64,@System.Convert.ToBase64String(Model.Avatar)" class="img-circle user-avatar" />
+
+            }
+        </div>
+    </div>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Fname)
@@ -50,7 +57,8 @@
         </dd>
 
     </dl>
-    <p>
+
+    <p class="col-md-offset-1">
         <button class="btn btn-default">
             @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
         </button>
