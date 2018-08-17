@@ -29,9 +29,11 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            CompanyProductView c_p_view = new CompanyProductView();
-            c_p_view.CompanyView = db.Companies.Find(id);
-            c_p_view.ProductView = product_db.Products.Where(x => x.Cid == id).ToList();
+            CompanyProductView c_p_view = new CompanyProductView
+            {
+                CompanyView = db.Companies.Find(id),
+                ProductView = product_db.Products.Where(x => x.Cid == id).ToList()
+            };
 
             if (c_p_view.CompanyView == null)
             {

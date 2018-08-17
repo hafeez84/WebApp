@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
+using WebContract;
 
 namespace WebApp.Controllers
 {
@@ -20,7 +21,33 @@ namespace WebApp.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            ProductsView products = new ProductsView
+            {
+                Products = db.Products.ToList(),
+                Product_b = GetBrandlist(),
+                Product_c = GetCategorylist(),
+                Product_m = GetModellist()
+            };
+
+            return View(products);
+        }
+
+        [OutputCache(CacheProfile = "Cache2min")]
+        public List<Brand> GetBrandlist()
+        {
+            return brand_db.Brands.ToList();
+        }
+
+        [OutputCache(CacheProfile = "Cache2min")]
+        public List<Category> GetCategorylist()
+        {
+            return category_db.Categories.ToList();
+        }
+
+        [OutputCache(CacheProfile = "Cache2min")]
+        public List<Model> GetModellist()
+        {
+            return product_model_db.Models.ToList();
         }
 
         // GET: Products/Details/5
@@ -122,8 +149,7 @@ namespace WebApp.Controllers
         }
 
         // POST: Products/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit( Product product)

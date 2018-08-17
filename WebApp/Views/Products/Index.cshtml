@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.Models.Product>
+﻿@model WebApp.Models.ProductsView
 
 @{
     ViewBag.Title = "Index";
@@ -16,29 +16,38 @@
 }
 
 <button class="btn btn-info">
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", "Products")
 </button>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Pname)
+            Product Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pdescription)
+            Description
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cid)
+            Company id
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Created_at)
+            Uploaded at
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Amount)
+            Amount
         </th>
-        <th></th>
+
+        <th>
+            Brand
+        </th>
+        <th>
+            Model
+        </th>
+        <th>
+            Category
+        </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Products)
     {
         <tr>
             <td>
@@ -55,7 +64,38 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
+            </td>  
+            <td>
+                @foreach (var b in Model.Product_b)
+                {
+                    if (b.P_id == item.Id)
+                    {
+                        @Html.DisplayFor(modelItem => b.Name)
+                    }
+                }
             </td>
+            <td>
+                @foreach (var m in Model.Product_m)
+                {
+                    if (m.P_id == item.Id)
+                    {
+                        @Html.DisplayFor(modelItem => m.Name)
+                    }
+                }
+            </td>
+            <td>
+                @foreach (var b in Model.Product_b)
+                {
+                    foreach (var c in Model.Product_c)
+                    {
+                        if (c.Brand_id == b.Id)
+                        {
+                            @Html.DisplayFor(modelItem => c.Name)
+                        }
+                    }
+                }
+            </td>
+    
             <td>
                 @{
                     if (Session["c_id"] != null)
@@ -76,7 +116,7 @@
 
 </table>
 <div class="row">
-    @foreach (var i in Model)
+    @foreach (var i in Model.Products)
     {
         <div class="col-sm-3 col-md-2">
             <div class="thumbnail">

@@ -255,6 +255,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductModelModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductsView.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>UserModel.tt</DependentUpon>
     </Compile>
@@ -455,6 +456,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebContract\WebContract.csproj">
+      <Project>{129bf3ae-13ed-4d3f-a032-e5cd5f9c4ce0}</Project>
+      <Name>WebContract</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -20,5 +20,6 @@ namespace WebContract
         public string Address { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public byte[] Avatar { get; set; }
     }
 }
