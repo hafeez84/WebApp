@@ -63,6 +63,7 @@ namespace WebApp.Controllers
                 db.Companies.Add(company);
                 db.SaveChanges();
                 Session["c_id"] = company.Id;
+                Session["name"] = company.Cname;
                 return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
             }
 

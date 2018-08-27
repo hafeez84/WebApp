@@ -6,15 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger alert-dismissible show" role="alert">
-        @TempData["Error"]
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}
 
 <table class="table">
     <tr>

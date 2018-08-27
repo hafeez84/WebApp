@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
+using WebContract;
 
 namespace WebApp.Controllers
 {
@@ -46,23 +47,46 @@ namespace WebApp.Controllers
         // POST: Users/Signup
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Signup(HttpPostedFileBase Avatar ,[Bind(Exclude = "Avatar")]User user)
+        public ActionResult Signup(HttpPostedFileBase Avatar ,[Bind(Exclude = "Avatar")]User u)
         {
-
-            var length = Avatar.InputStream.Length;
-            MemoryStream target = new MemoryStream();
-            Avatar.InputStream.CopyTo(target);
-            user.Avatar = target.ToArray();
-
-            if (ModelState.IsValid)
+            UserContract user = new UserContract
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                Session["u_id"] = user.Id;
-                return RedirectToAction("Index", "Products");
-            }
+                Id = u.Id,
+                Address = u.Address,
+                Avatar = u.Avatar,
+                Email = u.Email,
+                Fname = u.Fname,
+                Lname = u.Lname,
+                Password = u.Password,
+                Tel = u.Tel
+            };
+            var flag = db.Users.Any(x => x.Email == user.Email);
 
-            return View(user);
+            if (!flag)
+            {
+                if (Avatar != null)
+                {
+                    var length = Avatar.InputStream.Length;
+                    MemoryStream target = new MemoryStream();
+                    Avatar.InputStream.CopyTo(target);
+                    user.Avatar = target.ToArray();
+                }
+                if (ModelState.IsValid)
+                {
+                    db.Users.Add(u);
+                    db.SaveChanges();
+                    Session["u_id"] = user.Id;
+                    Session["name"] = user.Fname + " " + user.Lname;
+                    return RedirectToAction("Index", "Products");
+                }
+                return View(u);
+            }
+            else
+            {
+                TempData["Error"] = "The email address already exist, please login...";
+                return View(user);
+            }
+           
         }
 
         // GET: Users/Edit/5
@@ -77,7 +101,19 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User u = db.Users.Find(id);
+            UserContract user = new UserContract
+            {
+                Id = u.Id,
+                Address = u.Address,
+                Avatar = u.Avatar,
+                Email = u.Email,
+                Fname = u.Fname,
+                Lname = u.Lname,
+                Password = u.Password,
+                Tel = u.Tel
+            };
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -89,11 +125,14 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(HttpPostedFileBase Avatar, [Bind(Exclude = "Avatar")]User user)
-        {
-            var length = Avatar.InputStream.Length;
-            MemoryStream target = new MemoryStream();
-            Avatar.InputStream.CopyTo(target);
-            user.Avatar = target.ToArray();
+        {   
+            if (Avatar != null)
+            { 
+                var length = Avatar.InputStream.Length;
+                MemoryStream target = new MemoryStream();
+                Avatar.InputStream.CopyTo(target);
+                user.Avatar = target.ToArray();
+            }
 
             if (ModelState.IsValid)
             {

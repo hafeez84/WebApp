@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -20,47 +21,69 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        @if (Session["u_id"] == null && Session["c_id"] == null)
-                        {
-                            @Html.ActionLink("Sign up", "Signup", "Users")
-                        }
-                    </li>
-                    <li>
-                        @if (Session["c_id"] == null && Session["u_id"] == null)
-                        {
-                            @Html.ActionLink("Sign up as Company", "Signup", "Companies")
-                        }
-                    </li>
 
-                    <li>
-                        @if (Session["u_id"] == null && Session["c_id"] == null)
-                        {
-                            @Html.ActionLink("Login", "Index", "Account")
-                        }
-                    </li>
-                    <li>
-                        @if (Session["c_id"] != null || Session["u_id"] != null)
-                        {
-                            @Html.ActionLink("Logout", "Logout", "Account")
-                        }
-                    </li>
-                    <li>
-                        @if (Session["u_id"] != null)
-                        {
-                            @Html.ActionLink("Profile", "Profile", "Users", new { id = (int) Session["u_id"] }, null)
-                        }
-                    </li>
-                    <li>
-                        @if (Session["c_id"] != null)
-                        {
-                            @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int) Session["c_id"] }, null)
-                        }
-                    </li>
+                    @if (Session["name"] != null)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Session["name"]
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if (Session["u_id"] != null)
+                                {
+                                    @Html.ActionLink("Profile", "Profile", new { controller = "Users", id = (int)Session["u_id"] }, new { @class = "dropdown-item" })
+                                }
+                                @if (Session["c_id"] != null)
+                                {
+                                    @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int)Session["c_id"] }, null)
+                                }
+                                <br />
+                                @if (Session["c_id"] != null || Session["u_id"] != null)
+                                {
+                                    @Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "dorpdown-item" })
+                                }
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Sign up
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if (Session["u_id"] == null && Session["c_id"] == null)
+                                {
+                                    @Html.ActionLink("Sign up", "Signup", new { controller = "Users" }, new { @class = "dropdown-item" })
+                                }
+                                <br />
+                                @if (Session["c_id"] == null && Session["u_id"] == null)
+                                {
+                                    @Html.ActionLink("Sign up as Company", "Signup", new { controller = "Companies" }, new { @class = "dropdown-item" })
+                                }
+                            </div>
+                        </li>
+                        <li>
+                            @if (Session["u_id"] == null && Session["c_id"] == null)
+                            {
+                                @Html.ActionLink("Login", "Index", "Account")
+                            }
+                        </li>
+                    }
                 </ul>
             </div>
+        </div>
     </div>
     <div class="container-fluid">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
         <div>
             @RenderBody()
         </div>

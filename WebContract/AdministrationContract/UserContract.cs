@@ -8,23 +8,26 @@ namespace WebContract
     [DataContract]
     public class UserContract
     {
-        [DataMember]
         public int Id { get; set; }
+        [DataMember]
         [Required]
         [StringLength(20)]
         [DisplayName("First Name")]
         public string Fname { get; set; }
+        [DataMember]
         [Required]
         [StringLength(20)]
         [DisplayName("Last Name")]
         public string Lname { get; set; }
-        [Required]
+        [DataMember]
         [Phone]
         public string Tel { get; set; }
+        [DataMember]
         [Required]
         [EmailAddress]
         public string Email { get; set; }
         public string Address { get; set; }
+        [DataMember]
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }

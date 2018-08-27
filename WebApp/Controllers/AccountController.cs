@@ -41,11 +41,13 @@ namespace WebApp.Controllers
             if (user_a != null)
             {
                 Session["u_id"] = user_a.Id;
+                Session["name"] = user_a.Fname + " " + user_a.Lname;
                 return RedirectToAction("Index", "Products", new { id = user_a.Id });
             }
             else if(company_a != null)
             {
                 Session["c_id"] = company_a.Id;
+                Session["name"] = company_a.Cname;
                 return RedirectToAction("Profile", "Companies", new { id = company_a.Id });
             }
             else

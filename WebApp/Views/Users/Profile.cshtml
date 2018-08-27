@@ -8,7 +8,7 @@
 <div>
     <div class="row">
         <div class="col-md-offset-1 col-md-2">
-            @if (Model.Avatar.Length > 0)
+            @if (Model.Avatar != null)
             {
                 <img src="data:image;base64,@System.Convert.ToBase64String(Model.Avatar)" class="img-circle user-avatar" />
 
