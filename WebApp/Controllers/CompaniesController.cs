@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
+using WebContract;
 
 namespace WebApp.Controllers
 {
@@ -56,18 +58,45 @@ namespace WebApp.Controllers
         // POST: Companies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Signup([Bind(Include = "Id,Cname,Ctel,Caddress,Password,Email")] Company company)
+        public ActionResult Signup([Bind(Exclude = "Avatar")] Company company, HttpPostedFileBase Avatar)
         {
-            if (ModelState.IsValid)
+            CompanyContract c = new CompanyContract
             {
-                db.Companies.Add(company);
-                db.SaveChanges();
-                Session["c_id"] = company.Id;
-                Session["name"] = company.Cname;
-                return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
-            }
+                Id = company.Id,
+                Cname = company.Cname,
+                Ctel = company.Ctel,
+                Caddress = company.Caddress,
+                Password = company.Password,
+                Email = company.Email,
+                Avatar = company.Avatar
+            };
+            var flag = db.Companies.Any(x => x.Email == company.Email);
+            if (!flag)
+            {
+                if (Avatar != null)
+                {
+                    var length = Avatar.InputStream.Length;
+                    MemoryStream target = new MemoryStream();
+                    Avatar.InputStream.CopyTo(target);
+                    company.Avatar = target.ToArray();
+                }
+                if (ModelState.IsValid)
+                {
+                    db.Companies.Add(company);
+                    db.SaveChanges();
+                    Session["c_id"] = company.Id;
+                    Session["name"] = company.Cname;
+                    return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
+                }
 
-            return View(company);
+                return View(c);
+            }
+            else
+            {
+                TempData["Error"] = "The email address already exist, please login...";
+                return View(c);
+            }
+            
         }
 
         // GET: Companies/Edit/5
@@ -82,7 +111,17 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
+            Company c = db.Companies.Find(id);
+            CompanyContract company = new CompanyContract
+            {
+                Caddress = c.Caddress,
+                Cname = c.Cname,
+                Ctel = c.Ctel,
+                Id = c.Id,
+                Email = c.Email,
+                Password = c.Password
+            };
+
             if (company == null)
             {
                 return HttpNotFound();
@@ -93,13 +132,30 @@ namespace WebApp.Controllers
         // POST: Companies/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Cname,Ctel,Caddress,Password,Email")] Company company)
+        public ActionResult Edit([Bind(Include = "Id,Cname,Ctel,Caddress,Password,Email")] Company c, HttpPostedFileBase Avatar)
         {
+            CompanyContract company = new CompanyContract
+            {
+                Caddress = c.Caddress,
+                Cname = c.Cname,
+                Ctel = c.Ctel,
+                Id = c.Id,
+                Email = c.Email,
+                Password = c.Password
+            };
+          
+            if (Avatar != null)
+            {
+                var length = Avatar.InputStream.Length;
+                MemoryStream target = new MemoryStream();
+                Avatar.InputStream.CopyTo(target);
+                c.Avatar = target.ToArray();
+            }
             if (ModelState.IsValid)
             {
-                db.Entry(company).State = EntityState.Modified;
+                db.Entry(c).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Profile", "Companies", new { id = (int) company.Id });
+                return RedirectToAction("Profile", "Companies", new { id = (int)c.Id });
             }
             return View(company);
         }

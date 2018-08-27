@@ -69,17 +69,17 @@ namespace WebApp.Controllers
                     var length = Avatar.InputStream.Length;
                     MemoryStream target = new MemoryStream();
                     Avatar.InputStream.CopyTo(target);
-                    user.Avatar = target.ToArray();
+                    u.Avatar = target.ToArray();
                 }
                 if (ModelState.IsValid)
                 {
                     db.Users.Add(u);
                     db.SaveChanges();
-                    Session["u_id"] = user.Id;
-                    Session["name"] = user.Fname + " " + user.Lname;
+                    Session["u_id"] = u.Id;
+                    Session["name"] = u.Fname + " " + u.Lname;
                     return RedirectToAction("Index", "Products");
                 }
-                return View(u);
+                return View(user);
             }
             else
             {
@@ -101,18 +101,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User u = db.Users.Find(id);
-            UserContract user = new UserContract
-            {
-                Id = u.Id,
-                Address = u.Address,
-                Avatar = u.Avatar,
-                Email = u.Email,
-                Fname = u.Fname,
-                Lname = u.Lname,
-                Password = u.Password,
-                Tel = u.Tel
-            };
+            User user = db.Users.Find(id);
 
             if (user == null)
             {
@@ -124,23 +113,25 @@ namespace WebApp.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(HttpPostedFileBase Avatar, [Bind(Exclude = "Avatar")]User user)
-        {   
+        public ActionResult Edit([Bind(Exclude = "Avatar")]User u, HttpPostedFileBase Avatar)
+        {
             if (Avatar != null)
-            { 
+            {
                 var length = Avatar.InputStream.Length;
                 MemoryStream target = new MemoryStream();
                 Avatar.InputStream.CopyTo(target);
-                user.Avatar = target.ToArray();
+                u.Avatar = target.ToArray();
             }
 
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                db.Entry(u).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Profile", "Users", new { id = user.Id });
+                return RedirectToAction("Profile", "Users", new { id = u.Id });
             }
-            return View(user);
+
+            return View(u);
+            
         }
 
         // GET: Users/Delete/5

@@ -1,4 +1,4 @@
-﻿@model WebContract.UserContract
+﻿@model WebApp.Models.User
 
 @{
     ViewBag.Title = "Update";
@@ -8,7 +8,7 @@
 <div class=" col-md-3 col-md-offset-9">
     <div class="well well login">
 
-        @using (Html.BeginForm("Edit", "Users", FormMethod.Post))
+        @using (Html.BeginForm("Edit", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 

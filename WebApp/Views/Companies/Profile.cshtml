@@ -1,57 +1,74 @@
 ﻿@model WebApp.Models.CompanyProductView
 
 @{
-    ViewBag.Title = "Profile";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Profile";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="col-md-6">
+    <div class="well">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-3">
+                @if (Model.CompanyView.Avatar != null)
+                {
+                    <img src="data:image;base64,@System.Convert.ToBase64String(Model.CompanyView.Avatar)" class="img-circle user-avatar" />
+                }
+            </div>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyView.Cname)
+                    </dt>
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyView.Cname)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyView.Cname)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CompanyView.Cname)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyView.Ctel)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyView.Ctel)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyView.Ctel)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CompanyView.Ctel)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyView.Caddress)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyView.Caddress)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyView.Caddress)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CompanyView.Caddress)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CompanyView.Email)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyView.Email)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CompanyView.Email)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CompanyView.Email)
-        </dd>
+                </dl>
 
-    </dl>
-    <p>
-        <button class="btn btn-default">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.CompanyView.Id })
-        </button>
-        <button class="btn btn-default">
-            @Html.ActionLink("Delete", "Delete", new { id = Model.CompanyView.Id})
-        </button>
-        <button class="btn btn-info">
-            @Html.ActionLink("Upload a product", "Create", "Products")
-        </button>
-    </p>
+            </div>
+        </div>
+
+        <div class="col-md-offset-1">
+            <button class="btn btn-default top10">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.CompanyView.Id })
+            </button>
+            <button class="btn btn-default top10">
+                @Html.ActionLink("Delete", "Delete", new { id = Model.CompanyView.Id })
+            </button>
+        </div>
+        <div class="col-md-offset-1 top10 ">
+            <button class="btn btn-info">
+                @Html.ActionLink("Upload a product", "Create", "Products")
+            </button>
+        </div>
+    </div>
 </div>
 <hr />
 

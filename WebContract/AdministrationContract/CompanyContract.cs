@@ -8,7 +8,7 @@ using System.Text;
 namespace WebContract
 {
     [DataContract]
-    class CompanyContract
+    public class CompanyContract
     {
         public int Id { get; set; }
         [DataMember]
@@ -31,5 +31,6 @@ namespace WebContract
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+        public byte[] Avatar { get; set; }
     }
 }
