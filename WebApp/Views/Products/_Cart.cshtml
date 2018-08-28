@@ -1,0 +1,39 @@
+﻿@model WebApp.Models.ProductsView
+
+<table class="table">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Uploaded at
+        </th>
+        <th>
+            Amount
+        </th>
+    </tr>
+    @foreach (var i in Model.Products)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(item => i.Pname)
+            </td>
+            <td>
+                @Html.DisplayFor(item => i.Pdescription)
+            </td>
+            <td>
+                @Html.DisplayFor(item => i.Created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(item => i.Amount)
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "FromCart", new { controller = "Products", id = i.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

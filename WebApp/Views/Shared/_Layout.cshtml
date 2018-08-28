@@ -20,35 +20,40 @@
                 @Html.ActionLink("Shoppin", "Index", "Products", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
 
+                <ul class="nav navbar-nav navbar-right">
                     @if (Session["name"] != null)
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @if (Session["c_id"] != null)
                                 {
-                                    <i class="fas fa-industry-alt"></i>
+                                    <i class="fa fa-industry"></i>
                                 }
                                 else
                                 {
-                                    <i class="fas fa-user"></i>
+                                    <i class="fa fa-user"></i>
                                 }
                                 @Session["name"]
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" , id = "nav-btn">
                                 @if (Session["u_id"] != null)
-                                {
-                                    @Html.ActionLink("Profile", "Profile", new { controller = "Users", id = (int)Session["u_id"] }, new { @class = "dropdown-item" })
+                                {   <div class = "dropdown-item text-center ">
+                                         @Html.ActionLink("Profile", "Profile", new { controller = "Users", id = (int)Session["u_id"] }, new { @class = "btn btn-success" })
+                                    </div>
                                 }
-                                @if (Session["c_id"] != null)
+                                else if (Session["c_id"] != null)
                                 {
-                                    @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int)Session["c_id"] }, null)
+                                    <div class="dropdown-item text-center ">
+                                        @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int)Session["c_id"] }, new { @class = "btn btn-success" })
+                                    </div>
                                 }
                                 <br />
                                 @if (Session["c_id"] != null || Session["u_id"] != null)
                                 {
-                                    @Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "dorpdown-item" })
+                                    <div class="dropdown-item text-center ">
+                                        @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = " btn btn-danger" })
+                                    </div>
                                 }
                             </div>
                         </li>
@@ -82,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container">
         
             @if (TempData["Error"] != null)
             {

@@ -5,10 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (Session["c_id"] != null)
+{
+    @Html.ActionLink("Upload a Product", "Create", "Products", null, new { @class = "btn btn-success" })
+}
 
-<button class="btn btn-info">
-    @Html.ActionLink("Create New", "Create", "Products")
-</button>
 <table class="table">
     <tr>
         <th>
@@ -55,7 +56,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
-            </td>  
+            </td>
             <td>
                 @foreach (var b in Model.Product_b)
                 {
@@ -86,7 +87,7 @@
                     }
                 }
             </td>
-    
+
             <td>
                 @{
                     if (Session["c_id"] != null)
@@ -94,12 +95,15 @@
                         var session_id = (int)Session["c_id"];
                         if (session_id == item.Cid)
                         {
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id });
-                            @Html.ActionLink("Details", "Details", new { id = item.Id });
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id });
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                         }
                     }
                 }
+            </td>
+            <td>
+                @Html.ActionLink("Add to cart", "ToCart", new { id = item.Id })
             </td>
         </tr>
 
@@ -113,16 +117,38 @@
             <div class="thumbnail">
                 <img src="..." alt="...">
                 <div class="caption">
-                    <h3>
-                        @Html.DisplayFor(modeli => i.Pname)
-                    </h3>
+
+                    @Html.ActionLink("Add to cart", "ToCart", new { id = i.Id }, new { @class="badge " })
+                    <div>
+                        <strong>
+                            @Html.DisplayFor(modeli => i.Pname)
+                        </strong>
+                    </div>
+                    
                     <sub>
-                        Amount: @Html.DisplayFor(modeli => i.Amount)
+                        @Html.Label("Amount: ") @Html.DisplayFor(modeli => i.Amount)
+                        @foreach (var b in Model.Product_b)
+                        {
+                            if (b.P_id == i.Id)
+                            {
+                                @Html.Label("| Brand: ")
+                                @Html.DisplayFor(modelItem => b.Name)
+                            }
+                        }
+                        <br />
+                        @foreach (var b in Model.Product_b)
+                        {
+                            if (b.P_id == i.Id)
+                            {
+                                @Html.Label("Model: ")
+                                @Html.DisplayFor(modelItem => b.Name)
+                            }
+                        }
                     </sub>
-                    <p>
-                        @Html.DisplayFor(modeli => i.Pdescription)
-                    </p>
                 </div>
+                <p>
+                    @Html.DisplayFor(modeli => i.Pdescription)
+                </p>
                 <sub>
                     Uploaded at: @Html.DisplayFor(modeli => i.Created_at)
                 </sub>
@@ -134,9 +160,9 @@
                             var session_id = (int)Session["c_id"];
                             if (session_id == i.Cid)
                             {
-                                @Html.ActionLink("Edit", "Edit", new { id = i.Id });
-                                @Html.ActionLink("Details", "Details", new { id = i.Id });
-                                @Html.ActionLink("Delete", "Delete", new { id = i.Id });
+                                @Html.ActionLink("Edit", "Edit", new { id = i.Id })
+                                @Html.ActionLink("Details", "Details", new { id = i.Id })
+                                @Html.ActionLink("Delete", "Delete", new { id = i.Id })
                             }
                         }
                     }
@@ -145,3 +171,5 @@
         </div>
     }
 </div>
+
+@Html.ActionLink("Cart", "Cart", "Products")

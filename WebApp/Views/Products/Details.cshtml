@@ -8,11 +8,10 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Product</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Pname)
+            Product Name
         </dt>
 
         <dd>
@@ -20,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Pdescription)
+            Product Description
         </dt>
 
         <dd>
@@ -28,15 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Cid)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cid)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Created_at)
+            Uploaded at
         </dt>
 
         <dd>
@@ -54,6 +45,15 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @{
+        if (Session["c_id"] != null )
+        {
+            var id = (int)Session["c_id"];
+            if (id == Model.Cid)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            }
+        }
+    }
+    @Html.ActionLink("Back to List", "Index",null, new { @class="btn btn-info" })
 </p>

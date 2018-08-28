@@ -56,17 +56,8 @@
         </div>
 
         <div class="col-md-offset-1">
-            <button class="btn btn-default top10">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.CompanyView.Id })
-            </button>
-            <button class="btn btn-default top10">
-                @Html.ActionLink("Delete", "Delete", new { id = Model.CompanyView.Id })
-            </button>
-        </div>
-        <div class="col-md-offset-1 top10 ">
-            <button class="btn btn-info">
-                @Html.ActionLink("Upload a product", "Create", "Products")
-            </button>
+            @Html.ActionLink("Edit", "Edit","Companies", new { id = Model.CompanyView.Id }, new { @class = "btn btn-default top10" })
+            @Html.ActionLink("Delete", "Delete", "Companies", new { id = Model.CompanyView.Id }, new { @class = "btn btn-default top10" })
         </div>
     </div>
 </div>

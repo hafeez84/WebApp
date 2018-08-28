@@ -16,6 +16,8 @@ namespace WebApp.Controllers
     public class UsersController : Controller
     {
         private MyDBUserEntities db = new MyDBUserEntities();
+        private MyDBProductEntities products_db = new MyDBProductEntities();
+
 
         // GET: Users
         public ActionResult Index()
@@ -30,8 +32,28 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+
+            List<ProductsView> temp = new List<ProductsView>();
+            if (Request.Cookies["cart"] != null)
+            {
+                string[] p = Request.Cookies["cart"].Value.ToString().Split(',');
+                foreach (var i in p)
+                {
+                    int i_int = Convert.ToInt32(i);
+                    temp.Add(products_db.Products.Where(x => x.Id == i_int).FirstOrDefault());
+                }
+            }
+            else
+            {
+                temp = null;
+            }
+
+            UserProductsView user = new UserProductsView
+            {
+                UserV = db.Users.Find(id),
+                Products = temp
+            }; 
+            if (user.UserV == null)
             {
                 return HttpNotFound();
             }

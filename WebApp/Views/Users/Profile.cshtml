@@ -1,69 +1,75 @@
-﻿@model WebApp.Models.User
+﻿@model WebApp.Models.UserProductsView
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div>
-    <div class="row">
-        <div class="col-md-offset-1 col-md-2">
-            @if (Model.Avatar != null)
-            {
-                <img src="data:image;base64,@System.Convert.ToBase64String(Model.Avatar)" class="img-circle user-avatar" />
-            }
+<div class="col-md-7">
+    <div class="well">
+        <div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-6">
+                    @if (Model.UserV.Avatar != null)
+                    {
+                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.UserV.Avatar)" class="img-circle user-avatar" />
+                    }
+                </div>
+                <div class="col-md-10 col-md-offset-0">
+                <dl class="dl-horizontal text-left">
+                    <dt >
+                        First Name
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserV.Fname)
+                    </dd>
+
+                    <dt>
+                        Last Name
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserV.Lname)
+                    </dd>
+
+                    <dt>
+                        Mobile NO.
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserV.Tel)
+                    </dd>
+
+                    <dt>
+                        Email Address
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserV.Email)
+                    </dd>
+
+                    <dt>
+                        Address
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserV.Address)
+                    </dd>
+
+                </dl>
+            </div>
+            </div>
+            <p class="col-md-offset-1">
+                <button class="btn btn-default top10">
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.UserV.Id })
+                </button>
+                <button class="btn btn-default top10">
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.UserV.Id })
+                </button>
+            </p>
         </div>
     </div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Fname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Lname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Lname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-    </dl>
-
-    <p class="col-md-offset-1">
-        <button class="btn btn-default">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-        </button>
-        <button class="btn btn-default">
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-        </button>
-    </p>
 </div>
-    
+
+@Html.Partial("~/Views/Products/_Cart.cshtml", Model.Products)

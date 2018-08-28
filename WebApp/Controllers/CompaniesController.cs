@@ -20,7 +20,7 @@ namespace WebApp.Controllers
         // GET: Companies
         public ActionResult Index()
         {
-            return View(db.Companies.ToList());
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: Companies/Details/5

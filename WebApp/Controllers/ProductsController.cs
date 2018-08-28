@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
@@ -17,6 +18,115 @@ namespace WebApp.Controllers
         private MyDBCategoryEntities category_db = new MyDBCategoryEntities();
         private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
         private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
+
+        public ActionResult ToCart(int? id)
+        {
+            if (id != null)
+            {
+                var prod = db.Products.SingleOrDefault(x => x.Id == id);
+                string prod_id = prod.Id.ToString();
+                if (Request.Cookies["cart"] == null)
+                {
+                    Response.Cookies["cart"].Value = prod_id;
+                }
+                else
+                {
+                    string[] p = Request.Cookies["cart"].Value.ToString().Split(',');
+                    foreach (var i in p)
+                    {
+                        int i_int = Convert.ToInt32(i);
+                        if (id == i_int)
+                        {
+                            TempData["Error"] = "The product already exist in your Basket... ";
+                            return RedirectToAction("Index", "Products");
+                        }
+                    }
+                    Response.Cookies["cart"].Value = Request.Cookies["cart"].Value + "," + prod_id;
+                }
+                Response.Cookies["cart"].Expires = DateTime.Now.AddMonths(3);
+                return RedirectToAction("Details", "Products", new { id = prod.Id });
+            }
+            else
+            {
+                TempData["Error"] = "Spmething went wrong ! Please try again... ";
+                return RedirectToAction("Index", "Products");
+            }
+            
+        }
+
+        public ActionResult FromCart(int? id)
+        {
+            if (id != null)
+            {
+                string str = Request.Cookies["cart"].Value.ToString();
+                var id_s = id.ToString();
+                var start = id_s + ",";
+                var replace = "";
+                var between = "," + id_s + ",";
+                var replace_between = ",";
+                var end = "," + id_s;
+
+                var res = Regex.Replace(str, start, replace);
+                if (res.Equals(str))
+                {
+                    var res1 = Regex.Replace(str, between, replace_between);
+                    if (res1.Equals(str))
+                    {
+                        var res2 = Regex.Replace(str, end, replace);
+                        if (res2.Equals(str))
+                        {
+                            Response.Cookies["cart"].Expires = DateTime.Now.AddDays(-1);
+                            return RedirectToAction("Index", "Products");
+                        }
+                        else
+                        {
+                            Response.Cookies["cart"].Value = res2;
+                            return RedirectToAction("Index", "Products");
+                        }
+                    }
+                    else
+                    {
+                        Response.Cookies["cart"].Value = res1;
+                        return RedirectToAction("Index", "Products");
+                    }
+                }
+                else
+                {
+                    Response.Cookies["cart"].Value = res;
+                    return RedirectToAction("Index", "Products");
+                }
+            }
+            else
+            {
+                TempData["Error"] = "Spmething went wrong ! Please try again... ";
+                return RedirectToAction("Index", "Products");
+            }
+        }
+        public ActionResult Cart()
+        {
+            if (Request.Cookies["cart"] != null)
+            {
+                string[] p = Request.Cookies["cart"].Value.ToString().Split(',');
+                List<Product> temp = new List<Product>() ;
+                foreach (var i in p)
+                {
+                    int i_int = Convert.ToInt32(i);
+                    temp.Add(db.Products.Where(x => x.Id == i_int).FirstOrDefault());
+                }
+
+                ProductsView cart_pros = new ProductsView
+                {
+                    Products = temp
+                };
+                
+                return PartialView("~/Views/Products/_Cart.cshtml", cart_pros);
+            }
+            else
+            {
+                TempData["Error"] = "Your basket is Empty !";
+                return RedirectToAction("Index", "Products");
+            }
+        }
 
         // GET: Products
         public ActionResult Index()
