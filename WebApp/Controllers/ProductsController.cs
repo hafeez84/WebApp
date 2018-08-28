@@ -114,9 +114,9 @@ namespace WebApp.Controllers
                     temp.Add(db.Products.Where(x => x.Id == i_int).FirstOrDefault());
                 }
 
-                ProductsView cart_pros = new ProductsView
+                UserProducts cart_pros = new UserProducts
                 {
-                    Products = temp
+                    ProductsV = temp
                 };
                 
                 return PartialView("~/Views/Products/_Cart.cshtml", cart_pros);

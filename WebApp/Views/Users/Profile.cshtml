@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.UserProductsView
+﻿@model WebApp.Models.UserProducts
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -72,4 +72,4 @@
     </div>
 </div>
 
-@Html.Partial("~/Views/Products/_Cart.cshtml", Model.Products)
+@Html.Partial("~/Views/Products/_Cart.cshtml", Model)

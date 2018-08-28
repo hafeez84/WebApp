@@ -33,7 +33,7 @@ namespace WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            List<ProductsView> temp = new List<ProductsView>();
+            List<Product> temp = new List<Product>();
             if (Request.Cookies["cart"] != null)
             {
                 string[] p = Request.Cookies["cart"].Value.ToString().Split(',');
@@ -48,10 +48,10 @@ namespace WebApp.Controllers
                 temp = null;
             }
 
-            UserProductsView user = new UserProductsView
+            UserProducts user = new UserProducts
             {
                 UserV = db.Users.Find(id),
-                Products = temp
+                ProductsV = temp
             }; 
             if (user.UserV == null)
             {
