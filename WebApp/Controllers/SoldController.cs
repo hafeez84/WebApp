@@ -93,18 +93,18 @@ namespace WebApp.Controllers
                 sold_db.Sold_products.Add(product);
                 var flag = sold_db.SaveChanges();
                 prod.Amount = prod.Amount - 1;
-                if(prod.Amount == 0)
-                {
+                //if(prod.Amount == 0)
+                //{
                     //DeleteConfirmed(prod.Id);
-                    var delete_prod = new WebApp.Controllers.ProductsController();
-                    delete_prod.DeleteConfirmed(prod.Id);
-                }
-                else
-                {
+                  //  var delete_prod = new WebApp.Controllers.ProductsController();
+                    //delete_prod.DeleteConfirmed(prod.Id);
+                //}
+                //else
+                //{
                     product_db.Entry(prod).State = System.Data.Entity.EntityState.Modified;
                     product_db.SaveChanges();
                     FromCart(id);
-                }
+                //}
                 return RedirectToAction("Profile", "Users", new { id = i_int });
             }
             else

@@ -41,71 +41,75 @@
 
     @foreach (var item in Model.Products)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pdescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created_at)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @foreach (var b in Model.Product_b)
-                {
-                    if (b.P_id == item.Id)
+        if (item.Amount != 0)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pdescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created_at)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @foreach (var b in Model.Product_b)
                     {
-                        @Html.DisplayFor(modelItem => b.Name)
-                    }
-                }
-            </td>
-            <td>
-                @foreach (var m in Model.Product_m)
-                {
-                    if (m.P_id == item.Id)
-                    {
-                        @Html.DisplayFor(modelItem => m.Name)
-                    }
-                }
-            </td>
-            <td>
-                @foreach (var b in Model.Product_b)
-                {
-                    foreach (var c in Model.Product_c)
-                    {
-                        if (c.Brand_id == b.Id)
+                        if (b.P_id == item.Id)
                         {
-                            @Html.DisplayFor(modelItem => c.Name)
+                            @Html.DisplayFor(modelItem => b.Name)
                         }
                     }
-                }
-            </td>
+                </td>
+                <td>
+                    @foreach (var m in Model.Product_m)
+                    {
+                        if (m.P_id == item.Id)
+                        {
+                            @Html.DisplayFor(modelItem => m.Name)
+                        }
+                    }
+                </td>
+                <td>
+                    @foreach (var b in Model.Product_b)
+                    {
+                        foreach (var c in Model.Product_c)
+                        {
+                            if (c.Brand_id == b.Id)
+                            {
+                                @Html.DisplayFor(modelItem => c.Name)
+                            }
+                        }
+                    }
+                </td>
 
-            <td>
-                @{
-                    if (Session["c_id"] != null)
-                    {
-                        var session_id = (int)Session["c_id"];
-                        if (session_id == item.Cid)
+                <td>
+                    @{
+                        if (Session["c_id"] != null)
                         {
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                            @Html.ActionLink("Details", "Details", new { id = item.Id })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            var session_id = (int)Session["c_id"];
+                            if (session_id == item.Cid)
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            }
                         }
                     }
-                }
-            </td>
-            <td>
-                @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = item.Id }, null)
-            </td>
-        </tr>
+                </td>
+                <td>
+                    @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = item.Id }, null)
+                </td>
+            </tr>
+
+        }
 
     }
 
@@ -113,62 +117,66 @@
 <div class="row">
     @foreach (var i in Model.Products)
     {
-        <div class="col-sm-3 col-md-2">
-            <div class="thumbnail">
-                <img src="..." alt="...">
-                <div class="caption">
+        if (i.Amount != 0)
+        {
+            <div class="col-sm-3 col-md-2">
+                <div class="thumbnail">
+                    <img src="..." alt="...">
+                    <div class="caption">
 
-                    @Html.ActionLink("Add to cart", "ToCart","Cart", new { id = i.Id }, new { @class="badge " })
-                    <div>
-                        <strong>
-                            @Html.DisplayFor(modeli => i.Pname)
-                        </strong>
-                    </div>
+                        @Html.ActionLink("Add to cart", "ToCart","Cart", new { id = i.Id }, new { @class="badge " })
+                        <div>
+                            <strong>
+                                @Html.DisplayFor(modeli => i.Pname)
+                            </strong>
+                        </div>
                     
+                        <sub>
+                            @Html.Label("Amount: ") @Html.DisplayFor(modeli => i.Amount)
+                            @foreach (var b in Model.Product_b)
+                            {
+                                if (b.P_id == i.Id)
+                                {
+                                    @Html.Label("| Brand: ")
+                                    @Html.DisplayFor(modelItem => b.Name)
+                                }
+                            }
+                            <br />
+                            @foreach (var b in Model.Product_b)
+                            {
+                                if (b.P_id == i.Id)
+                                {
+                                    @Html.Label("Model: ")
+                                    @Html.DisplayFor(modelItem => b.Name)
+                                }
+                            }
+                        </sub>
+                    </div>
+                    <p>
+                        @Html.DisplayFor(modeli => i.Pdescription)
+                    </p>
                     <sub>
-                        @Html.Label("Amount: ") @Html.DisplayFor(modeli => i.Amount)
-                        @foreach (var b in Model.Product_b)
-                        {
-                            if (b.P_id == i.Id)
-                            {
-                                @Html.Label("| Brand: ")
-                                @Html.DisplayFor(modelItem => b.Name)
-                            }
-                        }
-                        <br />
-                        @foreach (var b in Model.Product_b)
-                        {
-                            if (b.P_id == i.Id)
-                            {
-                                @Html.Label("Model: ")
-                                @Html.DisplayFor(modelItem => b.Name)
-                            }
-                        }
+                        Uploaded at: @Html.DisplayFor(modeli => i.Created_at)
                     </sub>
-                </div>
-                <p>
-                    @Html.DisplayFor(modeli => i.Pdescription)
-                </p>
-                <sub>
-                    Uploaded at: @Html.DisplayFor(modeli => i.Created_at)
-                </sub>
-                <hr />
-                <span>
-                    @{
-                        if (Session["c_id"] != null)
-                        {
-                            var session_id = (int)Session["c_id"];
-                            if (session_id == i.Cid)
+                    <hr />
+                    <span>
+                        @{
+                            if (Session["c_id"] != null)
                             {
-                                @Html.ActionLink("Edit", "Edit", new { id = i.Id })
-                                @Html.ActionLink("Details", "Details", new { id = i.Id })
-                                @Html.ActionLink("Delete", "Delete", new { id = i.Id })
+                                var session_id = (int)Session["c_id"];
+                                if (session_id == i.Cid)
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = i.Id })
+                                    @Html.ActionLink("Details", "Details", new { id = i.Id })
+                                    @Html.ActionLink("Delete", "Delete", new { id = i.Id })
+                                }
                             }
                         }
-                    }
-                </span>
+                    </span>
+                </div>
             </div>
-        </div>
+
+        }
     }
 </div>
 
