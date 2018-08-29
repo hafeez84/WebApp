@@ -77,41 +77,49 @@ namespace WebApp.Controllers
         // GET: Sold
         public ActionResult Buy(int? id)
         {
-            if (id != null)
+            if( Session["u_id"] != null)
             {
-                var prod = product_db.Products.FirstOrDefault(x => x.Id == id);
-                int i_int = (int)Session["u_id"];
-
-                Sold_products product = new Sold_products
+                if (id != null)
                 {
-                    P_id = prod.Id,
-                    U_id = i_int,
-                    C_id = (int)prod.Cid,
-                    Date = DateTime.UtcNow
-                };
+                    var prod = product_db.Products.FirstOrDefault(x => x.Id == id);
+                    int i_int = (int)Session["u_id"];
 
-                sold_db.Sold_products.Add(product);
-                var flag = sold_db.SaveChanges();
-                prod.Amount = prod.Amount - 1;
-                //if(prod.Amount == 0)
-                //{
+                    Sold_products product = new Sold_products
+                    {
+                        P_id = prod.Id,
+                        U_id = i_int,
+                        C_id = (int)prod.Cid,
+                        Date = DateTime.UtcNow
+                    };
+
+                    sold_db.Sold_products.Add(product);
+                    var flag = sold_db.SaveChanges();
+                    prod.Amount = prod.Amount - 1;
+                    //if(prod.Amount == 0)
+                    //{
                     //DeleteConfirmed(prod.Id);
-                  //  var delete_prod = new WebApp.Controllers.ProductsController();
+                    //  var delete_prod = new WebApp.Controllers.ProductsController();
                     //delete_prod.DeleteConfirmed(prod.Id);
-                //}
-                //else
-                //{
+                    //}
+                    //else
+                    //{
                     product_db.Entry(prod).State = System.Data.Entity.EntityState.Modified;
                     product_db.SaveChanges();
                     FromCart(id);
-                //}
-                return RedirectToAction("Profile", "Users", new { id = i_int });
+                    //}
+                    return RedirectToAction("Profile", "Users", new { id = i_int });
+                }
+                else
+                {
+                    TempData["Error"] = "There was an error, please try again...";
+                    return RedirectToAction("Profile", "Users", new { id = (int)Session["u_id"] });
+                }
             }
             else
             {
-                TempData["Error"] = "There was an error, please try again...";
-                return RedirectToAction("Profile", "Users", new { id = (int)Session["u_id"] });
+                return RedirectToAction("Index", "Account");
             }
+            
         }
     }
 }

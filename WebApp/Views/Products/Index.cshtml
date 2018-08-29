@@ -122,15 +122,14 @@
             <div class="col-sm-3 col-md-2">
                 <div class="thumbnail">
                     <img src="..." alt="...">
+                    @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
                     <div class="caption">
-
-                        @Html.ActionLink("Add to cart", "ToCart","Cart", new { id = i.Id }, new { @class="badge " })
                         <div>
                             <strong>
                                 @Html.DisplayFor(modeli => i.Pname)
                             </strong>
                         </div>
-                    
+
                         <sub>
                             @Html.Label("Amount: ") @Html.DisplayFor(modeli => i.Amount)
                             @foreach (var b in Model.Product_b)

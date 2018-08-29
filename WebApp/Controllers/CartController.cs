@@ -37,7 +37,10 @@ namespace WebApp.Controllers
                     Response.Cookies["cart"].Value = Request.Cookies["cart"].Value + "," + prod_id;
                 }
                 Response.Cookies["cart"].Expires = DateTime.Now.AddMonths(3);
-                TempData["Success"] = "Product has been added to your Cart successfully !";
+                if (Session["u_id"] == null && TempData["Error"] == null)
+                {
+                    TempData["Warning"] = "Please login or sign up to proced buying the items...";
+                }
                 return RedirectToAction("Details", "Products", new { id = prod.Id });
             }
             else
@@ -120,6 +123,7 @@ namespace WebApp.Controllers
                 TempData["Error"] = "Your basket is Empty !";
                 return RedirectToAction("Index", "Products");
             }
+
         }
 
     }
