@@ -9,7 +9,7 @@
     @Styles.Render("~/Content/Site.css")
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top container-fluid">
+    <div class="navbar navbar-inverse navbar-fixed-top container-fluid">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,64 +24,83 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["name"] != null)
                     {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <li class="dropdown">
+                            <a class="btn btn-default dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @if (Session["c_id"] != null)
                                 {
-                                    <i class="fa fa-industry"></i>
+                                    <span class="fa fa-industry"></span>
                                 }
                                 else
                                 {
-                                    <i class="fa fa-user"></i>
+                                    <span class="glyphicon glyphicon-user"></span>
                                 }
                                 @Session["name"]
+                                <spn class="glyphicon glyphicon-chevron-down"></spn>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" , id = "nav-btn">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" , role="menu">
                                 @if (Session["u_id"] != null)
-                                {   <div class = "dropdown-item text-center ">
-                                         @Html.ActionLink("Profile", "Profile", new { controller = "Users", id = (int)Session["u_id"] }, new { @class = "btn btn-success" })
-                                    </div>
+                                {
+                                    <li class="dropdown-item text-center ">
+                                        @Html.ActionLink("Profile", "Profile", new { controller = "Users", id = (int)Session["u_id"] }, new { @class = "btn btn-success" })
+                                    </li>
                                 }
                                 else if (Session["c_id"] != null)
                                 {
-                                    <div class="dropdown-item text-center ">
+                                    <li class="dropdown-item text-center ">
                                         @Html.ActionLink("Profile", "Profile", "Companies", new { id = (int)Session["c_id"] }, new { @class = "btn btn-success" })
-                                    </div>
+                                    </li>
                                 }
-                                <br />
                                 @if (Session["c_id"] != null || Session["u_id"] != null)
                                 {
-                                    <div class="dropdown-item text-center ">
+                                    <li class="dropdown-item text-center ">
                                         @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = " btn btn-danger" })
-                                    </div>
+                                    </li>
                                 }
-                            </div>
+                            </ul>
                         </li>
                     }
                     else
                     {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <li class="dropdown">
+                            <a class="btn btn-default dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Sign up
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu">
                                 @if (Session["u_id"] == null && Session["c_id"] == null)
                                 {
-                                    @Html.ActionLink("Sign up", "Signup", new { controller = "Users" }, new { @class = "dropdown-item" })
+                                    <li class="dropdown-item text-capitalize text-center">
+                                        @Html.ActionLink("Sign up", "Signup", new { controller = "Users" }, new { @class = "btn btn-info" })
+                                    </li>
                                 }
-                                <br />
                                 @if (Session["c_id"] == null && Session["u_id"] == null)
                                 {
-                                    @Html.ActionLink("Sign up as Company", "Signup", new { controller = "Companies" }, new { @class = "dropdown-item" })
+                                    <li class="dropdown-item text-capitalize text-center">
+                                        @Html.ActionLink("Sign up as Company", "Signup", new { controller = "Companies" }, new { @class = "btn btn-info" })
+                                    </li>
                                 }
-                            </div>
+                            </ul>
                         </li>
                         <li>
                             @if (Session["u_id"] == null && Session["c_id"] == null)
                             {
-                                @Html.ActionLink("Login", "Index", "Account")
+                                @Html.ActionLink("Login", "Index", new { controller = "Account" }, new { @class = "btn btn-default" })
                             }
                         </li>
+                    }
+                    @if (Session["c_id"] == null)
+                    {
+                        if (Session["u_id"] != null)
+                        {
+                            <li>
+                                @Html.ActionLink("Cart", "Profile", new { controller = "Users", id = (int) Session["u_id"] }, new { @class = "btn btn-default glyphicon glyphicon-shopping-cart" })
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.ActionLink("Cart", "Cart", new { controller = "Cart" }, new { @class = "btn btn-default glyphicon glyphicon-shopping-cart" })
+                            </li>
+                        }
                     }
                 </ul>
             </div>

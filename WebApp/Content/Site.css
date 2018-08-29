@@ -47,3 +47,21 @@ a {
 #nav-btn {
     background-color:green !important;
 }
+.thumbnail {
+    height:390px;
+    width:290px;
+}
+
+.t-description {
+    height:20px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+hr {
+    margin-bottom:5px;
+    margin-top:5px;
+}
+img.t-img {
+    height:190px;
+    width:190px;
+}

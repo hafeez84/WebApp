@@ -45,15 +45,15 @@
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
     @{
-        if (Session["c_id"] != null )
+        if (Session["c_id"] != null)
         {
             var id = (int)Session["c_id"];
             if (id == Model.Cid)
             {
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+                @Html.ActionLink("Edit", "Edit", "Products", new { id = Model.Id }, new { @class = "btn btn-primary" })
             }
         }
     }
-    @Html.ActionLink("Back to List", "Index",null, new { @class="btn btn-info" })
 </p>

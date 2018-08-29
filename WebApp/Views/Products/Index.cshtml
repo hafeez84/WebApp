@@ -119,14 +119,14 @@
     {
         if (i.Amount != 0)
         {
-            <div class="col-sm-3 col-md-2">
-                <div class="thumbnail">
-                    <img src="..." alt="...">
+            <div class="col-sm-3 col-md-3">
+                <div class="thumbnail ">
+                    <img src="..." alt="..." class="t-img">
                     @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
                     <div class="caption">
                         <div>
                             <strong>
-                                @Html.DisplayFor(modeli => i.Pname)
+                                @Html.ActionLink(i.Pname, "Details", "Products", new { id = i.Id}, null)
                             </strong>
                         </div>
 
@@ -151,27 +151,27 @@
                             }
                         </sub>
                     </div>
-                    <p>
+                    <p class="t-description">
                         @Html.DisplayFor(modeli => i.Pdescription)
                     </p>
                     <sub>
                         Uploaded at: @Html.DisplayFor(modeli => i.Created_at)
                     </sub>
-                    <hr />
-                    <span>
-                        @{
-                            if (Session["c_id"] != null)
+                    @{
+                        if (Session["c_id"] != null)
+                        {
+                            var s_id = (int)Session["c_id"];
+                            if (s_id == i.Cid)
                             {
-                                var session_id = (int)Session["c_id"];
-                                if (session_id == i.Cid)
-                                {
-                                    @Html.ActionLink("Edit", "Edit", new { id = i.Id })
-                                    @Html.ActionLink("Details", "Details", new { id = i.Id })
-                                    @Html.ActionLink("Delete", "Delete", new { id = i.Id })
-                                }
+                                <hr />
+                                <span>
+                                    @Html.ActionLink("Edit", "Edit", new { id = i.Id }, new { @class = "btn btn-info btn-xs" })
+                                    @Html.ActionLink("Details", "Details", new { id = i.Id }, new { @class = "btn btn-info btn-xs" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = i.Id }, new { @class = "btn btn-info btn-xs" })
+                                </span>
                             }
                         }
-                    </span>
+                    }
                 </div>
             </div>
 
@@ -179,4 +179,3 @@
     }
 </div>
 
-@Html.ActionLink("Cart", "Cart", "Cart")
