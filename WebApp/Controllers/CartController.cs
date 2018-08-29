@@ -52,7 +52,7 @@ namespace WebApp.Controllers
         {
             if (id != null)
             {
-                string str = Request.Cookies["cart"].Value.ToString();
+                var str = Request.Cookies["cart"].Value.ToString();
                 var id_s = id.ToString();
                 var start = id_s + ",";
                 var replace = "";

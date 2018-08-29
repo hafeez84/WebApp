@@ -14,6 +14,13 @@
         <th>
             Amount
         </th>
+        <th>
+            Cart
+        </th>
+
+        <th>
+            Buy
+        </th>
     </tr>
     @foreach (var i in Model.ProductsV)
     {
@@ -32,6 +39,10 @@
             </td>
             <td>
                 @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id }, new { @class = "btn btn-danger" })
+            </td>
+
+            <td>
+                @Html.ActionLink("Buy", "Buy", new { controller = "Sold", id = i.Id}, new { @class = "btn btn-success" })
             </td>
         </tr>
     }
