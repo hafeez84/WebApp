@@ -31,7 +31,7 @@
                 @Html.DisplayFor(item => i.Amount)
             </td>
             <td>
-                @Html.ActionLink("Remove", "FromCart", new { controller = "Products", id = i.Id }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }

@@ -103,7 +103,7 @@
                 }
             </td>
             <td>
-                @Html.ActionLink("Add to cart", "ToCart", new { id = item.Id })
+                @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = item.Id }, null)
             </td>
         </tr>
 
@@ -118,7 +118,7 @@
                 <img src="..." alt="...">
                 <div class="caption">
 
-                    @Html.ActionLink("Add to cart", "ToCart", new { id = i.Id }, new { @class="badge " })
+                    @Html.ActionLink("Add to cart", "ToCart","Cart", new { id = i.Id }, new { @class="badge " })
                     <div>
                         <strong>
                             @Html.DisplayFor(modeli => i.Pname)
@@ -172,4 +172,4 @@
     }
 </div>
 
-@Html.ActionLink("Cart", "Cart", "Products")
+@Html.ActionLink("Cart", "Cart", "Cart")

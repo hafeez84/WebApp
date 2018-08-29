@@ -16,49 +16,49 @@
                     }
                 </div>
                 <div class="col-md-10 col-md-offset-0">
-                <dl class="dl-horizontal text-left">
-                    <dt >
-                        First Name
-                    </dt>
+                    <dl class="dl-horizontal text-left">
+                        <dt>
+                            First Name
+                        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.UserV.Fname)
-                    </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserV.Fname)
+                        </dd>
 
-                    <dt>
-                        Last Name
-                    </dt>
+                        <dt>
+                            Last Name
+                        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.UserV.Lname)
-                    </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserV.Lname)
+                        </dd>
 
-                    <dt>
-                        Mobile NO.
-                    </dt>
+                        <dt>
+                            Mobile NO.
+                        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.UserV.Tel)
-                    </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserV.Tel)
+                        </dd>
 
-                    <dt>
-                        Email Address
-                    </dt>
+                        <dt>
+                            Email Address
+                        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.UserV.Email)
-                    </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserV.Email)
+                        </dd>
 
-                    <dt>
-                        Address
-                    </dt>
+                        <dt>
+                            Address
+                        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.UserV.Address)
-                    </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserV.Address)
+                        </dd>
 
-                </dl>
-            </div>
+                    </dl>
+                </div>
             </div>
             <p class="col-md-offset-1">
                 <button class="btn btn-default top10">
@@ -71,5 +71,7 @@
         </div>
     </div>
 </div>
-
-@Html.Partial("~/Views/Products/_Cart.cshtml", Model)
+@if (Model.ProductsV !=  null)
+{
+    @Html.Partial("~/Views/Products/_Cart.cshtml", Model)
+}

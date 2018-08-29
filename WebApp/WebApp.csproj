@@ -156,6 +156,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -256,6 +257,24 @@
       <DependentUpon>ProductModelModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductsView.cs" />
+    <Compile Include="Models\Sold.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sold.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sold.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sold.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sold.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sold.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sold_products.cs">
+      <DependentUpon>Sold.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>UserModel.tt</DependentUpon>
     </Compile>
@@ -340,6 +359,16 @@
       <DependentUpon>ProductModelModel.edmx</DependentUpon>
       <LastGenOutput>ProductModelModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\Sold.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Sold.edmx</DependentUpon>
+      <LastGenOutput>Sold.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Sold.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Sold.edmx</DependentUpon>
+      <LastGenOutput>Sold.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\UserModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UserModel.edmx</DependentUpon>
@@ -402,6 +431,13 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <EntityDeploy Include="Models\Sold.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Sold.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Sold.edmx.diagram">
+      <DependentUpon>Sold.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -450,6 +486,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\" />
+    <Folder Include="Views\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
