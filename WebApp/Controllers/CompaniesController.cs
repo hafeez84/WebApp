@@ -82,6 +82,7 @@ namespace WebApp.Controllers
                 }
                 if (ModelState.IsValid)
                 {
+                    company.Status = 1;
                     db.Companies.Add(company);
                     db.SaveChanges();
                     Session["c_id"] = company.Id;
@@ -196,10 +197,11 @@ namespace WebApp.Controllers
                 List<Product> prod = product_db.Products.Where(x => x.Cid == company.Id).ToList();
                 foreach(var item in prod)
                 {
-                    product_db.Products.Remove(item);
+                    item.Status = 0;
                 }               
                 product_db.SaveChanges();
-                db.Companies.Remove(company);
+                company.Status = 0;
+                db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
                 Session.Abandon();
                 return RedirectToAction("Index", "Account");

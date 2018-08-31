@@ -95,28 +95,48 @@ namespace WebApp.Controllers
                 Category category = new Category();
                 Model model = new Model();
 
+                model.Name = upload.ProductModelM.Name.Trim().ToLower();
+                if(product_model_db.Models.Any(x=>x.Name == model.Name)) // if model with same name exist do not create new one
+                    model = product_model_db.Models.FirstOrDefault(x => x.Name == model.Name);
+                else
+                {
+                    product_model_db.Models.Add(model);
+                    product_model_db.SaveChanges();
+                }
+
+                category.Name = upload.CategoryM.Name.Trim().ToLower(); // same as model
+                if(category_db.Categories.Any(x=>x.Name == category.Name))
+                {
+                    category = category_db.Categories.FirstOrDefault(x => x.Name == category.Name);
+                }
+                else
+                {
+                    category_db.Categories.Add(category);
+                    category_db.SaveChanges();
+                }
+
+                brand.Name = upload.BrandM.Name.Trim().ToLower();
+                if(brand_db.Brands.Any(x=>x.Name == brand.Name)) //same
+                {
+                    brand = brand_db.Brands.FirstOrDefault(x => x.Name == brand.Name);
+                }
+                else
+                {
+                    brand.Cate_id = category.Id;
+                    brand_db.Brands.Add(brand);
+                    brand_db.SaveChanges();
+                }
+
                 product.Cid = (int)Session["c_id"];
                 product.Created_at = DateTime.UtcNow;
                 product.Amount = upload.ProductM.Amount;
                 product.Pname = upload.ProductM.Pname;
                 product.Pdescription = upload.ProductM.Pdescription;
+                product.B_id = brand.Id;
+                product.M_id = model.Id;
+                product.Status = 1;
                 db.Products.Add(product);
                 db.SaveChanges();
-
-                brand.P_id = product.Id;
-                brand.Name = upload.BrandM.Name;
-                brand_db.Brands.Add(brand);
-                brand_db.SaveChanges();
-
-                category.Brand_id = brand.Id;
-                category.Name = upload.CategoryM.Name;
-                category_db.Categories.Add(category);
-                category_db.SaveChanges();
-
-                model.P_id = product.Id;
-                model.Name = upload.ProductModelM.Name;
-                product_model_db.Models.Add(model);
-                product_model_db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -160,7 +180,7 @@ namespace WebApp.Controllers
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
             }
             return View(product);
         }
@@ -196,24 +216,12 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Brand brand = brand_db.Brands.Where(x => x.P_id == id).FirstOrDefault();
-
-            Category category = category_db.Categories.Where(x => x.Brand_id == brand.Id).FirstOrDefault();
-            category_db.Categories.Remove(category);
-            category_db.SaveChanges();
-
-            
-            brand_db.Brands.Remove(brand);
-            brand_db.SaveChanges();
-
-            Model model = product_model_db.Models.Where(x => x.P_id == id).FirstOrDefault();
-            product_model_db.Models.Remove(model);
-            product_model_db.SaveChanges();
-
-            Product product = db.Products.Find(id);
-            db.Products.Remove(product);
+            var product = db.Products.Find(id);
+            product.Status = 0;
+            db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            TempData["Success"] = "Product has been deleted successfully...";
+            return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
         }
 
         protected override void Dispose(bool disposing)

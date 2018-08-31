@@ -10,8 +10,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
-          <Property Name="P_id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Cate_id" Type="int" />
         </EntityType>
         <EntityContainer Name="MyDBProductBrandModelStoreContainer">
           <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
@@ -25,8 +25,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="P_id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cate_id" Type="Int32" />
         </EntityType>
         <EntityContainer Name="MyDBProductBrandEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Brands" EntityType="Self.Brand" />
@@ -40,7 +40,7 @@
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="MyDBProductBrandModel.Brand">
               <MappingFragment StoreEntitySet="Brand">
-                <ScalarProperty Name="P_id" ColumnName="P_id" />
+                <ScalarProperty Name="Cate_id" ColumnName="Cate_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>

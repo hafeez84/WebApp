@@ -17,8 +17,11 @@ namespace WebApp.Models
         public int Id { get; set; }
         public string Pname { get; set; }
         public string Pdescription { get; set; }
-        public Nullable<int> Cid { get; set; }
+        public int Cid { get; set; }
         public Nullable<System.DateTime> Created_at { get; set; }
-        public Nullable<int> Amount { get; set; }
+        public int Amount { get; set; }
+        public Nullable<int> B_id { get; set; }
+        public Nullable<int> M_id { get; set; }
+        public int Status { get; set; }
     }
 }

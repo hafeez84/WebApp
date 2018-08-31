@@ -29,25 +29,28 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pdescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created_at)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { controller = "Products", id = item.Id }, new {@class="btn btn-default" })
-                    @Html.ActionLink("Details", "Details",  new { controller = "Products", id = item.Id }, new {@class="btn btn-default" })
-                    @Html.ActionLink("Delete", "Delete",  new { controller = "Products", id = item.Id }, new { @class = "btn btn-default" })
-                </td>
-            </tr>
+            if (item.Status != 0)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pdescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created_at)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { controller = "Products", id = item.Id }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Details", "Details", new { controller = "Products", id = item.Id }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Delete", "Delete", new { controller = "Products", id = item.Id }, new { @class = "btn btn-default" })
+                    </td>
+                </tr>
+            }
         }
 
     </table>

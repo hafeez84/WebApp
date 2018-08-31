@@ -17,6 +17,5 @@ namespace WebApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> Up_Category_id { get; set; }
-        public int Brand_id { get; set; }
     }
 }

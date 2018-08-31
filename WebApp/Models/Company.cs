@@ -21,5 +21,6 @@ namespace WebApp.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public byte[] Avatar { get; set; }
+        public int Status { get; set; }
     }
 }

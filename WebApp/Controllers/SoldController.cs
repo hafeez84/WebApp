@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
 using WebApp.Controllers;
+using System.Data.Entity;
 
 namespace WebApp.Controllers
 {
@@ -16,6 +17,15 @@ namespace WebApp.Controllers
         private MyDBCategoryEntities category_db = new MyDBCategoryEntities();
         private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
         private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
+
+        private void DeleteConfirmed(int id)
+        {
+            var product = product_db.Products.Find(id);
+            product.Status = 0;
+            product_db.Entry(product).State = EntityState.Modified;
+            product_db.SaveChanges();
+        }
+
 
         private void FromCart(int? id)
         {
@@ -48,32 +58,9 @@ namespace WebApp.Controllers
                     Response.Cookies["cart"].Value = res;
             }
             else
-                TempData["Error"] = "Spmething went wrong ! Please try again... ";
+                TempData["Error"] = "Something went wrong ! Please try again... ";
         }
-        private void DeleteConfirmed(int id)
-        {
-            Brand brand = brand_db.Brands.Where(x => x.P_id == id).FirstOrDefault();
-
-            Category category = category_db.Categories.Where(x => x.Brand_id == brand.Id).FirstOrDefault();
-            category_db.Categories.Remove(category);
-            category_db.SaveChanges();
-
-
-            brand_db.Brands.Remove(brand);
-            brand_db.SaveChanges();
-
-            Model model = product_model_db.Models.Where(x => x.P_id == id).FirstOrDefault();
-            product_model_db.Models.Remove(model);
-            product_model_db.SaveChanges();
-
-            Product product = product_db.Products.Find(id);
-            product_db.Products.Remove(product);
-            product_db.SaveChanges();
-        }
-
-
-
-
+   
         // GET: Sold
         public ActionResult Buy(int? id)
         {
