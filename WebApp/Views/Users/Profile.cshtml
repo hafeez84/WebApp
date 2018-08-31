@@ -6,73 +6,133 @@
 
 
 <div class="col-md-7">
-    <div class="well">
-        <div>
-            <div class="row">
-                <div class="col-md-offset-1 col-md-6">
-                    @if (Model.UserV.Avatar != null)
-                    {
-                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.UserV.Avatar)" class="img-circle user-avatar" />
-                    }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <i class="glyphicon glyphicon-user"></i> Profile
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-6">
+                        @if (Model.UserV.Avatar != null)
+                        {
+                            <img src="data:image;base64,@System.Convert.ToBase64String(Model.UserV.Avatar)" class="img-circle user-avatar" />
+                        }
+                    </div>
+                    <div class="col-md-10 col-md-offset-0">
+                        <dl class="dl-horizontal text-left">
+                            <dt>
+                                First Name
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UserV.Fname)
+                            </dd>
+
+                            <dt>
+                                Last Name
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UserV.Lname)
+                            </dd>
+
+                            <dt>
+                                Mobile NO.
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UserV.Tel)
+                            </dd>
+
+                            <dt>
+                                Email Address
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UserV.Email)
+                            </dd>
+
+                            <dt>
+                                Address
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UserV.Address)
+                            </dd>
+
+                        </dl>
+                    </div>
                 </div>
-                <div class="col-md-10 col-md-offset-0">
-                    <dl class="dl-horizontal text-left">
-                        <dt>
-                            First Name
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.UserV.Fname)
-                        </dd>
-
-                        <dt>
-                            Last Name
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.UserV.Lname)
-                        </dd>
-
-                        <dt>
-                            Mobile NO.
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.UserV.Tel)
-                        </dd>
-
-                        <dt>
-                            Email Address
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.UserV.Email)
-                        </dd>
-
-                        <dt>
-                            Address
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.UserV.Address)
-                        </dd>
-
-                    </dl>
-                </div>
+                <p class="col-md-offset-1">
+                        <button class="btn btn-default top10">
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.UserV.Id })
+                        </button>
+                        <button class="btn btn-default top10">
+                            @Html.ActionLink("Delete", "Delete", new { id = Model.UserV.Id })
+                        </button>
+                    </p>
             </div>
-            <p class="col-md-offset-1">
-                <button class="btn btn-default top10">
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.UserV.Id })
-                </button>
-                <button class="btn btn-default top10">
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.UserV.Id })
-                </button>
-            </p>
         </div>
     </div>
-    @if (Model.ProductsV != null)
-    {
-        @Html.Partial("~/Views/Products/_Cart.cshtml", Model)
-    }
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <i class="glyphicon glyphicon-shopping-cart"></i> Your Cart
+            </h3>
+        </div>
+        <div class="panel-body">
+            @if (Model.ProductsV != null)
+            {
+                @Html.Partial("~/Views/Products/_Cart.cshtml", Model)
+            }
+            else
+            {
+                <p>You have not added any product yet...</p>
+            }
+        </div>
+    </div>
 </div>
 
+<div class="col-md-5">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Shopping History
+            </h3>
+        </div>
+        <div class="panel-body">
+            @if (Model.Bought_Prod != null)
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Bought Date
+                        </th>
+                    </tr>
+                    @foreach (var i in Model.Bought_Prod)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(i.P_name, "Details", new { controller = "Products", id = i.P_id }, new { @class = "btn btn-info" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => i.Date)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>There isn't any record avaiable now...</p>
+            }
+        </div>
+    </div>
+
+</div>

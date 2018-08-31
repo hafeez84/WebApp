@@ -76,9 +76,9 @@ namespace WebApp.Controllers
                         P_id = prod.Id,
                         U_id = i_int,
                         C_id = (int)prod.Cid,
-                        Date = DateTime.UtcNow
+                        Date = DateTime.UtcNow,
+                        P_name = prod.Pname
                     };
-
                     sold_db.Sold_products.Add(product);
                     var flag = sold_db.SaveChanges();
                     prod.Amount = prod.Amount - 1;

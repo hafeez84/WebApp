@@ -16,6 +16,7 @@ namespace WebApp.Controllers
     {
         private MyDBCompanyEntities db = new MyDBCompanyEntities();
         private MyDBProductEntities product_db = new MyDBProductEntities();
+        private MyDBSoldEntities soldProd_db = new MyDBSoldEntities();
 
         // GET: Companies
         public ActionResult Index()
@@ -30,12 +31,12 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             CompanyProductView c_p_view = new CompanyProductView
             {
                 CompanyView = db.Companies.Find(id),
-                ProductView = product_db.Products.Where(x => x.Cid == id).ToList()
-            };
+                ProductView = product_db.Products.Where(x => x.Cid == id && x.Status == 1).ToList(),
+                Sold_Prod = soldProd_db.Sold_products.Where(x => x.C_id == id).ToList()
+        };
 
             if (c_p_view.CompanyView == null)
             {
@@ -70,7 +71,7 @@ namespace WebApp.Controllers
                 Email = company.Email,
                 Avatar = company.Avatar
             };
-            var flag = db.Companies.Any(x => x.Email == company.Email);
+            var flag = db.Companies.Any(x => x.Email == company.Email && x.Status == 1);
             if (!flag)
             {
                 if (Avatar != null)

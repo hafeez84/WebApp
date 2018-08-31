@@ -9,5 +9,6 @@ namespace WebApp.Models
     {
         public User UserV { get; set; }
         public List<Product> ProductsV { get; set; }
+        public List<Sold_products> Bought_Prod { get; set; }
     }
 }

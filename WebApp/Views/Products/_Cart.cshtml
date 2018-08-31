@@ -1,60 +1,55 @@
 ﻿@model WebApp.Models.UserProducts
 
 
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-           <i class="glyphicon glyphicon-shopping-cart"></i> Your Cart
-        </h3>
-    </div>
-    <div class="panel-body">
-        <table class="table">
-            <tr>
-                <th>
-                    Product Name
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Uploaded at
-                </th>
-                <th>
-                    Amount
-                </th>
-                <th>
-                    Cart
-                </th>
-                <th>
-                    Buy
-                </th>
-            </tr>
-            @foreach (var i in Model.ProductsV)
+
+<table class="table">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Uploaded at
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Cart
+        </th>
+        <th>
+            Buy
+        </th>
+    </tr>
+    @foreach (var i in Model.ProductsV)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(item => i.Pname)
+            </td>
+            <td>
+                @Html.DisplayFor(item => i.Pdescription)
+            </td>
+            <td>
+                @Html.DisplayFor(item => i.Created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(item => i.Amount)
+            </td>
+            @if (i != null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(item => i.Pname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(item => i.Pdescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(item => i.Created_at)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(item => i.Amount)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id }, new { @class = "btn btn-danger" })
-                    </td>
+                <td>
+                    @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id }, new { @class = "btn btn-danger" })
+                </td>
 
-                    <td>
-                        @Html.ActionLink("Buy", "Buy", new { controller = "Sold", id = i.Id }, new { @class = "btn btn-success" })
-                    </td>
-                </tr>
+                <td>
+                    @Html.ActionLink("Buy", "Buy", new { controller = "Sold", id = i.Id }, new { @class = "btn btn-success" })
+                </td>
             }
+        </tr>
+    }
+</table>        
 
-        </table>        
-    </div>
-</div>
 

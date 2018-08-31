@@ -1,14 +1,19 @@
 ﻿@model WebApp.Models.CompanyProductView
 
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Profile";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-md-6">
-    <div class="well">
+<div class="col-md-7">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <i class="fa fa-industry"></i> Profile
+            </h3>
+        </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-3">
                 @if (Model.CompanyView.Avatar != null)
@@ -54,16 +59,63 @@
 
             </div>
         </div>
-
-        <div class="col-md-offset-1">
-            @Html.ActionLink("Edit", "Edit","Companies", new { id = Model.CompanyView.Id }, new { @class = "btn btn-default top10" })
-            @Html.ActionLink("Delete", "Delete", "Companies", new { id = Model.CompanyView.Id }, new { @class = "btn btn-default top10" })
-        </div>
+        @if (Model.CompanyView.Id == (int)Session["c_id"])
+        {
+            <div class="col-md-offset-1">
+                @Html.ActionLink("Edit", "Edit", "Companies", new { id = Model.CompanyView.Id }, new { @class = "btn btn-default top10" })
+                @Html.ActionLink("Delete", "Delete", "Companies", new { id = Model.CompanyView.Id }, new { @class = "btn btn-default top10" })
+            </div>
+        }
     </div>
+    <hr />
+    @Html.Partial("~/Views/Products/_Company_p.cshtml", Model.ProductView)
 </div>
-<hr />
 
-@Html.Partial("~/Views/Products/_Company_p.cshtml", Model.ProductView)
+@if (Model.CompanyView.Id == (int)Session["c_id"])
+{
+    <div class="col-md-5">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Sold Products History
+                </h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.Sold_Prod != null)
+                {
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Product Name
+                            </th>
+                            <th>
+                                Bought Date
+                            </th>
+                        </tr>
+                        @foreach (var i in Model.Sold_Prod)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(i.P_name, "Details", new { controller = "Products", id = i.P_id }, new { @class = "btn btn-info" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => i.Date)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>There isn't any record avaiable now...</p>
+                }
+            </div>
+        </div>
+
+    </div>
+}
+
+
 
 
 

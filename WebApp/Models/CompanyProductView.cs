@@ -9,5 +9,6 @@ namespace WebApp.Models
     {
         public List<Product> ProductView { get; set; }
         public Company CompanyView { get; set; }
+        public List<Sold_products> Sold_Prod { get; set; }
     }
 }

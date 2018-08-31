@@ -19,5 +19,6 @@ namespace WebApp.Models
         public int U_id { get; set; }
         public int C_id { get; set; }
         public System.DateTime Date { get; set; }
+        public string P_name { get; set; }
     }
 }

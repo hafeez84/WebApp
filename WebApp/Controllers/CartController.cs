@@ -14,7 +14,7 @@ namespace WebApp.Controllers
 
         public ActionResult ToCart(int? id)
         {
-            if (id != null)
+            if (id != null && Session["c_id"] == null)
             {
                 var prod = db.Products.SingleOrDefault(x => x.Id == id);
                 string prod_id = prod.Id.ToString();
@@ -41,7 +41,9 @@ namespace WebApp.Controllers
                 {
                     TempData["Warning"] = "Please login or sign up to proced buying the items...";
                 }
-                return RedirectToAction("Details", "Products", new { id = prod.Id });
+                TempData["Success"] = "Successfully added to your cart...";
+                //return RedirectToAction("Details", "Products", new { id = prod.Id });
+                return RedirectToAction("Index", "Products");
             }
             else
             {
@@ -108,14 +110,17 @@ namespace WebApp.Controllers
                 foreach (var i in p)
                 {
                     int i_int = Convert.ToInt32(i);
-                    temp.Add(db.Products.Where(x => x.Id == i_int).FirstOrDefault());
+                    var check = (db.Products.Where(x => x.Id == i_int && x.Status == 1).FirstOrDefault());
+                    if(check != null)
+                    {
+                        temp.Add(check);
+                    }
                 }
 
                 UserProducts cart_pros = new UserProducts
                 {
                     ProductsV = temp
                 };
-
                 return PartialView("~/Views/Products/_Cart.cshtml", cart_pros);
             }
             else
@@ -123,8 +128,6 @@ namespace WebApp.Controllers
                 TempData["Error"] = "Your basket is Empty !";
                 return RedirectToAction("Index", "Products");
             }
-
         }
-
     }
 }

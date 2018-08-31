@@ -31,16 +31,6 @@
 
                             @foreach (var b in Model.Product_b)
                             {
-                                foreach (var c in Model.Product_c)
-                                {
-                                    if(b.Cate_id == c.Id)
-                                    {
-                                        @Html.Label("| Category: ")
-                                        <span class="badge">
-                                            @Html.DisplayFor(modelItem => c.Name)
-                                        </span>
-                                    }
-                                }
                                 if (b.Id == i.B_id)
                                 {
                                     @Html.Label("| Brand: ")

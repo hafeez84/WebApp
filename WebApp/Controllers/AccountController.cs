@@ -35,8 +35,8 @@ namespace WebApp.Controllers
         public ActionResult Login(User user)
         {   
 
-            var user_a = dbUser.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
-            var company_a = dbCompany.Companies.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+            var user_a = dbUser.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.Status == 1).FirstOrDefault();
+            var company_a = dbCompany.Companies.Where(x => x.Email == user.Email && x.Password == user.Password && x.Status == 1).FirstOrDefault();
 
             if (user_a != null)
             {

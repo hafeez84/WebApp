@@ -17,6 +17,7 @@ namespace WebApp.Controllers
     {
         private MyDBUserEntities db = new MyDBUserEntities();
         private MyDBProductEntities products_db = new MyDBProductEntities();
+        private MyDBSoldEntities sold_db = new MyDBSoldEntities();
 
 
         // GET: Users
@@ -40,7 +41,7 @@ namespace WebApp.Controllers
                 foreach (var i in p)
                 {
                     int i_int = Convert.ToInt32(i);
-                    temp.Add(products_db.Products.Where(x => x.Id == i_int).FirstOrDefault());
+                    temp.Add(products_db.Products.Where(x => x.Id == i_int && x.Status == 1).FirstOrDefault());
                 }
             }
             else
@@ -51,8 +52,10 @@ namespace WebApp.Controllers
             UserProducts user = new UserProducts
             {
                 UserV = db.Users.Find(id),
-                ProductsV = temp
-            }; 
+                ProductsV = temp,
+                Bought_Prod = sold_db.Sold_products.Where(x => x.U_id == id).ToList()
+        };
+
             if (user.UserV == null)
             {
                 return HttpNotFound();
@@ -82,7 +85,7 @@ namespace WebApp.Controllers
                 Password = u.Password,
                 Tel = u.Tel
             };
-            var flag = db.Users.Any(x => x.Email == user.Email);
+            var flag = db.Users.Any(x => x.Email == user.Email && x.Status == 1);
 
             if (!flag)
             {
@@ -95,6 +98,7 @@ namespace WebApp.Controllers
                 }
                 if (ModelState.IsValid)
                 {
+                    u.Status = 1;
                     db.Users.Add(u);
                     db.SaveChanges();
                     Session["u_id"] = u.Id;
@@ -189,7 +193,8 @@ namespace WebApp.Controllers
             else
             {
                 User user = db.Users.Find(id);
-                db.Users.Remove(user);
+                user.Status = 0;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 Session.Abandon();
                 return RedirectToAction("Index", "Account");
