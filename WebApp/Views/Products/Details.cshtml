@@ -1,59 +1,68 @@
-﻿@model WebApp.Models.Product
+﻿@model WebApp.Models.CompanyProductUpload
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Product Name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pname)
-        </dd>
-
-        <dt>
-            Product Description
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pdescription)
-        </dd>
-
-        <dt>
-            Uploaded at
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created_at)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
-    @{
-        if (Session["c_id"] != null)
-        {
-            var id = (int)Session["c_id"];
-            if (id == Model.Cid)
+<div class="col-md-5 col-md-offset-3">
+    <p>
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
+        @{
+            if (Session["c_id"] != null)
             {
-                @Html.ActionLink("Edit", "Edit", "Products", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                var id = (int)Session["c_id"];
+                if (id == Model.ProductM.Cid)
+                {
+                    @Html.ActionLink("Edit", "Edit", "Products", new { id = Model.ProductM.Id }, new { @class = "btn btn-primary" })
+                }
             }
         }
-    }
-</p>
+    </p>
+
+    <div class="well">
+        @foreach (var photo in Model.P_photos)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(photo.Photo)" style="width: 700px; height:500px;" />
+        }
+        <div class="card-body">
+            <h3 class="card-title">@Model.ProductM.Pname</h3>
+            <div> <strong>Brand: </strong><span class="badge">@Model.BrandM.Name </span>  | <strong>Model: </strong><span class="badge"> @Model.ProductModelM.Name</span> | <strong>Category: </strong><span class="badge"> @Model.CategoryM.Name</span> </div>
+
+            @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = Model.ProductM.Id }, new { @class = "badge badge-big" })
+            <h4>$24.99</h4>
+            <p class="card-text"> @Model.ProductM.Pdescription </p>
+            <span class="text-warning">★ ★ ★ ★ ☆</span>
+            4.0 stars
+        </div>
+        <hr />
+        <div class="well">
+            <div class="card card-outline-secondary my-4">
+                <h3 class="card-header">
+                    Product Reviews
+                </h3>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <a href="#" class="btn btn-success">Leave a Review</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.card -->
+
+    <!-- /.card -->
+
+</div>
+
+

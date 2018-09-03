@@ -63,14 +63,23 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+
+            CompanyProductUpload product = new CompanyProductUpload
+            {
+                ProductM = db.Products.Find(id)
+            };
+            if (product.ProductM == null)
             {
                 return HttpNotFound();
             }
+
+            product.BrandM = brand_db.Brands.SingleOrDefault(x=>x.Id == product.ProductM.B_id);
+            product.CategoryM = category_db.Categories.SingleOrDefault(x => x.Id == product.BrandM.Cate_id);
+            product.ProductModelM = product_model_db.Models.SingleOrDefault(x=>x.Id == product.ProductM.M_id);
+            product.P_photos = P_photo_db.P_photo.Where(x=>x.P_id == product.ProductM.Id).ToList();
+
             return View(product);
         }
-
         // GET: Products/Create
         public ActionResult Create()
         {

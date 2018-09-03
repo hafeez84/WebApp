@@ -57,3 +57,8 @@ hr {
     margin-bottom:5px;
     margin-top:5px;
 }
+
+.badge-big {
+    height: 20px;
+    width: 100px;
+}
