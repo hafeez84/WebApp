@@ -1,0 +1,20 @@
+﻿@model WebApp.Models.ProductsView
+
+<div class="col-md-3 ">
+    @foreach (var i in Model.Product_c)
+    {
+        <div class="list-group">
+            <a href="#" class="list-group-item active">
+                @i.Name
+            </a>
+            @foreach (var ii in Model.Product_b)
+            {
+                if(i.Id == ii.Cate_id)
+                {
+                    <a href="#" class="list-group-item"> @ii.Name </a>
+                }
+            }
+        </div>
+    }
+</div>
+

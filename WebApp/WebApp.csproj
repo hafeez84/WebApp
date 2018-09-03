@@ -318,6 +318,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bg.jpg" />
@@ -518,6 +519,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\_Company_p.cshtml" />
     <Content Include="Views\Products\_Cart.cshtml" />
+    <Content Include="Views\Shared\_Categories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
