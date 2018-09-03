@@ -151,6 +151,7 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                u.Status = 1;
                 db.Entry(u).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Profile", "Users", new { id = u.Id });

@@ -21,7 +21,7 @@
                     {
                         if(i.Id == photo.P_id)
                         {
-                            <img src="data:image;base64,@System.Convert.ToBase64String(photo.Photo)"  style="width: 280px; height:220px;"/>
+                            <img src="data:image;base64,@System.Convert.ToBase64String(photo.Photo)"  style="width: 280px; height:200px;"/>
                         }
                     }
                     @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })

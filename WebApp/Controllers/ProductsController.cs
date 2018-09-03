@@ -168,18 +168,26 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            CompanyProductUpload product = new CompanyProductUpload
+            {
+                ProductM = db.Products.Find(id),
+            };
+            
+            if (product.ProductM == null)
             {
                 return HttpNotFound();
             }
+            product.BrandM = brand_db.Brands.SingleOrDefault(x => x.Id == product.ProductM.B_id);
+            product.ProductModelM = product_model_db.Models.SingleOrDefault(x => x.Id == product.ProductM.M_id);
+            product.CategoryM = category_db.Categories.SingleOrDefault(x => x.Id == product.BrandM.Cate_id);
+            product.P_photos = P_photo_db.P_photo.Where(x => x.P_id == product.ProductM.Id).ToList();
             if (Session["c_id"] == null)
             {
                 TempData["Error"] = "You must log in to perfum this action";
                 return RedirectToAction("Index", "Account");
             }
             var s_id = (int)Session["c_id"];
-            if ( s_id != product.Cid )
+            if ( s_id != product.ProductM.Cid )
             {
                 TempData["Error"] = "You can only edit your own products !";
                 return RedirectToAction("Index", "Products");
@@ -191,15 +199,56 @@ namespace WebApp.Controllers
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Product product)
+        public ActionResult Edit( CompanyProductUpload product, HttpPostedFileBase Photo)
         {
-            product.Cid = (int)Session["c_id"];
+            P_photo _Photo = new P_photo();
+            if (Photo != null)
+            {
+
+                var length = Photo.InputStream.Length;
+                MemoryStream target = new MemoryStream();
+                Photo.InputStream.CopyTo(target);
+                _Photo.Photo = target.ToArray();
+            }
+
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
+                if(product.CategoryM == null)
+                {
+                    Category cat = new Category
+                    {
+                        Name = product.CategoryM.Name
+                    };
+                    category_db.Categories.Add(cat);
+                    category_db.SaveChanges();
+                    product.BrandM.Cate_id = cat.Id;
+                }
+                else
+                {
+                    category_db.Entry(product.CategoryM).State = EntityState.Modified;
+                    category_db.SaveChanges();
+                }
+
+                var p = P_photo_db.P_photo.SingleOrDefault(x => x.P_id == product.ProductM.Id);
+                p.Photo = _Photo.Photo;
+                P_photo_db.Entry(p).State = EntityState.Modified;
+                P_photo_db.SaveChanges();
+
+                brand_db.Entry(product.BrandM).State = EntityState.Modified;
+                brand_db.SaveChanges();
+
+                product_model_db.Entry(product.ProductModelM).State = EntityState.Modified;
+                product_model_db.SaveChanges();
+
+                db.Entry(product.ProductM).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
             }
+            var errors = ModelState
+            .Where(x => x.Value.Errors.Count > 0)
+            .Select(x => new { x.Key, x.Value.Errors })
+            .ToArray();
+
             return View(product);
         }
 

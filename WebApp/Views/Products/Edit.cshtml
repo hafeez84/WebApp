@@ -1,8 +1,9 @@
-﻿@model WebApp.Models.Product
+﻿@model WebApp.Models.CompanyProductUpload
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+                ViewBag.Title = "Update";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -10,29 +11,49 @@
 @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
     <div class="form-horizontal">
         <h4>Product</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Pname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Product Name", @required = true } })
-                @Html.ValidationMessageFor(model => model.Pname, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ProductM.Pname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Product Name", @required = true } })
+                @Html.ValidationMessageFor(model => model.ProductM.Pname, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Pdescription, new { htmlAttributes = new { @class = "form-control", @placeholder = "Product Description" } })
-                @Html.ValidationMessageFor(model => model.Pdescription, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.ProductM.Pdescription, 10, 40, new { htmlAttributes = new { @class = "form-control", @placeholder = "Product Description" } })
+                @Html.ValidationMessageFor(model => model.ProductM.Pdescription, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @required = true } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ProductM.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @required = true } })
+                @Html.ValidationMessageFor(model => model.ProductM.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BrandM.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Brand Name" } })
+                @Html.ValidationMessageFor(model => model.BrandM.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductModelM.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Model" } })
+                @Html.ValidationMessageFor(model => model.ProductModelM.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryM.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Category Name" } })
+                @Html.ValidationMessageFor(model => model.CategoryM.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -45,12 +66,30 @@
             </div>
         </div>
 
+        <div class="hidden">
+            @Html.HiddenFor(m => m.ProductM.Id)
+            @Html.HiddenFor(m => m.ProductM.B_id)
+            @Html.HiddenFor(m => m.ProductM.M_id)
+            @Html.HiddenFor(m => m.ProductM.Status)
+            @Html.HiddenFor(m => m.ProductM.Created_at)
+            @Html.HiddenFor(m => m.ProductM.Cid)
+
+            @Html.HiddenFor(m => m.BrandM.Cate_id)
+            @Html.HiddenFor(m => m.BrandM.Id)
+
+            @Html.HiddenFor(m => m.CategoryM.Id)
+            @Html.HiddenFor(m => m.CategoryM.Up_Category_id)
+
+            @Html.HiddenFor(m => m.ProductModelM.Id)
+        </div>
+
 
         <div class="form-group">
-            <div >
-                <input type="submit" value="Update" class="btn btn-default" />
+            <div>
+                <input type="submit" value="Update" class="btn btn-info" />
             </div>
         </div>
+        
     </div>
 }
 
@@ -58,4 +97,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
