@@ -12,6 +12,7 @@ namespace WebApp.Models
         public Brand BrandM { get; set; }
         public Category CategoryM { get; set; }
         public Model ProductModelM { get; set; }
+        public List<P_photo> P_photos { get; set; }
 
     }
 }

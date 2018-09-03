@@ -258,6 +258,24 @@
       <DependentUpon>ProductModelModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductsView.cs" />
+    <Compile Include="Models\P_photo.cs">
+      <DependentUpon>P_photoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\P_photoModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>P_photoModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\P_photoModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>P_photoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\P_photoModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>P_photoModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Sold.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -360,6 +378,16 @@
       <DependentUpon>ProductModelModel.edmx</DependentUpon>
       <LastGenOutput>ProductModelModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\P_photoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>P_photoModel.edmx</DependentUpon>
+      <LastGenOutput>P_photoModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\P_photoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>P_photoModel.edmx</DependentUpon>
+      <LastGenOutput>P_photoModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Sold.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Sold.edmx</DependentUpon>
@@ -438,6 +466,13 @@
     </EntityDeploy>
     <Content Include="Models\Sold.edmx.diagram">
       <DependentUpon>Sold.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\P_photoModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>P_photoModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\P_photoModel.edmx.diagram">
+      <DependentUpon>P_photoModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

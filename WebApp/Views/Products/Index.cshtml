@@ -16,7 +16,14 @@
         {
             <div class="col-sm-3 col-md-3">
                 <div class="thumbnail ">
-                    <img src="..." alt="..." class="t-img">
+                    
+                    @foreach (var photo in Model.P_Photos)
+                    {
+                        if(i.Id == photo.P_id)
+                        {
+                            <img src="data:image;base64,@System.Convert.ToBase64String(photo.Photo)"  style="width: 280px; height:220px;"/>
+                        }
+                    }
                     @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
                     <div class="caption">
                         <div>

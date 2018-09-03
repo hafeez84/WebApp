@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -18,6 +19,7 @@ namespace WebApp.Controllers
         private MyDBCategoryEntities category_db = new MyDBCategoryEntities();
         private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
         private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
+        private MyDBP_photoEntities P_photo_db = new MyDBP_photoEntities();
 
         
         // GET: Products
@@ -28,8 +30,9 @@ namespace WebApp.Controllers
                 Products = db.Products.ToList(),
                 Product_b = GetBrandlist(),
                 Product_c = GetCategorylist(),
-                Product_m = GetModellist()
-            };
+                Product_m = GetModellist(),
+                P_Photos = P_photo_db.P_photo.ToList()
+        };
 
             return View(products);
         }
@@ -86,8 +89,9 @@ namespace WebApp.Controllers
      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CompanyProductUpload upload)
+        public ActionResult Create(CompanyProductUpload upload, HttpPostedFileBase Photo)
         {
+            
             if (ModelState.IsValid)
             {
                 Product product = new Product();
@@ -137,6 +141,20 @@ namespace WebApp.Controllers
                 product.Status = 1;
                 db.Products.Add(product);
                 db.SaveChanges();
+
+                P_photo _Photo = new P_photo();
+                if(Photo != null)
+                {
+
+                    var length = Photo.InputStream.Length;
+                    MemoryStream target = new MemoryStream();
+                    Photo.InputStream.CopyTo(target);
+                    _Photo.Photo = target.ToArray();
+
+                    _Photo.P_id = product.Id;
+                    P_photo_db.P_photo.Add(_Photo);
+                    P_photo_db.SaveChanges();
+                }
 
                 return RedirectToAction("Index");
             }
