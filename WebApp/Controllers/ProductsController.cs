@@ -22,22 +22,6 @@ namespace WebApp.Controllers
         private MyDBP_photoEntities P_photo_db = new MyDBP_photoEntities();
         private MyDBCommentEntities comment_db = new MyDBCommentEntities();
 
-        
-        // GET: Products
-        public ActionResult Index()
-        {
-            ProductsView products = new ProductsView
-            {
-                Products = db.Products.ToList(),
-                Product_b = GetBrandlist(),
-                Product_c = GetCategorylist(),
-                Product_m = GetModellist(),
-                P_Photos = P_photo_db.P_photo.ToList()
-        };
-
-            return View(products);
-        }
-
         // Cached these foo 2 mins to not keep connecting db
         [OutputCache(CacheProfile = "Cache2min")]
         public List<Brand> GetBrandlist()
@@ -57,7 +41,21 @@ namespace WebApp.Controllers
             return product_model_db.Models.ToList();
         }
 
-        // GET: Products/Details/5
+
+        public ActionResult Index()
+        {
+            ProductsView products = new ProductsView
+            {
+                Products = db.Products.ToList(),
+                Product_b = GetBrandlist(),
+                Categories = GetCategorylist(),
+                Product_m = GetModellist(),
+                P_Photos = P_photo_db.P_photo.ToList()
+            };
+
+            return View(products);
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -81,7 +79,7 @@ namespace WebApp.Controllers
 
             return View(product);
         }
-        // GET: Products/Create
+
         public ActionResult Create()
         {
             if (Session["c_id"] == null)
@@ -95,8 +93,6 @@ namespace WebApp.Controllers
             }
         }
 
-        // POST: Products/Create
-     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CompanyProductUpload upload, HttpPostedFileBase Photo)
@@ -171,7 +167,6 @@ namespace WebApp.Controllers
             return View(upload);
         }
 
-        // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -206,7 +201,6 @@ namespace WebApp.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit( CompanyProductUpload product, HttpPostedFileBase Photo)
@@ -257,7 +251,6 @@ namespace WebApp.Controllers
             return View(product);
         }
 
-        // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -283,7 +276,6 @@ namespace WebApp.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -294,6 +286,52 @@ namespace WebApp.Controllers
             db.SaveChanges();
             TempData["Success"] = "Product has been deleted successfully...";
             return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
+        }
+
+        public ActionResult Categories(string name)
+        {
+            Category cat = category_db.Categories.SingleOrDefault(x=>x.Name == name);
+            List<Category> cats = new List<Category>();
+            cats.Add(cat);
+
+            
+            //products.Product_c.Add(cat);
+            var brands = brand_db.Brands.Where(x => x.Cate_id == cat.Id).ToList();
+            List<Product> products_temp = new List<Product>();
+            List<Model> model_temp = new List<Model>();
+            List<P_photo> photos_temp = new List<P_photo>();
+
+            foreach (var i in brands)
+            {
+                var temp = db.Products.Where(x => x.B_id == i.Id).ToList();
+                products_temp.AddRange(temp);
+            }
+
+            foreach (var p in products_temp)
+            {
+                var temp = product_model_db.Models.Find(p.M_id);
+                if(temp != null)
+                {
+                    model_temp.Add(temp);
+                }
+                var temp1 = P_photo_db.P_photo.FirstOrDefault(x => x.P_id == p.Id);
+                if (temp1 != null)
+                {
+                    photos_temp.Add(temp1);
+                }
+            }
+
+            ProductsView products = new ProductsView
+            {
+                Product_c = cats,
+                Product_b= brands,
+                Product_m = model_temp,
+                Products = products_temp,
+                P_Photos = photos_temp,
+                Categories = GetCategorylist()
+            };
+
+            return View("Index", products);
         }
 
         protected override void Dispose(bool disposing)

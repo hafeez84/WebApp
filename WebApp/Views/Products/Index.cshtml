@@ -46,81 +46,9 @@
 
 -->
 
-
 @Html.Partial("~/Views/Shared/_Categories.cshtml", Model)
-<div class="col-md-7">
-    <div class="row">
-        @foreach (var i in Model.Products)
-        {
-            if (i.Amount != 0 && i.Status != 0)
-            {
-                <div class="col-sm-3 col-md-3">
-                    <div class="thumbnail" style="width: 260px; height:380px; margin: 5px;">
-                        @foreach (var photo in Model.P_Photos)
-                        {
-                            if (i.Id == photo.P_id)
-                            {
-                                <img src="data:image;base64,@System.Convert.ToBase64String(photo.Photo)" style="width: 255px; height:200px;" />
-                            }
-                        }
-                        @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
-                        <div class="caption">
-                            <div>
-                                <strong>
-                                    @Html.ActionLink(i.Pname, "Details", "Products", new { id = i.Id }, null)
-                                </strong>
-                            </div>
-                            <sub>
-                                @Html.Label("Amount: ") @Html.DisplayFor(modeli => i.Amount)
 
-                                @foreach (var b in Model.Product_b)
-                                {
-                                    if (b.Id == i.B_id)
-                                    {
-                                        @Html.Label("| Brand: ")
-                                        @Html.DisplayFor(modelItem => b.Name)
-                                    }
-                                }
-                                <br />
-                                @foreach (var m in Model.Product_m)
-                                {
-                                    if (m.Id == i.M_id)
-                                    {
-                                        @Html.Label("Model: ")
-                                        @Html.DisplayFor(modelItem => m.Name)
-                                    }
-                                }
-                            </sub>
-                        </div>
-                        <p class="t-description" style="margin:0; text-overflow:ellipsis;">
-                            @Html.DisplayFor(modeli => i.Pdescription)
-                        </p>
-                        <sub>
-                            Uploaded at: @Html.DisplayFor(modeli => i.Created_at)
-                        </sub>
-                        @{
-                            if (Session["c_id"] != null)
-                            {
-                                var s_id = (int)Session["c_id"];
-                                if (s_id == i.Cid)
-                                {
-                                    <hr />
-                                    <span>
-                                        @Html.ActionLink("Edit", "Edit", new { id = i.Id }, new { @class = "btn btn-info btn-xs" })
-                                        @Html.ActionLink("Details", "Details", new { id = i.Id }, new { @class = "btn btn-info btn-xs" })
-                                        @Html.ActionLink("Delete", "Delete", new { id = i.Id }, new { @class = "btn btn-info btn-xs" })
-                                    </span>
-                                }
-                            }
-                        }
-                    </div>
-                </div>
-
-            }
-        }
-    </div>
-
-</div>
+@Html.Partial("~/Views/Products/_Products.cshtml", Model)
 
 @section Scripts {
     @Scripts.Render("~/bundles/bootstrap.bundle.min.js")

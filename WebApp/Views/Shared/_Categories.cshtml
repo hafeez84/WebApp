@@ -1,12 +1,12 @@
 ﻿@model WebApp.Models.ProductsView
 
 <div class="col-md-3 ">
-    @foreach (var i in Model.Product_c)
+    @foreach (var i in Model.Categories)
     {
         <div class="list-group">
-            <a href="#" class="list-group-item active">
-                @i.Name
-            </a>
+           
+            @Html.ActionLink(i.Name, "Categories", "Products", new { name = i.Name }, new { @class= "list-group-item active" })
+
             @foreach (var ii in Model.Product_b)
             {
                 if(i.Id == ii.Cate_id)

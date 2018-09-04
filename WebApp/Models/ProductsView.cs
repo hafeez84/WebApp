@@ -12,5 +12,6 @@ namespace WebApp.Models
         public List<Category> Product_c { get; set; }
         public List<Model> Product_m { get; set; }
         public List<P_photo> P_Photos { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }
