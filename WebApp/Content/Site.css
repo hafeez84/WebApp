@@ -61,3 +61,7 @@ hr {
 .badge-big {
     background-color:forestgreen;
 }
+
+.thumbnail {
+    overflow:auto;
+}

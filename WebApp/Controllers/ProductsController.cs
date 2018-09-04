@@ -293,9 +293,6 @@ namespace WebApp.Controllers
             Category cat = category_db.Categories.SingleOrDefault(x=>x.Name == name);
             List<Category> cats = new List<Category>();
             cats.Add(cat);
-
-            
-            //products.Product_c.Add(cat);
             var brands = brand_db.Brands.Where(x => x.Cate_id == cat.Id).ToList();
             List<Product> products_temp = new List<Product>();
             List<Model> model_temp = new List<Model>();
@@ -327,6 +324,41 @@ namespace WebApp.Controllers
                 Product_b= brands,
                 Product_m = model_temp,
                 Products = products_temp,
+                P_Photos = photos_temp,
+                Categories = GetCategorylist()
+            };
+
+            return View("Index", products);
+        }
+
+        public ActionResult Brands (string name)
+        {
+            var brand_temp = brand_db.Brands.FirstOrDefault(x=>x.Name == name);
+            List<Brand> brand_t = new List<Brand>();
+            brand_t.Add(brand_temp);
+            var products_temp = db.Products.Where(x => x.B_id == brand_temp.Id).ToList();
+            List<Model> model_temp = new List<Model>();
+            List<P_photo> photos_temp = new List<P_photo>();
+
+            foreach (var p in products_temp)
+            {
+                var temp = product_model_db.Models.Find(p.M_id);
+                if (temp != null)
+                {
+                    model_temp.Add(temp);
+                }
+                var temp1 = P_photo_db.P_photo.FirstOrDefault(x => x.P_id == p.Id);
+                if (temp1 != null)
+                {
+                    photos_temp.Add(temp1);
+                }
+            }
+
+            ProductsView products = new ProductsView
+            {
+                Products = products_temp,
+                Product_b = brand_t,
+                Product_m = model_temp,
                 P_Photos = photos_temp,
                 Categories = GetCategorylist()
             };
