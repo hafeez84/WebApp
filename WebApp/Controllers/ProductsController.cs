@@ -20,6 +20,7 @@ namespace WebApp.Controllers
         private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
         private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
         private MyDBP_photoEntities P_photo_db = new MyDBP_photoEntities();
+        private MyDBCommentEntities comment_db = new MyDBCommentEntities();
 
         
         // GET: Products
@@ -72,7 +73,7 @@ namespace WebApp.Controllers
             {
                 return HttpNotFound();
             }
-
+            product.P_Comments = comment_db.Comments.Where(x => x.P_id == product.ProductM.Id).ToList();
             product.BrandM = brand_db.Brands.SingleOrDefault(x=>x.Id == product.ProductM.B_id);
             product.CategoryM = category_db.Categories.SingleOrDefault(x => x.Id == product.BrandM.Cate_id);
             product.ProductModelM = product_model_db.Models.SingleOrDefault(x=>x.Id == product.ProductM.M_id);
@@ -253,11 +254,6 @@ namespace WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
             }
-            var errors = ModelState
-            .Where(x => x.Value.Errors.Count > 0)
-            .Select(x => new { x.Key, x.Value.Errors })
-            .ToArray();
-
             return View(product);
         }
 

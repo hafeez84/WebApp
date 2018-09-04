@@ -18,5 +18,6 @@ namespace WebApp.Models
         public string Description { get; set; }
         public int U_id { get; set; }
         public int P_id { get; set; }
+        public int State { get; set; }
     }
 }

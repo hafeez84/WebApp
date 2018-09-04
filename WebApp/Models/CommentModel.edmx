@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MyDBCommentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MyDBCommentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Comment">
           <Key>
             <PropertyRef Name="Id" />
@@ -13,12 +13,12 @@
           <Property Name="Description" Type="text" Nullable="false" />
           <Property Name="U_id" Type="int" Nullable="false" />
           <Property Name="P_id" Type="int" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="MyDBCommentModelStoreContainer">
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MyDBCommentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -30,6 +30,7 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="U_id" Type="Int32" Nullable="false" />
           <Property Name="P_id" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityContainer Name="MyDBCommentEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Comments" EntityType="Self.Comment" />
@@ -43,6 +44,7 @@
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="MyDBCommentModel.Comment">
               <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="U_id" ColumnName="U_id" />

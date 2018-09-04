@@ -13,6 +13,8 @@ namespace WebApp.Models
         public Category CategoryM { get; set; }
         public Model ProductModelM { get; set; }
         public List<P_photo> P_photos { get; set; }
+        public List<Comment> P_Comments { get; set; }
+        public Comment P_Comment { get; set; }
 
     }
 }
