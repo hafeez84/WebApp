@@ -28,6 +28,10 @@ namespace WebApp
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"
                       ));
+
+            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
+                    "~/Scripts/custom/site.js"
+                ));
         }
     }
 }

@@ -201,6 +201,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CategoryModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>CommentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CommentModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommentModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CommentModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CommentModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommentModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Company.cs">
       <DependentUpon>CompanyModel.tt</DependentUpon>
     </Compile>
@@ -318,6 +336,16 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Models\CommentModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CommentModel.edmx</DependentUpon>
+      <LastGenOutput>CommentModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CommentModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CommentModel.edmx</DependentUpon>
+      <LastGenOutput>CommentModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -475,7 +503,15 @@
     <Content Include="Models\P_photoModel.edmx.diagram">
       <DependentUpon>P_photoModel.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\CommentModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CommentModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CommentModel.edmx.diagram">
+      <DependentUpon>CommentModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\custom\site.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
