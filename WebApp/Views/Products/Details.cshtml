@@ -45,19 +45,33 @@
                 <div class="card-body">
                     @foreach (var c in Model.P_Comments)
                     {
-                        <p> @c.Description </p>
-                        <small class="text-muted">Posted by @c.U_id </small>
-                        <hr>
+                        if (c.State != 0)
+                        {
+                            <p> @c.Description </p>
+                            <small class="text-muted">Posted by<span class="comment"> @c.U_id </span> </small>
+                            if (Session["u_id"] != null)
+                            {
+                                if (c.U_id == (int)Session["u_id"])
+                                {
+                                    <!--
+                                    <button class="btn btn-primary btn-xs comment-edit">Edit</button>
+                                    <textarea class="comment-area"></textarea>
+                                        -->
+                                    @Html.ActionLink("Delete", "Delete", "Comments", new { id = c.Id }, new { @class = "btn btn-danger btn-xs" })
+                                }
+                            }
+                            <hr>
+                        }
                     }
 
                     @if (Session["u_id"] != null)
                     {
-                       using (Html.BeginForm("Create", "Comments", FormMethod.Post))
+                        using (Html.BeginForm("Create", "Comments", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             <div class="form-group">
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.P_Comment.Description, 10, 40, new { htmlAttributes = new { @class = "form-control", @placeholder = "Comment" } })
+                                    @Html.TextAreaFor(model => model.P_Comment.Description, 10, 60, new { htmlAttributes = new { @class = "form-control", @placeholder = "Comment" } })
                                     @Html.ValidationMessageFor(model => model.P_Comment.Description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -74,10 +88,27 @@
         </div>
 
     </div>
-    <!-- /.card -->
-
-    <!-- /.card -->
 
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+}
+<!--
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
 
+        $('.comment-area').hide();
+        $('.comment-btn').hide();
+        $('.comment-edit').click(function () {
+            var text = $('.comment').val();
+            $('.comment-area').show();
+            $('.comment-btn').show();
+            $('.comment-area').val(text);
+            $('.comment-edit').hide();
+        });
+    });
+</script>
+
+    -->

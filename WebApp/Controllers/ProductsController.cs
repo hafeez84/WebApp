@@ -217,32 +217,38 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                if(product.CategoryM == null)
+
+                var cat_n = product.CategoryM.Name.Trim().ToLower(); // if there is category with that name
+                if (!category_db.Categories.Any(x => x.Name == cat_n))
                 {
-                    Category cat = new Category
-                    {
-                        Name = product.CategoryM.Name
-                    };
-                    category_db.Categories.Add(cat);
+                    category_db.Categories.Add(product.CategoryM);
                     category_db.SaveChanges();
-                    product.BrandM.Cate_id = cat.Id;
-                }
-                else
-                {
-                    category_db.Entry(product.CategoryM).State = EntityState.Modified;
-                    category_db.SaveChanges();
+                    product.BrandM.Cate_id = product.CategoryM.Id;
                 }
 
-                var p = P_photo_db.P_photo.SingleOrDefault(x => x.P_id == product.ProductM.Id);
-                p.Photo = _Photo.Photo;
-                P_photo_db.Entry(p).State = EntityState.Modified;
-                P_photo_db.SaveChanges();
+                var brand_n = product.BrandM.Name.Trim().ToLower(); // same as up
+                if(!brand_db.Brands.Any(x=>x.Name == brand_n))
+                {
+                    brand_db.Brands.Add(product.BrandM);
+                    brand_db.SaveChanges();
+                    product.ProductM.B_id = product.BrandM.Id;
+                }
 
-                brand_db.Entry(product.BrandM).State = EntityState.Modified;
-                brand_db.SaveChanges();
+                var model_n = product.ProductModelM.Name.Trim().ToLower(); // same as up
+                if(!product_model_db.Models.Any(x=>x.Name == model_n))
+                {
+                    product_model_db.Models.Add(product.ProductModelM);
+                    product_model_db.SaveChanges();
+                    product.ProductM.M_id = product.ProductModelM.Id;
+                }
 
-                product_model_db.Entry(product.ProductModelM).State = EntityState.Modified;
-                product_model_db.SaveChanges();
+                if ( _Photo.Photo != null)
+                {
+                    var p = P_photo_db.P_photo.SingleOrDefault(x => x.P_id == product.ProductM.Id);
+                    p.Photo = _Photo.Photo;
+                    P_photo_db.Entry(p).State = EntityState.Modified;
+                    P_photo_db.SaveChanges();
+                }
 
                 db.Entry(product.ProductM).State = EntityState.Modified;
                 db.SaveChanges();
@@ -290,7 +296,7 @@ namespace WebApp.Controllers
 
         public ActionResult Categories(string name)
         {
-            Category cat = category_db.Categories.SingleOrDefault(x=>x.Name == name);
+            Category cat = category_db.Categories.FirstOrDefault(x=>x.Name == name);
             List<Category> cats = new List<Category>();
             cats.Add(cat);
             var brands = brand_db.Brands.Where(x => x.Cate_id == cat.Id).ToList();

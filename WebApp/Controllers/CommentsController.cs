@@ -33,5 +33,14 @@ namespace WebApp.Controllers
             .ToArray();
             return RedirectToAction("Details", "Products", new { id = comment.P_id}) ;
         }
+        
+        public ActionResult Delete(int id)
+        {
+            var comment = db.Comments.Find(id);
+            comment.State = 0;
+            db.Entry(comment).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details", "Products", new { id = comment.P_id });
+        }
     }
 }
