@@ -18,23 +18,31 @@ namespace WebApp.Controllers
             {
                 var prod = db.Products.SingleOrDefault(x => x.Id == id);
                 string prod_id = prod.Id.ToString();
+                string prod_str = prod.Id.ToString();
+                prod_str = prod_str + "," + prod.Pname.ToString();
+                prod_str = prod_str + "," + prod.Amount.ToString();
+
                 if (Request.Cookies["cart"] == null)
                 {
-                    Response.Cookies["cart"].Value = prod_id;
+                    Response.Cookies["cart"].Value = prod_str;
                 }
                 else
                 {
-                    string[] p = Request.Cookies["cart"].Value.ToString().Split(',');
+                    string[] p = Request.Cookies["cart"].Value.ToString().Split('|');
                     foreach (var i in p)
                     {
-                        int i_int = Convert.ToInt32(i);
-                        if (id == i_int)
+                        if (i != "")
                         {
-                            TempData["Error"] = "The product already exist in your Basket... ";
-                            return RedirectToAction("Index", "Products");
+                            var p_a = i.Split(',');
+                            int i_int = Convert.ToInt32(p_a[0]);
+                            if (id == i_int)
+                            {
+                                TempData["Error"] = "The product already exist in your Basket... ";
+                                return RedirectToAction("Index", "Products");
+                            }
                         }
                     }
-                    Response.Cookies["cart"].Value = Request.Cookies["cart"].Value + "," + prod_id;
+                    Response.Cookies["cart"].Value = Request.Cookies["cart"].Value + "|" + prod_str;
                 }
                 Response.Cookies["cart"].Expires = DateTime.Now.AddMonths(3);
                 if (Session["u_id"] == null && TempData["Error"] == null)
@@ -53,47 +61,19 @@ namespace WebApp.Controllers
 
         }
 
-        public ActionResult FromCart(int? id)
+        public ActionResult FromCart(int? id, string name, int amount)
         {
             if (id != null)
             {
                 var str = Request.Cookies["cart"].Value.ToString();
-                var id_s = id.ToString();
+                var id_s = id.ToString() + "," + name + "," + amount.ToString();
                 var start = id_s + ",";
                 var replace = "";
-                var between = "," + id_s + ",";
-                var replace_between = ",";
-                var end = "," + id_s;
 
-                var res = Regex.Replace(str, start, replace);
-                if (res.Equals(str))
-                {
-                    var res1 = Regex.Replace(str, between, replace_between);
-                    if (res1.Equals(str))
-                    {
-                        var res2 = Regex.Replace(str, end, replace);
-                        if (res2.Equals(str))
-                        {
-                            Response.Cookies["cart"].Expires = DateTime.Now.AddDays(-1);
-                            return RedirectToAction("Index", "Products");
-                        }
-                        else
-                        {
-                            Response.Cookies["cart"].Value = res2;
-                            return RedirectToAction("Index", "Products");
-                        }
-                    }
-                    else
-                    {
-                        Response.Cookies["cart"].Value = res1;
-                        return RedirectToAction("Index", "Products");
-                    }
-                }
-                else
-                {
-                    Response.Cookies["cart"].Value = res;
-                    return RedirectToAction("Index", "Products");
-                }
+                var res = Regex.Replace(str, id_s, replace);
+             
+                Response.Cookies["cart"].Value = res;
+                return RedirectToAction("Index", "Products");
             }
             else
             {
@@ -105,16 +85,22 @@ namespace WebApp.Controllers
         {
             if (Request.Cookies["cart"] != null)
             {
-                string[] p = Request.Cookies["cart"].Value.ToString().Split(',');
+                var ps = Request.Cookies["cart"].Value.ToString().Split('|');
                 List<Product> temp = new List<Product>();
-                foreach (var i in p)
+                foreach (var i in ps)
                 {
-                    int i_int = Convert.ToInt32(i);
-                    var check = (db.Products.Where(x => x.Id == i_int && x.Status == 1).FirstOrDefault());
-                    if(check != null)
+                    var p = i.Split(',');
+
+                    int i_int = Convert.ToInt32(p[0]);
+                    int amount = Convert.ToInt32(p[2]);
+                    var new_p = new Product
                     {
-                        temp.Add(check);
-                    }
+                        Id = i_int,
+                        Pname = p[1],
+                        Amount = amount,
+                        Status = 1
+                    };
+                    temp.Add(new_p);
                 }
 
                 UserProducts cart_pros = new UserProducts

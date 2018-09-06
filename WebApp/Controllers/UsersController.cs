@@ -37,11 +37,23 @@ namespace WebApp.Controllers
             List<Product> temp = new List<Product>();
             if (Request.Cookies["cart"] != null)
             {
-                string[] p = Request.Cookies["cart"].Value.ToString().Split(',');
-                foreach (var i in p)
+                var ps = Request.Cookies["cart"].Value.ToString().Split('|');
+                foreach (var i in ps)
                 {
-                    int i_int = Convert.ToInt32(i);
-                    temp.Add(products_db.Products.Where(x => x.Id == i_int && x.Status == 1).FirstOrDefault());
+                    if(i != "")
+                    {
+                        var p = i.Split(',');
+                        int i_int = Convert.ToInt32(p[0]);
+                        int amount = Convert.ToInt32(p[2]);
+                        var new_p = new Product
+                        {
+                            Id = i_int,
+                            Pname = p[1],
+                            Amount = amount,
+                            Status = 1
+                        };
+                        temp.Add(new_p);
+                    }
                 }
             }
             else

@@ -119,7 +119,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.ActionLink(i.P_name, "Details", new { controller = "Products", id = i.P_id }, new { @class = "btn btn-info" })
+                                @Html.ActionLink(i.P_name, "Details", new { controller = "Products", id = i.P_id }, new { @class = "text-capitalize", style = "color: blue;" })
                             </td>
                             <td>
                                 @Html.DisplayFor(item => i.Date)

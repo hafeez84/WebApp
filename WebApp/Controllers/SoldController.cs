@@ -62,9 +62,10 @@ namespace WebApp.Controllers
         }
    
         // GET: Sold
-        public ActionResult Buy(int? id)
+        public ActionResult Buy(int? id, int amount)
         {
-            if( Session["u_id"] != null)
+            var a = amount;
+            if ( Session["u_id"] != null)
             {
                 if (id != null)
                 {

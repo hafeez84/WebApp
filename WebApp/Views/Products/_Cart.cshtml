@@ -20,17 +20,18 @@
             Cart
         </th>
         <th>
-            Buy
-        </th>
-        <th hidden>
             Amount you want
         </th>
+        <th>
+            Buy
+        </th>
+
     </tr>
     @foreach (var i in Model.ProductsV)
     {
         <tr>
             <td>
-                @Html.DisplayFor(item => i.Pname)
+                @Html.ActionLink(i.Pname, "Details", "Products", new { id = i.Id }, new { @class="text-capitalize", style="color: blue;" })
             </td>
             <td>
                 @Html.DisplayFor(item => i.Pdescription)
@@ -44,15 +45,15 @@
             @if (i != null)
             { 
                 <td>
-                    @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id }, new { @class = "btn btn-danger" })
-                </td>
-
-                <td>
-                    @Html.ActionLink("Buy", "Buy", "Sold", new {  id = i.Id }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id, name = i.Pname, amount = i.Amount }, new { @class = "btn btn-danger" })
                 </td>
                 <td>
-                    <input type="number" name="P_amount" hidden/>
+                    @Html.EditorFor(m=>m.Bought_Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @type="number", @min = "1", @max = i.Amount } })
                 </td>
+                <td>
+                    @Html.ActionLink("Buy", "Buy", "Sold", new {  id = i.Id, amount = Model.Bought_Amount }, new { @class = "btn btn-success" })
+                </td>
+                
             }
         </tr>
     }
