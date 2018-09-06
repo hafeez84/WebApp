@@ -558,7 +558,7 @@
     <Content Include="Views\Products\_Cart.cshtml" />
     <Content Include="Views\Shared\_Categories.cshtml" />
     <Content Include="Views\Products\_Products.cshtml" />
-    <Content Include="Views\temp.cshtml" />
+    <Content Include="Views\Shared\_Carousel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

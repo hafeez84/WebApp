@@ -52,7 +52,7 @@ namespace WebApp.Controllers
                 Product_m = GetModellist(),
                 P_Photos = P_photo_db.P_photo.ToList()
             };
-            var c_ps = products.Products.Where(x => x.Amount < 5);
+            var c_ps = products.Products.Where(x => x.Amount <= 5);
             products.Carousel_ps = c_ps;
 
             return View(products);
@@ -335,7 +335,8 @@ namespace WebApp.Controllers
                 P_Photos = photos_temp,
                 Categories = GetCategorylist()
             };
-
+            var c_ps = db.Products.Where(x => x.Amount <= 5);
+            products.Carousel_ps = c_ps;
             return View("Index", products);
         }
 
@@ -370,7 +371,8 @@ namespace WebApp.Controllers
                 P_Photos = photos_temp,
                 Categories = GetCategorylist()
             };
-
+            var c_ps = db.Products.Where(x => x.Amount <= 5);
+            products.Carousel_ps = c_ps;
             return View("Index", products);
         }
 

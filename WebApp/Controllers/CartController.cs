@@ -67,7 +67,6 @@ namespace WebApp.Controllers
             {
                 var str = Request.Cookies["cart"].Value.ToString();
                 var id_s = id.ToString() + "," + name + "," + amount.ToString();
-                var start = id_s + ",";
                 var replace = "";
 
                 var res = Regex.Replace(str, id_s, replace);
