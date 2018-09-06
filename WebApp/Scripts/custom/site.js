@@ -1,8 +1,10 @@
-﻿$('.carousel').carousel();
+﻿
 
 
 
 $(document).ready(function () {
+
+    $('.carousel').carousel();
 
     $('#comment-area').hide();
     $('#comment-btn').hide();

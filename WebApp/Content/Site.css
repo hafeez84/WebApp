@@ -61,3 +61,10 @@ hr {
 .badge-big {
     background-color:forestgreen;
 }
+
+#logo {
+    float:left;
+    font-size:1.7em;
+    text-transform:uppercase;
+    font-weight:bold;
+}

@@ -9,7 +9,7 @@
     @Styles.Render("~/Content/Site.css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top container-fluid">
+    <div class="navbar navbar-default navbar-fixed-top container-fluid">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,14 +17,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Shoppin", "Index", "Products", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Shoppin", "Index", "Products", new { area = "" }, new { @class = "navbar-brand", id="logo" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["name"] != null)
                     {
                         <li class="dropdown">
-                            <a class="btn btn-default dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class=" dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @if (Session["c_id"] != null)
                                 {
                                     <span class="fa fa-industry"></span>
@@ -34,7 +34,7 @@
                                     <span class="glyphicon glyphicon-user"></span>
                                 }
                                 @Session["name"]
-                                <spn class="glyphicon glyphicon-chevron-down"></spn>
+                                <span class="glyphicon glyphicon-chevron-down"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" , role="menu">
                                 @if (Session["u_id"] != null)
@@ -61,7 +61,7 @@
                     else
                     {
                         <li class="dropdown">
-                            <a class="btn btn-default dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class=" dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Sign up
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu">
@@ -82,7 +82,7 @@
                         <li>
                             @if (Session["u_id"] == null && Session["c_id"] == null)
                             {
-                                @Html.ActionLink("Login", "Index", new { controller = "Account" }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Login", "Index", new { controller = "Account" }, new { @class = "" })
                             }
                         </li>
                     }
@@ -91,13 +91,13 @@
                         if (Session["u_id"] != null)
                         {
                             <li>
-                                @Html.ActionLink("Cart", "Profile", new { controller = "Users", id = (int) Session["u_id"] }, new { @class = "btn btn-default glyphicon glyphicon-shopping-cart" })
+                                @Html.ActionLink("Cart", "Profile", new { controller = "Users", id = (int) Session["u_id"] }, new { @class = " glyphicon glyphicon-shopping-cart" })
                             </li>
                         }
                         else
                         {
                             <li>
-                                @Html.ActionLink("Cart", "Cart", new { controller = "Cart" }, new { @class = "btn btn-default glyphicon glyphicon-shopping-cart" })
+                                @Html.ActionLink("Cart", "Cart", new { controller = "Cart" }, new { @class = " glyphicon glyphicon-shopping-cart" })
                             </li>
                         }
                     }
@@ -151,5 +151,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/custom")
     @RenderSection("scripts", required: false)
+
+
 </body>
 </html>

@@ -52,6 +52,8 @@ namespace WebApp.Controllers
                 Product_m = GetModellist(),
                 P_Photos = P_photo_db.P_photo.ToList()
             };
+            var c_ps = products.Products.Where(x => x.Amount < 5);
+            products.Carousel_ps = c_ps;
 
             return View(products);
         }

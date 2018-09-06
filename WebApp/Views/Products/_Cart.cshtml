@@ -22,6 +22,9 @@
         <th>
             Buy
         </th>
+        <th hidden>
+            Amount you want
+        </th>
     </tr>
     @foreach (var i in Model.ProductsV)
     {
@@ -35,17 +38,20 @@
             <td>
                 @Html.DisplayFor(item => i.Created_at)
             </td>
-            <td>
+            <td >
                 @Html.DisplayFor(item => i.Amount)
             </td>
             @if (i != null)
-            {
+            { 
                 <td>
                     @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id }, new { @class = "btn btn-danger" })
                 </td>
 
                 <td>
-                    @Html.ActionLink("Buy", "Buy", new { controller = "Sold", id = i.Id }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Buy", "Buy", "Sold", new {  id = i.Id }, new { @class = "btn btn-success" })
+                </td>
+                <td>
+                    <input type="number" name="P_amount" hidden/>
                 </td>
             }
         </tr>
