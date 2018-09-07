@@ -27,6 +27,16 @@ namespace WebApp.Controllers
             product_db.SaveChanges();
         }
 
+        private void Fromcart(int? id, string name, int amount)
+        {
+            var str = Request.Cookies["cart"].Value.ToString();
+            var id_s = id.ToString() + "," + name + "," + amount.ToString();
+            var replace = "";
+
+            var res = Regex.Replace(str, id_s, replace);
+            Response.Cookies["cart"].Value = res;
+        }
+
         // GET: Sold
         public ActionResult Buy(int? id, int amount)
         {
@@ -51,7 +61,8 @@ namespace WebApp.Controllers
                     prod.Amount = prod.Amount - 1;
                     product_db.Entry(prod).State = System.Data.Entity.EntityState.Modified;
                     product_db.SaveChanges();
-                    //var cntrlr = Controllers.CartController();
+
+                    Fromcart(prod.Id, prod.Pname, prod.Amount + 1);
                     return RedirectToAction("Profile", "Users", new { id = i_int });
                 }
                 else
