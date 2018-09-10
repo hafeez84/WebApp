@@ -23,5 +23,6 @@ namespace WebApp.Models
         public Nullable<int> B_id { get; set; }
         public Nullable<int> M_id { get; set; }
         public int Status { get; set; }
+        public Nullable<decimal> Price { get; set; }
     }
 }

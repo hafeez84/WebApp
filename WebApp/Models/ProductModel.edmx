@@ -18,6 +18,7 @@
           <Property Name="B_id" Type="int" />
           <Property Name="M_id" Type="int" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" />
         </EntityType>
         <EntityContainer Name="MyDBProductModelStoreContainer">
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -39,6 +40,7 @@
           <Property Name="B_id" Type="Int32" />
           <Property Name="M_id" Type="Int32" />
           <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityContainer Name="MyDBProductEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -52,6 +54,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="MyDBProductModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="M_id" ColumnName="M_id" />
                 <ScalarProperty Name="B_id" ColumnName="B_id" />

@@ -1,7 +1,7 @@
 ﻿@model WebApp.Models.ProductsView
 
 <h3> Last Products </h3>
-<div class="col-md-7 ">
+<div class="col-md-9 ">
     <div class="row">
         <div id="my-pics" class="col-md-12 carousel slide" data-ride="carousel">
 
@@ -20,7 +20,7 @@
                             <div class="col-md-offset-2">
                                 @foreach (var i in Model.Carousel_ps)
                                 {
-                                    <div class="thumbnail col-md-2" style="width: 260px; height:380px; margin: 2px;">
+                                    <div class="thumbnail col-md-3" >
                                         @foreach (var photo in Model.P_Photos)
                                         {
                                             if (i.Id == photo.P_id)
@@ -29,6 +29,7 @@
                                             }
                                         }
                                         @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
+                                        <span class="price" style="float:right;">@i.Price tl </span>
                                         <div class="caption">
                                             <div>
                                                 <strong>

@@ -52,7 +52,7 @@ namespace WebApp.Controllers
                 Product_m = GetModellist(),
                 P_Photos = P_photo_db.P_photo.ToList()
             };
-            var c_ps = products.Products.Where(x => x.Amount <= 5);
+            var c_ps = products.Products.Where(x => x.Amount <= 5).ToList();
             products.Carousel_ps = c_ps;
 
             return View(products);
@@ -146,6 +146,7 @@ namespace WebApp.Controllers
                 product.Pdescription = upload.ProductM.Pdescription;
                 product.B_id = brand.Id;
                 product.M_id = model.Id;
+                product.Price = upload.ProductM.Price;
                 product.Status = 1;
                 db.Products.Add(product);
                 db.SaveChanges();
@@ -246,10 +247,24 @@ namespace WebApp.Controllers
 
                 if ( _Photo.Photo != null)
                 {
-                    var p = P_photo_db.P_photo.SingleOrDefault(x => x.P_id == product.ProductM.Id);
-                    p.Photo = _Photo.Photo;
-                    P_photo_db.Entry(p).State = EntityState.Modified;
-                    P_photo_db.SaveChanges();
+                    if(P_photo_db.P_photo.Any(x=>x.P_id == product.ProductM.Id))
+                    {
+                        var p = P_photo_db.P_photo.SingleOrDefault(x => x.P_id == product.ProductM.Id);
+                        p.Photo = _Photo.Photo;
+                        P_photo_db.Entry(p).State = EntityState.Modified;
+                        P_photo_db.SaveChanges();
+                    }
+                    else
+                    {
+                        P_photo ph = new P_photo
+                        {
+                            P_id = product.ProductM.Id,
+                            Photo = _Photo.Photo
+                        };
+                        P_photo_db.P_photo.Add(ph);
+                        P_photo_db.SaveChanges();
+                    }
+                    
                 }
 
                 db.Entry(product.ProductM).State = EntityState.Modified;

@@ -1,14 +1,14 @@
 ﻿
 @model WebApp.Models.ProductsView
 
-<div class="col-md-7">
+<div class="col-md-12" style="float:right;">
     <div class="row">
         @foreach (var i in Model.Products)
         {
             if (i.Amount != 0 && i.Status != 0)
             {
                 <div class="col-sm-3 col-md-3">
-                    <div class="thumbnail" style="width: 260px; height:380px; margin: 5px;">
+                    <div class="thumbnail">
                         @foreach (var photo in Model.P_Photos)
                         {
                             if (i.Id == photo.P_id)
@@ -17,6 +17,7 @@
                             }
                         }
                         @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
+                                <span class="price" style="float:right;">@i.Price tl </span>
                         <div class="caption">
                             <div>
                                 <strong>
