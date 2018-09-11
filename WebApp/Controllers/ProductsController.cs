@@ -421,7 +421,7 @@ namespace WebApp.Controllers
                     photos_temp.Add(temp1);
                 }
                 var temp2 = brand_db.Brands.FirstOrDefault(x => x.Id == p.Id);
-                if (temp1 != null)
+                if (temp2 != null)
                 {
                     brand_t.Add(temp2);
                 }
