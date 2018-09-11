@@ -109,6 +109,7 @@
                                                 }
                                             }
                                             @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
+                                            <span class="price" style="float:right;">@i.Price tl </span>
                                             <div class="caption">
                                                 <div>
                                                     <strong>
@@ -189,6 +190,7 @@
                                                 }
                                             }
                                             @Html.ActionLink("Add to cart", "ToCart", "Cart", new { id = i.Id }, new { @class = "badge " })
+                                            <span class="price" style="float:right;">@i.Price tl </span>
                                             <div class="caption">
                                                 <div>
                                                     <strong>
@@ -242,7 +244,7 @@
 
                                     }
                                     num += 1;
-                                    if (num >= 9)
+                                    if (num >= 10)
                                     {
                                         break;
                                     }

@@ -1,6 +1,6 @@
 ﻿body {
     margin-top: 60px;
-    /*background-image:url("img/bg.jpg");*/
+    background-image:url("bg.jpg");
     background-attachment: fixed;
     background-size: cover;
 }

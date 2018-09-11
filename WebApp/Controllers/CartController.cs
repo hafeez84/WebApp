@@ -90,16 +90,19 @@ namespace WebApp.Controllers
                 {
                     var p = i.Split(',');
 
-                    int i_int = Convert.ToInt32(p[0]);
-                    int amount = Convert.ToInt32(p[2]);
-                    var new_p = new Product
+                    if(p[0] != "")
                     {
-                        Id = i_int,
-                        Pname = p[1],
-                        Amount = amount,
-                        Status = 1
-                    };
-                    temp.Add(new_p);
+                        int i_int = Convert.ToInt32(p[0]);
+                        int amount = Convert.ToInt32(p[2]);
+                        var new_p = new Product
+                        {
+                            Id = i_int,
+                            Pname = p[1],
+                            Amount = amount,
+                            Status = 1
+                        };
+                        temp.Add(new_p);
+                    }
                 }
 
                 UserProducts cart_pros = new UserProducts
