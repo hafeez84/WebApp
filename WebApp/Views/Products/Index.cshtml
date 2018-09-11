@@ -7,6 +7,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<div class="col-md-12">
+    <div class="form-group">
+        <div class="col-md-3 col-md-offset-4">
+            <input type="text" id="s_input" placeholder="search something" class="form-control" cols="6">
+        </div>
+        <div class="col-md-3">
+            <button onclick="dosearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> Search
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="well col-md-10 col-md-offset-1" id="well_hid">
+    <h3 id="s_head" align="center" style="margin-top:0;">Search Results</h3>
+    <hr />
+    <div id="p_res"></div>
+</div>
+
+
 @Html.Partial("~/Views/Shared/_Categories.cshtml", Model)
 <div>
     @Html.Partial("~/Views/Shared/_Carousel.cshtml", Model)
@@ -14,6 +35,27 @@
     @Html.Partial("~/Views/Products/_Products.cshtml", Model)
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/bootstrap.bundle.min.js")
-}
+
+
+<script>
+    $('#well_hid').hide();
+
+    function dosearch() {
+        var s = $('#s_input').val();
+
+        $.ajax({
+            type: "POST",
+            url: "Products/Search",
+            data: JSON.stringify({ s_str: s }),
+            contentType: "application/json",
+
+            success: function (res) {
+                $('#well_hid').show();
+                $('#p_res').html(res);
+
+            }
+        });
+    }
+</script>
+
+

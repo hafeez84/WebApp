@@ -2,7 +2,7 @@
 @model WebApp.Models.ProductsView
 
 <div class="col-md-12" style="float:right;">
-    <div class="row">
+    <div class="row" id="results">
         @foreach (var i in Model.Products)
         {
             if (i.Amount != 0 && i.Status != 0)

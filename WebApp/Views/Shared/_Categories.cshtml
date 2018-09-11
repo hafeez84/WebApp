@@ -9,7 +9,7 @@
 
         @foreach (var ii in Model.Product_b)
         {
-            if (i.Id == ii.Cate_id)
+            if (i.Id == ii.Cate_id && ii != null)
             {
                 //<a href="#" class="list-group-item"> @ii.Name <span class="badge">4</span> </a>
                 @Html.ActionLink(ii.Name , "Brands", "Products", new { name = ii.Name }, new { @class = "list-group-item text-capitalize" })

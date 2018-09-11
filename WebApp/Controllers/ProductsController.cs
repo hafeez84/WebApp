@@ -391,6 +391,52 @@ namespace WebApp.Controllers
             return View("Index", products);
         }
 
+        public ActionResult Search(string s_str)
+        {
+            s_str = s_str.Trim().ToLower();
+            var ps = db.Products.ToList();
+            List<Product> res = new List<Product>();
+            foreach(var i in ps)
+            {
+                if (i.Pname.Contains(s_str) || i.Pname == s_str /*|| i.Pdescription.Contains(s_str)*/)
+                {
+                    res.Add(i);
+                }
+            }
+
+            List<Model> model_temp = new List<Model>();
+            List<P_photo> photos_temp = new List<P_photo>();
+            List<Brand> brand_t = new List<Brand>();
+
+            foreach (var p in res)
+            {
+                var temp = product_model_db.Models.FirstOrDefault(x=>x.Id == p.M_id);
+                if (temp != null)
+                {
+                    model_temp.Add(temp);
+                }
+                var temp1 = P_photo_db.P_photo.FirstOrDefault(x => x.P_id == p.Id);
+                if (temp1 != null)
+                {
+                    photos_temp.Add(temp1);
+                }
+                var temp2 = brand_db.Brands.FirstOrDefault(x => x.Id == p.Id);
+                if (temp1 != null)
+                {
+                    brand_t.Add(temp2);
+                }
+            }
+
+            ProductsView products = new ProductsView
+            {
+                Products = res,
+                Product_b = brand_t,
+                Product_m = model_temp,
+                P_Photos = photos_temp,
+            };
+            return PartialView("_Products", products);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
