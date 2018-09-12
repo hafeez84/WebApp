@@ -41,13 +41,16 @@
 
 <script>
     $('#well_hid').hide();
+    var myappurl = {
+        myurl: '@Url.Action("Search", "Products")'
+    };
 
     function dosearch() {
         var s = $('#s_input').val();
 
         $.ajax({
             type: "POST",
-            url: "Products/Search",
+            url: myappurl.myurl,
             data: JSON.stringify({ s_str: s }),
             contentType: "application/json",
 
