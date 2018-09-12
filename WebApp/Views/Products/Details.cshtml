@@ -54,9 +54,9 @@
                                 if (c.U_id == (int)Session["u_id"])
                                 {
                                     <!--
-                                    <button class="btn btn-primary btn-xs comment-edit">Edit</button>
-                                    <textarea class="comment-area"></textarea>
-                                        -->
+                    <button class="btn btn-primary btn-xs comment-edit">Edit</button>
+                    <textarea class="comment-area"></textarea>
+                        -->
                                     @Html.ActionLink("Delete", "Delete", "Comments", new { id = c.Id }, new { @class = "btn btn-danger btn-xs" })
                                 }
                             }
@@ -69,16 +69,16 @@
                         using (Html.BeginForm("Create", "Comments", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.P_Comment.Description, 3,200, new { htmlAttributes = new { @class = "form-control", @placeholder = "Comment" } })
+                            @Html.HiddenFor(m => m.ProductM.Id)
+                            <div class="form-group" style="margin-bottom:0;">
+                                <div class="">
+                                    @Html.TextAreaFor(model => model.P_Comment.Description, 3, 200, new { htmlAttributes = new { @class = "form-control col-md-10", @placeholder = "Comment" } })
                                     @Html.ValidationMessageFor(model => model.P_Comment.Description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            @Html.HiddenFor(m => m.ProductM.Id)
-                            <div class="form-group">
+                            <span>
                                 <input type="submit" value="Leave a Reaview" class="btn btn-success" />
-                            </div>
+                            </span>
                         }
                     }
 

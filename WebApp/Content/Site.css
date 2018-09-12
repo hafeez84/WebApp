@@ -1,6 +1,6 @@
 ﻿body {
     margin-top: 60px;
-    background-image:url("bg.jpg");
+    background-image:url("img/bg1.jpg");
     background-attachment: fixed;
     background-size: cover;
 }
@@ -67,4 +67,7 @@ hr {
     font-size:1.7em;
     text-transform:uppercase;
     font-weight:bold;
+}
+.no-right-padding {
+    padding-right:0;
 }
