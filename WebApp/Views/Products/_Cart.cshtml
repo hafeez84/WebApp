@@ -17,10 +17,6 @@
         <th>
             Amount you want
         </th>
-        <th>
-            Buy
-        </th>
-
     </tr>
     @foreach (var i in Model.ProductsV)
     {
@@ -34,20 +30,18 @@
             </td>
             @if (i != null)
             {
-                <td>
-                    @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id, name = i.Pname, amount = i.Amount }, new { @class = "btn btn-danger" })
+            <td>
+                <input type="number" value="@i.Id" class="p_id" hidden />
+                <input type="number" value="@i.Amount" class="p_amount" hidden />
+                <input type="text" value="@i.Pname" class="p_name" hidden />
+                <a class="btn btn-danger remove-btn">Remove</a>
+            </td>
+                <td class="form-group">
+                    @Html.EditorFor(m => m.Bought_Amount, new { htmlAttributes = new { @class = "Bought_Amount", @placeholder = "Amount", @type = "number", @min = "1", @max = i.Amount, @Value = "1" } })
+                    <a class="btn btn-success buy-btn">Buy</a>
+                    <input type="number" value="@i.Id" class="p_id" hidden />
                 </td>
-                <td>
-                    @Html.EditorFor(m => m.Bought_Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @type = "number", @min = "1", @max = i.Amount } })
-                </td>
-                <td>
-                    <input type="number" value="@i.Id" id="p_id" hidden />
-                </td>
-                <td>
-                    <button class="btn btn-success" id="buy-btn" onclick="dobuy()">Buy</button>
-                </td>
-
-            }
+             }
         </tr>
     }
 </table>
