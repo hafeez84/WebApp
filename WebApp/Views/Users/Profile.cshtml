@@ -103,15 +103,17 @@
     @Html.Partial("~/Views/Shared/_History.cshtml", Model)
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     var MyAppUrl = {
         MyUrl: '@Url.Action("Buy","Sold")'
     };
 
-    function dobuy() {
-        var amount = $('#Bought_Amount').val();
-        var p_id = $('#p_id').val();
+    $('.buy-btn').click(function () {
+        var $a = $(this);
+        var p_id = $a.siblings('.p_id').val();
+        var amount = $a.siblings('.Bought_Amount').val();
+        alert(p_id + ", " + amount);
 
         $.ajax({
             type: "POST",
@@ -123,5 +125,5 @@
                 $('#cart-view').html(res);
             }
         });
-    }
+        });
 </script>

@@ -17,9 +17,6 @@
         <th>
             Amount you want
         </th>
-        <th>
-            Buy
-        </th>
 
     </tr>
     @foreach (var i in Model.ProductsV)
@@ -37,14 +34,12 @@
                 <td>
                     @Html.ActionLink("Remove", "FromCart", new { controller = "Cart", id = i.Id, name = i.Pname, amount = i.Amount }, new { @class = "btn btn-danger" })
                 </td>
-                <td>
-                    @Html.EditorFor(m => m.Bought_Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @type = "number", @min = "1", @max = i.Amount } })
+                <td class="form-group">
+                    @Html.EditorFor(m => m.Bought_Amount, new { htmlAttributes = new { @class = "Bought_Amount", @placeholder = "Amount", @type = "number", @min = "1", @max = i.Amount, @Value = "1" } })
+                    <a class="btn btn-success buy-btn">Buy</a>
+                    <input type="number" value="@i.Id" class="p_id" hidden />
                 </td>
-                <td>
-                    <input type="number" value="@i.Id" id="p_id" hidden />
-                </td>
-                <td>
-                    <button class="btn btn-success" id="buy-btn" onclick="dobuy()">Buy</button>
+                <td >
                 </td>
 
             }
