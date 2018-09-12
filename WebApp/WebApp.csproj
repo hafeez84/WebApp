@@ -561,6 +561,7 @@
     <Content Include="Views\Shared\_Categories.cshtml" />
     <Content Include="Views\Products\_Products.cshtml" />
     <Content Include="Views\Shared\_Carousel.cshtml" />
+    <Content Include="Views\Shared\_History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

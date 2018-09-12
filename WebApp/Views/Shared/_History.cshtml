@@ -1,0 +1,42 @@
+﻿@model WebApp.Models.UserProducts
+
+<div class="col-md-5">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Shopping History
+            </h3>
+        </div>
+        <div class="panel-body">
+            @if (Model.Bought_Prod != null)
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Bought Date
+                        </th>
+                    </tr>
+                    @foreach (var i in Model.Bought_Prod)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(i.P_name, "Details", new { controller = "Products", id = i.P_id }, new { @class = "text-capitalize", style = "color: blue;" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => i.Date)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>There isn't any record avaiable now...</p>
+            }
+        </div>
+    </div>
+
+</div>

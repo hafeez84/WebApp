@@ -67,26 +67,29 @@
                     </div>
                 </div>
                 <p class="col-md-offset-1">
-                        <button class="btn btn-default top10">
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.UserV.Id })
-                        </button>
-                        <button class="btn btn-default top10">
-                            @Html.ActionLink("Delete", "Delete", new { id = Model.UserV.Id })
-                        </button>
-                    </p>
+                    <button class="btn btn-default top10">
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.UserV.Id })
+                    </button>
+                    <button class="btn btn-default top10">
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.UserV.Id })
+                    </button>
+                </p>
             </div>
         </div>
     </div>
+
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">
                 <i class="glyphicon glyphicon-shopping-cart"></i> Your Cart
             </h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" id="cart-view">
             @if (Model.ProductsV != null)
             {
-                @Html.Partial("~/Views/Products/_Cart.cshtml", Model)
+                <div >
+                    @Html.Partial("~/Views/Products/_Cart.cshtml", Model)
+                </div>
             }
             else
             {
@@ -96,43 +99,29 @@
     </div>
 </div>
 
-<div class="col-md-5">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                Shopping History
-            </h3>
-        </div>
-        <div class="panel-body">
-            @if (Model.Bought_Prod != null)
-            {
-                <table class="table">
-                    <tr>
-                        <th>
-                            Product Name
-                        </th>
-                        <th>
-                            Bought Date
-                        </th>
-                    </tr>
-                    @foreach (var i in Model.Bought_Prod)
-                    {
-                        <tr>
-                            <td>
-                                @Html.ActionLink(i.P_name, "Details", new { controller = "Products", id = i.P_id }, new { @class = "text-capitalize", style = "color: blue;" })
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => i.Date)
-                            </td>
-                        </tr>
-                    }
-                </table>
-            }
-            else
-            {
-                <p>There isn't any record avaiable now...</p>
-            }
-        </div>
-    </div>
-
+<div id="history-view">
+    @Html.Partial("~/Views/Shared/_History.cshtml", Model)
 </div>
+
+
+<script>
+    var MyAppUrl = {
+        MyUrl: '@Url.Action("Buy","Sold")'
+    };
+
+    function dobuy() {
+        var amount = $('#Bought_Amount').val();
+        var p_id = $('#p_id').val();
+
+        $.ajax({
+            type: "POST",
+            url: MyAppUrl.MyUrl,
+            data: JSON.stringify({ p_id: p_id, amount: amount }),
+            contentType: "application/json",
+
+            success: function (res) {
+                $('#cart-view').html(res);
+            }
+        });
+    }
+</script>
