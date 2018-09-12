@@ -1,0 +1,28 @@
+﻿@model WebApp.Models.CompanyProductUpload
+
+<div>
+    @foreach (var c in Model.P_Comments)
+    {
+        if (c.State != 0)
+        {
+            <p> @c.Description </p>
+            <small class="text-muted">Posted by<span class="comment"> @c.U_id </span> </small>
+            if (Session["u_id"] != null)
+            {
+                if (c.U_id == (int)Session["u_id"])
+                {
+                    <!--
+                    <button class="btn btn-primary btn-xs comment-edit">Edit</button>
+                    <textarea class="comment-area"></textarea>
+                        -->
+                    <div>
+                            <input class="cmnt_id" value="@c.Id"  hidden/>
+                        <input class="p_id" value="@c.P_id" hidden />
+                        <a class="btn btn-danger btn-xs comment-delete-btn"> Delete</a>
+                    </div>
+                }
+            }
+            <hr>
+        }
+    }
+</div>

@@ -43,43 +43,22 @@
                     Product Reviews
                 </h3>
                 <div class="card-body">
-                    @foreach (var c in Model.P_Comments)
-                    {
-                        if (c.State != 0)
+                    <div id="comments">
+                        @if (Model.P_Comments.Count > 0)
                         {
-                            <p> @c.Description </p>
-                            <small class="text-muted">Posted by<span class="comment"> @c.U_id </span> </small>
-                            if (Session["u_id"] != null)
-                            {
-                                if (c.U_id == (int)Session["u_id"])
-                                {
-                                    <!--
-                    <button class="btn btn-primary btn-xs comment-edit">Edit</button>
-                    <textarea class="comment-area"></textarea>
-                        -->
-                                    @Html.ActionLink("Delete", "Delete", "Comments", new { id = c.Id }, new { @class = "btn btn-danger btn-xs" })
-                                }
-                            }
-                            <hr>
+                            @Html.Partial("_Comments", Model)
                         }
-                    }
+                    </div>
 
                     @if (Session["u_id"] != null)
                     {
-                        using (Html.BeginForm("Create", "Comments", FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.HiddenFor(m => m.ProductM.Id)
-                            <div class="form-group" style="margin-bottom:0;">
-                                <div class="">
-                                    @Html.TextAreaFor(model => model.P_Comment.Description, 3, 200, new { htmlAttributes = new { @class = "form-control col-md-10", @placeholder = "Comment" } })
-                                    @Html.ValidationMessageFor(model => model.P_Comment.Description, "", new { @class = "text-danger" })
-                                </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <div class="">
+                                @Html.HiddenFor(m => m.ProductM.Id)
+                                <textarea cols="200" class="form-control comment-input" placeholder="Comment"  rows="3"></textarea>
+                                <a  class="btn btn-success comment-btn"> Leave a Reaview</a>
                             </div>
-                            <span>
-                                <input type="submit" value="Leave a Reaview" class="btn btn-success" />
-                            </span>
-                        }
+                        </div>
                     }
 
                 </div>
@@ -94,21 +73,52 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
 }
-<!--
-<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-<script type="text/javascript" language="javascript">
-    $(document).ready(function () {
 
-        $('.comment-area').hide();
-        $('.comment-btn').hide();
-        $('.comment-edit').click(function () {
-            var text = $('.comment').val();
-            $('.comment-area').show();
-            $('.comment-btn').show();
-            $('.comment-area').val(text);
-            $('.comment-edit').hide();
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var MyAppUrl = {
+        MyUrl: '@Url.Action("Create","Comments")'
+    };
+
+    $('.comment-btn').click(function () {
+        var $a = $(this);
+        var p_id = $a.siblings('#ProductM_Id').val();
+        var comment = $a.siblings('.comment-input').val();
+
+        $.ajax({
+            type: "POST",
+            url: MyAppUrl.MyUrl,
+            data: JSON.stringify({ pid: p_id, cmnt: comment }),
+            contentType: "application/json",
+
+            success: function (res) {
+                $('#comments').html(res);
+                $('.comment-input').val("");
+
+            }
         });
     });
-</script>
 
-    -->
+
+    var CommentDeleteUrl = {
+        Url: '@Url.Action("Delete","Comments")'
+    };
+    $('.comment-delete-btn').click(function () {
+        var $a = $(this);
+        var c_id = $a.siblings('.cmnt_id').val();
+        var pid = $a.siblings('.p_id').val();
+        alert("Are you sure ?");
+
+        $.ajax({
+            type: "POST",
+            url: CommentDeleteUrl.Url,
+            data: JSON.stringify({ id: c_id, p_id: pid }),
+            contentType: "application/json",
+
+            success: function (res) {
+                $('#comments').html(res);
+            }
+        });
+    });
+
+</script>
