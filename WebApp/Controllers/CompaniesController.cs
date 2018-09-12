@@ -162,30 +162,7 @@ namespace WebApp.Controllers
             return View(company);
         }
 
-        // GET: Companies/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (Session["c_id"] == null)
-            {
-                TempData["Error"] = "You must be logged in to do this action !";
-                return RedirectToAction("Index", "Account");
-            }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Company company = db.Companies.Find(id);
-            if (company == null)
-            {
-                return HttpNotFound();
-            }
-            return View(company);
-        }
-
-        // POST: Companies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             if (Session["c_id"] == null)
             {
@@ -194,18 +171,28 @@ namespace WebApp.Controllers
             }
             else
             {
-                Company company = db.Companies.Find(id);
-                List<Product> prod = product_db.Products.Where(x => x.Cid == company.Id).ToList();
-                foreach(var item in prod)
+                int s_id = (int) Session["c_id"];
+                if (id == s_id)
                 {
-                    item.Status = 0;
-                }               
-                product_db.SaveChanges();
-                company.Status = 0;
-                db.Entry(company).State = EntityState.Modified;
-                db.SaveChanges();
-                Session.Abandon();
-                return RedirectToAction("Index", "Account");
+                    Company company = db.Companies.Find(id);
+                    List<Product> prod = product_db.Products.Where(x => x.Cid == company.Id).ToList();
+                    foreach (var item in prod)
+                    {
+                        item.Status = 0;
+                    }
+                    product_db.SaveChanges();
+                    company.Status = 0;
+                    db.Entry(company).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session.Abandon();
+                    return RedirectToAction("Index", "Account");
+                }
+                else
+                {
+                    TempData["Error"] = "You can only delete your own account !";
+                    return RedirectToAction("Index", "Products");
+                }
+                
             }
         }
 

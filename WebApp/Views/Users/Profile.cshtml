@@ -15,14 +15,14 @@
         <div class="panel-body">
             <div>
                 <div class="row">
-                    <div class="col-md-offset-1 col-md-6">
+                    <div class="col-md-offset-1 col-md-4">
                         @if (Model.UserV.Avatar != null)
                         {
                             <img src="data:image;base64,@System.Convert.ToBase64String(Model.UserV.Avatar)" class="img-circle user-avatar" />
                         }
                     </div>
-                    <div class="col-md-10 col-md-offset-0">
-                        <dl class="dl-horizontal text-left">
+                    <div class="col-md-7">
+                        <dl >
                             <dt>
                                 First Name
                             </dt>
@@ -70,8 +70,8 @@
                     <button class="btn btn-default top10">
                         @Html.ActionLink("Edit", "Edit", new { id = Model.UserV.Id })
                     </button>
-                    <button class="btn btn-default top10">
-                        @Html.ActionLink("Delete", "Delete", new { id = Model.UserV.Id })
+                    <button class="btn btn-danger top10 p-delete-btn">
+                        @Html.ActionLink("Delete", "Delete", "Users", new { id = Model.UserV.Id }, null)
                     </button>
                 </p>
             </div>
@@ -105,6 +105,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+
     var MyAppUrl = {
         MyUrl: '@Url.Action("Buy","Sold")'
     };
@@ -148,5 +149,9 @@
                 $('#cart-view').html(res);
             }
         });
+    });
+
+    $('.p-delete-btn').click(function () {
+        alert("Are you sure, you want to delete your profile ?");
     });
 </script>

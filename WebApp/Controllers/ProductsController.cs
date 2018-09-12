@@ -52,7 +52,7 @@ namespace WebApp.Controllers
                 Product_m = GetModellist(),
                 P_Photos = P_photo_db.P_photo.ToList()
             };
-            var c_ps = products.Products.Where(x => x.Amount <= 5).ToList();
+            var c_ps = products.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
             products.Carousel_ps = c_ps;
 
             return View(products);
@@ -274,41 +274,42 @@ namespace WebApp.Controllers
             return View(product);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if(Session["c_id"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                int s_id = (int)Session["c_id"];
+                if(db.Products.Any(x=>x.Id == id))
+                {
+                    var product = db.Products.Find(id);
+                    if(product.Cid == s_id)
+                    {
+                        product.Status = 0;
+                        db.Entry(product).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["Success"] = "Product has been deleted successfully...";
+                        return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
+                    }
+                    else
+                    {
+                        TempData["Error"] = "You can only delete your own products !";
+                        return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
+                    }
+                    
+                }
+                else
+                {
+                    TempData["Error"] = "There isn't such product !";
+                    return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
+                }
+
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
-            }
-            if (Session["c_id"] == null)
-            {
-                TempData["Error"] = "You must log in to perfum this action";
+                TempData["Error"] = "You can't perform this action !";
                 return RedirectToAction("Index", "Account");
             }
-            var s_id = (int)Session["c_id"];
-            if (s_id != product.Cid)
-            {
-                TempData["Error"] = "You can only delete your own products !";
-                return RedirectToAction("Index", "Products");
-            }
-            return View(product);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            var product = db.Products.Find(id);
-            product.Status = 0;
-            db.Entry(product).State = EntityState.Modified;
-            db.SaveChanges();
-            TempData["Success"] = "Product has been deleted successfully...";
-            return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
+            
         }
 
         public ActionResult Categories(string name)
@@ -350,7 +351,7 @@ namespace WebApp.Controllers
                 P_Photos = photos_temp,
                 Categories = GetCategorylist()
             };
-            var c_ps = db.Products.Where(x => x.Amount <= 5).ToList();
+            var c_ps = db.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
             products.Carousel_ps = c_ps;
             return View("Index", products);
         }
@@ -386,7 +387,7 @@ namespace WebApp.Controllers
                 P_Photos = photos_temp,
                 Categories = GetCategorylist()
             };
-            var c_ps = db.Products.Where(x => x.Amount <= 5).ToList();
+            var c_ps = db.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
             products.Carousel_ps = c_ps;
             return View("Index", products);
         }

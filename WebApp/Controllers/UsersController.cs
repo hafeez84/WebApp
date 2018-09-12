@@ -173,44 +173,32 @@ namespace WebApp.Controllers
             
         }
 
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (Session["u_id"] == null)
-            {
-                TempData["Error"] = "You must be logged in to do this action !";
-                return RedirectToAction("Index", "Account");
-            }
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
         // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            if (Session["u_id"] == null)
+            if (Session["u_id"] == null )
             {
                 TempData["Error"] = "You must be logged in to do this action !";
                 return RedirectToAction("Index", "Account");
             }
             else
             {
-                User user = db.Users.Find(id);
-                user.Status = 0;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                Session.Abandon();
-                return RedirectToAction("Index", "Account");
+                int s_id = (int)Session["u_id"];
+                if(s_id == id)
+                {
+                    User user = db.Users.Find(id);
+                    user.Status = 0;
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session.Abandon();
+                    return RedirectToAction("Index", "Account");
+                }
+                else
+                {
+                    TempData["Error"] = "You can only delete your own account !";
+                    return RedirectToAction("Index", "Products");
+                }
+                
             }
             
         }

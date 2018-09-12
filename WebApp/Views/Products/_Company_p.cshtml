@@ -46,14 +46,14 @@
                             @Html.DisplayFor(modelItem => item.Amount)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { controller = "Products", id = item.Id }, new { @class = "btn btn-default" })
-                            @Html.ActionLink("Details", "Details", new { controller = "Products", id = item.Id }, new { @class = "btn btn-default" })
-                            @Html.ActionLink("Delete", "Delete", new { controller = "Products", id = item.Id }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("Edit", "Edit", new { controller = "Products", id = item.Id }, new { @class = "btn btn-primary btn-xs" })
+                            @Html.ActionLink("Details", "Details", new { controller = "Products", id = item.Id }, new { @class = "btn btn-info btn-xs" })
+                            @Html.ActionLink("Delete", "Delete", new { controller = "Products", id = item.Id }, new { @class = "btn btn-danger btn-xs product-delete-btn" })
                         </td>
                     </tr>
                 }
             }
-
         </table>
     </div>
 </div>
+

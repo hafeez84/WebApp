@@ -16,6 +16,7 @@
                 if (id == Model.ProductM.Cid)
                 {
                     @Html.ActionLink("Edit", "Edit", "Products", new { id = Model.ProductM.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Products", new { id = Model.ProductM.Id }, new { @class = "btn btn-danger product-delete-btn" })
                 }
             }
         }
@@ -121,4 +122,8 @@
         });
     });
 
+
+    $('.product-delete-btn').click(function () {
+        alert("Are you sure, you want to delete this product ?");
+    });
 </script>
