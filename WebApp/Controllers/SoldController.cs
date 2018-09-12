@@ -19,31 +19,14 @@ namespace WebApp.Controllers
         private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
         private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
 
-        private void DeleteConfirmed(int id)
-        {
-            var product = product_db.Products.Find(id);
-            product.Status = 0;
-            product_db.Entry(product).State = EntityState.Modified;
-            product_db.SaveChanges();
-        }
-
-        private void Fromcart(int? id, string name, int amount)
-        {
-            var str = Request.Cookies["cart"].Value.ToString();
-            var id_s = id.ToString() + "," + name + "," + amount.ToString();
-            var replace = "";
-
-            var res = Regex.Replace(str, id_s, replace);
-            Response.Cookies["cart"].Value = res;
-        }
-
         // GET: Sold
-        public ActionResult Buy(int? id, int amount)
+        public ActionResult Buy(string p_id, string amount)
         {
-            var a = amount;
             if ( Session["u_id"] != null)
             {
-                if (id != null)
+                int id = Convert.ToInt32(p_id);
+                int a_int = Convert.ToInt32(amount);
+                if (id != 0)
                 {
                     var prod = product_db.Products.FirstOrDefault(x => x.Id == id);
                     int i_int = (int)Session["u_id"];
@@ -58,12 +41,52 @@ namespace WebApp.Controllers
                     };
                     sold_db.Sold_products.Add(product);
                     var flag = sold_db.SaveChanges();
-                    prod.Amount = prod.Amount - 1;
+                    prod.Amount = prod.Amount - a_int;
                     product_db.Entry(prod).State = System.Data.Entity.EntityState.Modified;
                     product_db.SaveChanges();
 
-                    Fromcart(prod.Id, prod.Pname, prod.Amount + 1);
-                    return RedirectToAction("Profile", "Users", new { id = i_int });
+                    //Fromcart(prod.Id, prod.Pname, prod.Amount + a_int);
+                    var str = Request.Cookies["cart"].Value.ToString();
+                    var id_s = prod.Id.ToString() + "," + prod.Pname + "," + (prod.Amount + a_int).ToString();
+                    var replace = "";
+
+                    var res = Regex.Replace(str, id_s, replace);
+                    Response.Cookies["cart"].Value = res;
+
+                    //var c_ps = Request.Cookies["cart"].Value.ToString().Split('|');
+                    var c_ps = res.Split('|');
+                    List<Product> temp = new List<Product>();
+                    foreach (var i in c_ps)
+                    {
+                        var p = i.Split(',');
+
+                        if (p[0] != "")
+                        {
+                            int ii_int = Convert.ToInt32(p[0]);
+                            int amountt = Convert.ToInt32(p[2]);
+                            var new_p = new Product
+                            {
+                                Id = ii_int,
+                                Pname = p[1],
+                                Amount = amountt,
+                                Status = 1
+                            };
+                            temp.Add(new_p);
+                        }
+                    }
+
+                    UserProducts cart_pros = new UserProducts
+                    {
+                        ProductsV = temp
+                    };
+                    if(cart_pros.ProductsV.Count > 0)
+                    {
+                        return PartialView("~/Views/Products/_Cart.cshtml", cart_pros);
+                    }
+                    else
+                    {
+                        return Content("You don't have any product in your cart at the time...");
+                    }
                 }
                 else
                 {
