@@ -125,5 +125,28 @@
                 $('#cart-view').html(res);
             }
         });
+    });
+
+
+
+    var MyAppUFromCart = {
+        MyUrl: '@Url.Action("FromCart","Cart")'
+    };
+    $('.remove-btn').click(function () {
+        var $a = $(this);
+        var p_id = $a.siblings('.p_id').val();
+        var amount = $a.siblings('.p_amount').val();
+        var name = $a.siblings('.p_name').val();
+
+        $.ajax({
+            type: "POST",
+            url: MyAppUFromCart.MyUrl,
+            data: JSON.stringify({ id: p_id, name: name, amount: amount }),
+            contentType: "application/json",
+
+            success: function (res) {
+                $('#cart-view').html(res);
+            }
         });
+    });
 </script>

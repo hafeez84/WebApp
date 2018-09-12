@@ -61,18 +61,52 @@ namespace WebApp.Controllers
 
         }
 
-        public ActionResult FromCart(int? id, string name, int amount)
+        [HttpPost]
+        public ActionResult FromCart(string id, string name, string amount)
         {
             if (id != null)
             {
                 var str = Request.Cookies["cart"].Value.ToString();
-                var id_s = id.ToString() + "," + name + "," + amount.ToString();
+                var id_s = id+ "," + name + "," + amount;
                 var replace = "";
 
                 var res = Regex.Replace(str, id_s, replace);
              
                 Response.Cookies["cart"].Value = res;
-                return RedirectToAction("Index", "Products");
+
+                var c_ps = res.Split('|');
+                List<Product> temp = new List<Product>();
+                foreach (var i in c_ps)
+                {
+                    var p = i.Split(',');
+
+                    if (p[0] != "")
+                    {
+                        int ii_int = Convert.ToInt32(p[0]);
+                        int amountt = Convert.ToInt32(p[2]);
+                        var new_p = new Product
+                        {
+                            Id = ii_int,
+                            Pname = p[1],
+                            Amount = amountt,
+                            Status = 1
+                        };
+                        temp.Add(new_p);
+                    }
+                }
+
+                UserProducts cart_pros = new UserProducts
+                {
+                    ProductsV = temp
+                };
+                if (cart_pros.ProductsV.Count > 0)
+                {
+                    return PartialView("~/Views/Products/_Cart.cshtml", cart_pros);
+                }
+                else
+                {
+                    return Content("You don't have any product in your cart at the time...");
+                }
             }
             else
             {
