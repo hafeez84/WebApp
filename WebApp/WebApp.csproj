@@ -301,7 +301,6 @@
     <Content Include="Views\Shared\_History.cshtml" />
     <Content Include="Views\Products\_Comments.cshtml" />
     <Content Include="Views\Companies\_Signup.cshtml" />
-    <Content Include="Views\Companies\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

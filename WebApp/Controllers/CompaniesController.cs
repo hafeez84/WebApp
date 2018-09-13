@@ -51,7 +51,7 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
             }
-            return PartialView("_Signup");
+            return View("_Signup");
         }
 
         // POST: Companies/Create
@@ -89,12 +89,12 @@ namespace WebApp.Controllers
                     return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
                 }
 
-                return View(c);
+                return View("_Signup");
             }
             else
             {
                 TempData["Error"] = "The email address already exist, please login...";
-                return View(c);
+                return View("_Signup");
             }
             
         }

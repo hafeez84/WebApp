@@ -75,7 +75,7 @@ namespace WebApp.Controllers
         // GET: Users/Signup
         public ActionResult Signup()
         {
-            return PartialView("_USignup");
+            return View("_USignup");
         }
 
         // POST: Users/Signup
@@ -114,14 +114,14 @@ namespace WebApp.Controllers
                     Session["name"] = u.Fname + " " + u.Lname;
                     return RedirectToAction("Index", "Products");
                 }
-                return View(user);
+                return View("_USignup");
             }
             else
             {
                 TempData["Error"] = "The email address already exist, please login...";
-                return View(user);
+                return View("_USignup");
             }
-           
+
         }
 
         // GET: Users/Edit/5

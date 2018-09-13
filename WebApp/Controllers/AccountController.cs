@@ -24,7 +24,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                return PartialView("_Login");
+                return View("_Login");
             }
         }
 
