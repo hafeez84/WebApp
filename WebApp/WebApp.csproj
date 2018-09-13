@@ -282,14 +282,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Users\Signup.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Profile.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
-    <Content Include="Views\Shared\_Signup.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Companies\Signup.cshtml" />
+    <Content Include="Views\Users\_USignup.cshtml" />
     <Content Include="Views\Companies\Profile.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
@@ -297,13 +293,14 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-    <Content Include="Views\Products\_Company_p.cshtml" />
-    <Content Include="Views\Products\_Cart.cshtml" />
+    <Content Include="Views\Companies\_Company_p.cshtml" />
+    <Content Include="Views\Users\_Cart.cshtml" />
     <Content Include="Views\Shared\_Categories.cshtml" />
     <Content Include="Views\Products\_Products.cshtml" />
     <Content Include="Views\Shared\_Carousel.cshtml" />
     <Content Include="Views\Shared\_History.cshtml" />
     <Content Include="Views\Products\_Comments.cshtml" />
+    <Content Include="Views\Companies\_Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

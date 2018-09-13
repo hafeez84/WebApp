@@ -51,7 +51,7 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
             }
-            return View();
+            return PartialView("_Signup");
         }
 
         // POST: Companies/Create

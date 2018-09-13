@@ -75,7 +75,7 @@ namespace WebApp.Controllers
         // GET: Users/Signup
         public ActionResult Signup()
         {
-            return View();
+            return PartialView("_USignup");
         }
 
         // POST: Users/Signup

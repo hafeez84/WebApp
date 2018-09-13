@@ -68,13 +68,13 @@
                                 @if (Session["u_id"] == null && Session["c_id"] == null)
                                 {
                                     <li class="dropdown-item text-capitalize text-center">
-                                        @Html.ActionLink("Sign up", "Signup", new { controller = "Users" }, new { @class = "btn btn-info" })
+                                        <a class="signup-btn btn btn-info" href="#">Sign up</a>
                                     </li>
                                 }
                                 @if (Session["c_id"] == null && Session["u_id"] == null)
                                 {
                                     <li class="dropdown-item text-capitalize text-center">
-                                        @Html.ActionLink("Sign up as Company", "Signup", new { controller = "Companies" }, new { @class = "btn btn-info" })
+                                        <a class="signup-company-btn btn btn-info" href="#">Sign up as Company</a>
                                     </li>
                                 }
                             </ul>
@@ -82,7 +82,7 @@
                         <li>
                             @if (Session["u_id"] == null && Session["c_id"] == null)
                             {
-                                @Html.ActionLink("Login", "Index", new { controller = "Account" }, new { @class = "" })
+                                <a class="login-btn" href="#">Login</a>
                             }
                         </li>
                     }
@@ -152,6 +152,53 @@
     @Scripts.Render("~/bundles/custom")
     @RenderSection("scripts", required: false)
 
+    <script>
+        var LoginUrl = {
+            Url: '@Url.Action("Index","Account")'
+        };
+        $('.login-btn').click(function () {
+            $.ajax({
+                type: "GET",
+                url: LoginUrl.Url,
+                contentType: "application/json",
 
+                success: function (res) {
+                    $('#shared-div').html(res);
+                }
+            });
+        });
+
+
+        var SignupCUrl = {
+            Url: '@Url.Action("Signup","Companies")'
+        };
+        $('.signup-company-btn').click(function () {
+            $.ajax({
+                type: "GET",
+                url: SignupCUrl.Url,
+                contentType: "application/json",
+
+                success: function (res) {
+                    $('#shared-div').html(res);
+                }
+            });
+        });
+
+
+        var SignupUrl = {
+            Url: '@Url.Action("Signup","Users")'
+        };
+        $('.signup-btn').click(function () {
+            $.ajax({
+                type: "GET",
+                url: SignupCUrl.Url,
+                contentType: "application/json",
+
+                success: function (res) {
+                    $('#shared-div').html(res);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
