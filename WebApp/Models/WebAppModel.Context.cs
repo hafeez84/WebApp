@@ -13,10 +13,10 @@ namespace WebApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MyDBP_photoEntities : DbContext
+    public partial class WepAppMyDBEntities : DbContext
     {
-        public MyDBP_photoEntities()
-            : base("name=MyDBP_photoEntities")
+        public WepAppMyDBEntities()
+            : base("name=WepAppMyDBEntities")
         {
         }
     
@@ -25,6 +25,14 @@ namespace WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Brand> Brands { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Model> Models { get; set; }
         public virtual DbSet<P_photo> P_photo { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Sold_products> Sold_products { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -14,9 +14,7 @@ namespace WebApp.Controllers
 {
     public class CompaniesController : Controller
     {
-        private MyDBCompanyEntities db = new MyDBCompanyEntities();
-        private MyDBProductEntities product_db = new MyDBProductEntities();
-        private MyDBSoldEntities soldProd_db = new MyDBSoldEntities();
+        private WepAppMyDBEntities ent = new WepAppMyDBEntities();
 
         // GET: Companies
         public ActionResult Index()
@@ -33,9 +31,9 @@ namespace WebApp.Controllers
             }
             CompanyProductView c_p_view = new CompanyProductView
             {
-                CompanyView = db.Companies.Find(id),
-                ProductView = product_db.Products.Where(x => x.Cid == id && x.Status == 1).ToList(),
-                Sold_Prod = soldProd_db.Sold_products.Where(x => x.C_id == id).ToList()
+                CompanyView = ent.Companies.Find(id),
+                ProductView = ent.Products.Where(x => x.Cid == id && x.Status == 1).ToList(),
+                Sold_Prod = ent.Sold_products.Where(x => x.C_id == id).ToList()
         };
 
             if (c_p_view.CompanyView == null)
@@ -71,7 +69,7 @@ namespace WebApp.Controllers
                 Email = company.Email,
                 Avatar = company.Avatar
             };
-            var flag = db.Companies.Any(x => x.Email == company.Email && x.Status == 1);
+            var flag = ent.Companies.Any(x => x.Email == company.Email && x.Status == 1);
             if (!flag)
             {
                 if (Avatar != null)
@@ -84,8 +82,8 @@ namespace WebApp.Controllers
                 if (ModelState.IsValid)
                 {
                     company.Status = 1;
-                    db.Companies.Add(company);
-                    db.SaveChanges();
+                    ent.Companies.Add(company);
+                    ent.SaveChanges();
                     Session["c_id"] = company.Id;
                     Session["name"] = company.Cname;
                     return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
@@ -113,7 +111,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company c = db.Companies.Find(id);
+            Company c = ent.Companies.Find(id);
             CompanyContract company = new CompanyContract
             {
                 Caddress = c.Caddress,
@@ -155,8 +153,8 @@ namespace WebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.Entry(c).State = EntityState.Modified;
-                db.SaveChanges();
+                ent.Entry(c).State = EntityState.Modified;
+                ent.SaveChanges();
                 return RedirectToAction("Profile", "Companies", new { id = (int)c.Id });
             }
             return View(company);
@@ -174,16 +172,16 @@ namespace WebApp.Controllers
                 int s_id = (int) Session["c_id"];
                 if (id == s_id)
                 {
-                    Company company = db.Companies.Find(id);
-                    List<Product> prod = product_db.Products.Where(x => x.Cid == company.Id).ToList();
+                    Company company = ent.Companies.Find(id);
+                    List<Product> prod = ent.Products.Where(x => x.Cid == company.Id).ToList();
                     foreach (var item in prod)
                     {
                         item.Status = 0;
                     }
-                    product_db.SaveChanges();
+                    ent.SaveChanges();
                     company.Status = 0;
-                    db.Entry(company).State = EntityState.Modified;
-                    db.SaveChanges();
+                    ent.Entry(company).State = EntityState.Modified;
+                    ent.SaveChanges();
                     Session.Abandon();
                     return RedirectToAction("Index", "Account");
                 }
@@ -200,7 +198,7 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                ent.Dispose();
             }
             base.Dispose(disposing);
         }

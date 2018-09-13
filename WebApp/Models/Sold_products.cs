@@ -20,5 +20,10 @@ namespace WebApp.Models
         public int C_id { get; set; }
         public System.DateTime Date { get; set; }
         public string P_name { get; set; }
+        public Nullable<int> P_amount { get; set; }
+    
+        public virtual Company Company { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

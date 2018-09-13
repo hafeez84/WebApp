@@ -10,13 +10,13 @@ namespace WebApp.Controllers
 {
     public class CartController : Controller
     {
-        private MyDBProductEntities db = new MyDBProductEntities();
+        private WepAppMyDBEntities ent = new WepAppMyDBEntities();
 
         public ActionResult ToCart(int? id)
         {
             if (id != null && Session["c_id"] == null)
             {
-                var prod = db.Products.SingleOrDefault(x => x.Id == id);
+                var prod = ent.Products.SingleOrDefault(x => x.Id == id);
                 string prod_id = prod.Id.ToString();
                 string prod_str = prod.Id.ToString();
                 prod_str = prod_str + "," + prod.Pname.ToString();

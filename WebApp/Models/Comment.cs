@@ -17,7 +17,10 @@ namespace WebApp.Models
         public int Id { get; set; }
         public string Description { get; set; }
         public int U_id { get; set; }
-        public int P_id { get; set; }
+        public Nullable<int> P_id { get; set; }
         public int State { get; set; }
+    
+        public virtual Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

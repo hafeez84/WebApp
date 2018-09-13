@@ -9,7 +9,7 @@ namespace WebApp.Controllers
 {
     public class CommentsController : Controller
     {
-        private MyDBCommentEntities db = new MyDBCommentEntities();
+        private WepAppMyDBEntities ent = new WepAppMyDBEntities();
 
         [HttpPost]
         public ActionResult Create(string pid, string cmnt)
@@ -24,8 +24,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Comments.Add(comment);
-                db.SaveChanges();
+                ent.Comments.Add(comment);
+                ent.SaveChanges();
             }
             var errors = ModelState
             .Where(x => x.Value.Errors.Count > 0)
@@ -33,7 +33,7 @@ namespace WebApp.Controllers
             .ToArray();
             CompanyProductUpload comments = new CompanyProductUpload
             {
-                P_Comments = db.Comments.Where(x=>x.P_id == p_id).ToList()
+                P_Comments = ent.Comments.Where(x=>x.P_id == p_id).ToList()
             };
             return PartialView("~/Views/Products/_Comments.cshtml", comments);
         }
@@ -42,15 +42,15 @@ namespace WebApp.Controllers
         public ActionResult Delete(string id, string p_id)
         {
             int i_id = Convert.ToInt32(id); 
-            var comment = db.Comments.Find(i_id);
+            var comment = ent.Comments.Find(i_id);
             comment.State = 0;
-            db.Entry(comment).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
+            ent.Entry(comment).State = System.Data.Entity.EntityState.Modified;
+            ent.SaveChanges();
 
             int i_p_id = Convert.ToInt32(p_id);
             CompanyProductUpload comments = new CompanyProductUpload
             {
-                P_Comments = db.Comments.Where(x => x.P_id == i_p_id).ToList()
+                P_Comments = ent.Comments.Where(x => x.P_id == i_p_id).ToList()
             };
             return PartialView("~/Views/Products/_Comments.cshtml", comments);
         }

@@ -14,6 +14,14 @@ namespace WebApp.Models
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.Comments = new HashSet<Comment>();
+            this.P_photo = new HashSet<P_photo>();
+            this.Sold_products = new HashSet<Sold_products>();
+        }
+    
         public int Id { get; set; }
         public string Pname { get; set; }
         public string Pdescription { get; set; }
@@ -24,5 +32,15 @@ namespace WebApp.Models
         public Nullable<int> M_id { get; set; }
         public int Status { get; set; }
         public Nullable<decimal> Price { get; set; }
+    
+        public virtual Brand Brand { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual Model Model { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<P_photo> P_photo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sold_products> Sold_products { get; set; }
     }
 }

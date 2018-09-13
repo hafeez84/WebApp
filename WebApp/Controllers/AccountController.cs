@@ -9,10 +9,7 @@ namespace WebApp.Controllers
 {
     public class AccountController : Controller
     {
-        private MyDBUserEntities dbUser = new MyDBUserEntities();
-        private MyDBCompanyEntities dbCompany = new MyDBCompanyEntities();
-
-
+        private WepAppMyDBEntities ent = new WepAppMyDBEntities();
 
         // GET: Account
         public ActionResult Index()
@@ -35,8 +32,8 @@ namespace WebApp.Controllers
         public ActionResult Login(User user)
         {   
 
-            var user_a = dbUser.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.Status == 1).FirstOrDefault();
-            var company_a = dbCompany.Companies.Where(x => x.Email == user.Email && x.Password == user.Password && x.Status == 1).FirstOrDefault();
+            var user_a = ent.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.Status == 1).FirstOrDefault();
+            var company_a = ent.Companies.Where(x => x.Email == user.Email && x.Password == user.Password && x.Status == 1).FirstOrDefault();
 
             if (user_a != null)
             {

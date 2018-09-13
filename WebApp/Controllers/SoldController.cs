@@ -12,12 +12,7 @@ namespace WebApp.Controllers
 {
     public class SoldController : Controller
     {
-        private MyDBSoldEntities sold_db = new MyDBSoldEntities();
-        private MyDBProductEntities product_db = new MyDBProductEntities();
-        private MyDBCompanyEntities company_db = new MyDBCompanyEntities();
-        private MyDBCategoryEntities category_db = new MyDBCategoryEntities();
-        private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
-        private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
+        private WepAppMyDBEntities ent = new WepAppMyDBEntities();
 
         // GET: Sold
         public ActionResult Buy(string p_id, string amount)
@@ -28,7 +23,7 @@ namespace WebApp.Controllers
                 int a_int = Convert.ToInt32(amount);
                 if (id != 0)
                 {
-                    var prod = product_db.Products.FirstOrDefault(x => x.Id == id);
+                    var prod = ent.Products.FirstOrDefault(x => x.Id == id);
                     int i_int = (int)Session["u_id"];
 
                     Sold_products product = new Sold_products
@@ -39,11 +34,11 @@ namespace WebApp.Controllers
                         Date = DateTime.UtcNow,
                         P_name = prod.Pname
                     };
-                    sold_db.Sold_products.Add(product);
-                    var flag = sold_db.SaveChanges();
+                    ent.Sold_products.Add(product);
+                    var flag = ent.SaveChanges();
                     prod.Amount = prod.Amount - a_int;
-                    product_db.Entry(prod).State = System.Data.Entity.EntityState.Modified;
-                    product_db.SaveChanges();
+                    ent.Entry(prod).State = System.Data.Entity.EntityState.Modified;
+                    ent.SaveChanges();
 
                     //Fromcart(prod.Id, prod.Pname, prod.Amount + a_int);
                     var str = Request.Cookies["cart"].Value.ToString();

@@ -14,6 +14,13 @@ namespace WebApp.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Comments = new HashSet<Comment>();
+            this.Sold_products = new HashSet<Sold_products>();
+        }
+    
         public int Id { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
@@ -23,5 +30,10 @@ namespace WebApp.Models
         public string Password { get; set; }
         public byte[] Avatar { get; set; }
         public int Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sold_products> Sold_products { get; set; }
     }
 }

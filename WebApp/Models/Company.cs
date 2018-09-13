@@ -14,6 +14,13 @@ namespace WebApp.Models
     
     public partial class Company
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Company()
+        {
+            this.Products = new HashSet<Product>();
+            this.Sold_products = new HashSet<Sold_products>();
+        }
+    
         public int Id { get; set; }
         public string Cname { get; set; }
         public string Ctel { get; set; }
@@ -22,5 +29,10 @@ namespace WebApp.Models
         public string Email { get; set; }
         public byte[] Avatar { get; set; }
         public int Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sold_products> Sold_products { get; set; }
     }
 }

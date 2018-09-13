@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac661109954b43aeb1944195ae56a287" Name="Diagram1">
+        <EntityTypeShape EntityType="MyAppModel.Brand" Width="1.5" PointX="1.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.Category" Width="1.5" PointX="8" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.Comment" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.Company" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.Model" Width="1.5" PointX="10.125" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.P_photo" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.Product" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.Sold_products" Width="1.5" PointX="12.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyAppModel.User" Width="1.5" PointX="4.875" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="MyAppModel.Brand_id" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.Category_id" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.FK_Comment_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.User_id" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.FK_Product_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.FK_Sold_products_ToTable_2" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.Model_id" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.Product_id" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.FK_Sold_products_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="MyAppModel.FK_Sold_products_ToTable_1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

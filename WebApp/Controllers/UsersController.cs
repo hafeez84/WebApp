@@ -15,10 +15,7 @@ namespace WebApp.Controllers
 {
     public class UsersController : Controller
     {
-        private MyDBUserEntities db = new MyDBUserEntities();
-        private MyDBProductEntities products_db = new MyDBProductEntities();
-        private MyDBSoldEntities sold_db = new MyDBSoldEntities();
-
+        private WepAppMyDBEntities ent = new WepAppMyDBEntities();
 
         // GET: Users
         public ActionResult Index()
@@ -63,9 +60,9 @@ namespace WebApp.Controllers
 
             UserProducts user = new UserProducts
             {
-                UserV = db.Users.Find(id),
+                UserV = ent.Users.Find(id),
                 ProductsV = temp,
-                Bought_Prod = sold_db.Sold_products.Where(x => x.U_id == id).ToList()
+                Bought_Prod = ent.Sold_products.Where(x => x.U_id == id).ToList()
         };
 
             if (user.UserV == null)
@@ -97,7 +94,7 @@ namespace WebApp.Controllers
                 Password = u.Password,
                 Tel = u.Tel
             };
-            var flag = db.Users.Any(x => x.Email == user.Email && x.Status == 1);
+            var flag = ent.Users.Any(x => x.Email == user.Email && x.Status == 1);
 
             if (!flag)
             {
@@ -111,8 +108,8 @@ namespace WebApp.Controllers
                 if (ModelState.IsValid)
                 {
                     u.Status = 1;
-                    db.Users.Add(u);
-                    db.SaveChanges();
+                    ent.Users.Add(u);
+                    ent.SaveChanges();
                     Session["u_id"] = u.Id;
                     Session["name"] = u.Fname + " " + u.Lname;
                     return RedirectToAction("Index", "Products");
@@ -139,7 +136,7 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = ent.Users.Find(id);
 
             if (user == null)
             {
@@ -164,8 +161,8 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 u.Status = 1;
-                db.Entry(u).State = EntityState.Modified;
-                db.SaveChanges();
+                ent.Entry(u).State = EntityState.Modified;
+                ent.SaveChanges();
                 return RedirectToAction("Profile", "Users", new { id = u.Id });
             }
 
@@ -186,10 +183,10 @@ namespace WebApp.Controllers
                 int s_id = (int)Session["u_id"];
                 if(s_id == id)
                 {
-                    User user = db.Users.Find(id);
+                    User user = ent.Users.Find(id);
                     user.Status = 0;
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
+                    ent.Entry(user).State = EntityState.Modified;
+                    ent.SaveChanges();
                     Session.Abandon();
                     return RedirectToAction("Index", "Account");
                 }
@@ -207,7 +204,7 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                ent.Dispose();
             }
             base.Dispose(disposing);
         }

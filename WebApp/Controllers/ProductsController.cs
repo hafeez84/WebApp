@@ -15,30 +15,25 @@ namespace WebApp.Controllers
 {
     public class ProductsController : Controller
     {
-        private MyDBProductEntities db = new MyDBProductEntities();
-        private MyDBCategoryEntities category_db = new MyDBCategoryEntities();
-        private MyDBProductBrandEntities brand_db = new MyDBProductBrandEntities();
-        private MyDBProductModelEntities product_model_db = new MyDBProductModelEntities();
-        private MyDBP_photoEntities P_photo_db = new MyDBP_photoEntities();
-        private MyDBCommentEntities comment_db = new MyDBCommentEntities();
+        private WepAppMyDBEntities ent = new WepAppMyDBEntities();
 
-        // Cached these foo 2 mins to not keep connecting db
+        // Cached these foo 2 mins to not keep connecting ent
         [OutputCache(CacheProfile = "Cache2min")]
         public List<Brand> GetBrandlist()
         {
-            return brand_db.Brands.ToList();
+            return ent.Brands.ToList();
         }
 
         [OutputCache(CacheProfile = "Cache2min")]
         public List<Category> GetCategorylist()
         {
-            return category_db.Categories.ToList();
+            return ent.Categories.ToList();
         }
 
         [OutputCache(CacheProfile = "Cache2min")]
         public List<Model> GetModellist()
         {
-            return product_model_db.Models.ToList();
+            return ent.Models.ToList();
         }
 
 
@@ -46,11 +41,11 @@ namespace WebApp.Controllers
         {
             ProductsView products = new ProductsView
             {
-                Products = db.Products.ToList(),
+                Products = ent.Products.ToList(),
                 Product_b = GetBrandlist(),
                 Categories = GetCategorylist(),
                 Product_m = GetModellist(),
-                P_Photos = P_photo_db.P_photo.ToList()
+                P_Photos = ent.P_photo.ToList()
             };
             var c_ps = products.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
             products.Carousel_ps = c_ps;
@@ -67,17 +62,17 @@ namespace WebApp.Controllers
 
             CompanyProductUpload product = new CompanyProductUpload
             {
-                ProductM = db.Products.Find(id)
+                ProductM = ent.Products.Find(id)
             };
             if (product.ProductM == null)
             {
                 return HttpNotFound();
             }
-            product.P_Comments = comment_db.Comments.Where(x => x.P_id == product.ProductM.Id).ToList();
-            product.BrandM = brand_db.Brands.SingleOrDefault(x=>x.Id == product.ProductM.B_id);
-            product.CategoryM = category_db.Categories.SingleOrDefault(x => x.Id == product.BrandM.Cate_id);
-            product.ProductModelM = product_model_db.Models.SingleOrDefault(x=>x.Id == product.ProductM.M_id);
-            product.P_photos = P_photo_db.P_photo.Where(x=>x.P_id == product.ProductM.Id).ToList();
+            product.P_Comments = ent.Comments.Where(x => x.P_id == product.ProductM.Id).ToList();
+            product.BrandM = ent.Brands.SingleOrDefault(x=>x.Id == product.ProductM.B_id);
+            product.CategoryM = ent.Categories.SingleOrDefault(x => x.Id == product.BrandM.Cate_id);
+            product.ProductModelM = ent.Models.SingleOrDefault(x=>x.Id == product.ProductM.M_id);
+            product.P_photos = ent.P_photo.Where(x=>x.P_id == product.ProductM.Id).ToList();
 
             return View(product);
         }
@@ -108,35 +103,35 @@ namespace WebApp.Controllers
                 Model model = new Model();
 
                 model.Name = upload.ProductModelM.Name.Trim().ToLower();
-                if(product_model_db.Models.Any(x=>x.Name == model.Name)) // if model with same name exist do not create new one
-                    model = product_model_db.Models.FirstOrDefault(x => x.Name == model.Name);
+                if(ent.Models.Any(x=>x.Name == model.Name)) // if model with same name exist do not create new one
+                    model = ent.Models.FirstOrDefault(x => x.Name == model.Name);
                 else
                 {
-                    product_model_db.Models.Add(model);
-                    product_model_db.SaveChanges();
+                    ent.Models.Add(model);
+                    ent.SaveChanges();
                 }
 
                 category.Name = upload.CategoryM.Name.Trim().ToLower(); // same as model
-                if(category_db.Categories.Any(x=>x.Name == category.Name))
+                if(ent.Categories.Any(x=>x.Name == category.Name))
                 {
-                    category = category_db.Categories.FirstOrDefault(x => x.Name == category.Name);
+                    category = ent.Categories.FirstOrDefault(x => x.Name == category.Name);
                 }
                 else
                 {
-                    category_db.Categories.Add(category);
-                    category_db.SaveChanges();
+                    ent.Categories.Add(category);
+                    ent.SaveChanges();
                 }
 
                 brand.Name = upload.BrandM.Name.Trim().ToLower();
-                if(brand_db.Brands.Any(x=>x.Name == brand.Name)) //same
+                if(ent.Brands.Any(x=>x.Name == brand.Name)) //same
                 {
-                    brand = brand_db.Brands.FirstOrDefault(x => x.Name == brand.Name);
+                    brand = ent.Brands.FirstOrDefault(x => x.Name == brand.Name);
                 }
                 else
                 {
                     brand.Cate_id = category.Id;
-                    brand_db.Brands.Add(brand);
-                    brand_db.SaveChanges();
+                    ent.Brands.Add(brand);
+                    ent.SaveChanges();
                 }
 
                 product.Cid = (int)Session["c_id"];
@@ -148,8 +143,8 @@ namespace WebApp.Controllers
                 product.M_id = model.Id;
                 product.Price = upload.ProductM.Price;
                 product.Status = 1;
-                db.Products.Add(product);
-                db.SaveChanges();
+                ent.Products.Add(product);
+                ent.SaveChanges();
 
                 P_photo _Photo = new P_photo();
                 if(Photo != null)
@@ -161,8 +156,8 @@ namespace WebApp.Controllers
                     _Photo.Photo = target.ToArray();
 
                     _Photo.P_id = product.Id;
-                    P_photo_db.P_photo.Add(_Photo);
-                    P_photo_db.SaveChanges();
+                    ent.P_photo.Add(_Photo);
+                    ent.SaveChanges();
                 }
 
                 return RedirectToAction("Index");
@@ -178,17 +173,17 @@ namespace WebApp.Controllers
             }
             CompanyProductUpload product = new CompanyProductUpload
             {
-                ProductM = db.Products.Find(id),
+                ProductM = ent.Products.Find(id),
             };
             
             if (product.ProductM == null)
             {
                 return HttpNotFound();
             }
-            product.BrandM = brand_db.Brands.SingleOrDefault(x => x.Id == product.ProductM.B_id);
-            product.ProductModelM = product_model_db.Models.SingleOrDefault(x => x.Id == product.ProductM.M_id);
-            product.CategoryM = category_db.Categories.SingleOrDefault(x => x.Id == product.BrandM.Cate_id);
-            product.P_photos = P_photo_db.P_photo.Where(x => x.P_id == product.ProductM.Id).ToList();
+            product.BrandM = ent.Brands.SingleOrDefault(x => x.Id == product.ProductM.B_id);
+            product.ProductModelM = ent.Models.SingleOrDefault(x => x.Id == product.ProductM.M_id);
+            product.CategoryM = ent.Categories.SingleOrDefault(x => x.Id == product.BrandM.Cate_id);
+            product.P_photos = ent.P_photo.Where(x => x.P_id == product.ProductM.Id).ToList();
             if (Session["c_id"] == null)
             {
                 TempData["Error"] = "You must log in to perfum this action";
@@ -222,37 +217,37 @@ namespace WebApp.Controllers
             {
 
                 var cat_n = product.CategoryM.Name.Trim().ToLower(); // if there is category with that name
-                if (!category_db.Categories.Any(x => x.Name == cat_n))
+                if (!ent.Categories.Any(x => x.Name == cat_n))
                 {
-                    category_db.Categories.Add(product.CategoryM);
-                    category_db.SaveChanges();
+                    ent.Categories.Add(product.CategoryM);
+                    ent.SaveChanges();
                     product.BrandM.Cate_id = product.CategoryM.Id;
                 }
 
                 var brand_n = product.BrandM.Name.Trim().ToLower(); // same as up
-                if(!brand_db.Brands.Any(x=>x.Name == brand_n))
+                if(!ent.Brands.Any(x=>x.Name == brand_n))
                 {
-                    brand_db.Brands.Add(product.BrandM);
-                    brand_db.SaveChanges();
+                    ent.Brands.Add(product.BrandM);
+                    ent.SaveChanges();
                     product.ProductM.B_id = product.BrandM.Id;
                 }
 
                 var model_n = product.ProductModelM.Name.Trim().ToLower(); // same as up
-                if(!product_model_db.Models.Any(x=>x.Name == model_n))
+                if(!ent.Models.Any(x=>x.Name == model_n))
                 {
-                    product_model_db.Models.Add(product.ProductModelM);
-                    product_model_db.SaveChanges();
+                    ent.Models.Add(product.ProductModelM);
+                    ent.SaveChanges();
                     product.ProductM.M_id = product.ProductModelM.Id;
                 }
 
                 if ( _Photo.Photo != null)
                 {
-                    if(P_photo_db.P_photo.Any(x=>x.P_id == product.ProductM.Id))
+                    if(ent.P_photo.Any(x=>x.P_id == product.ProductM.Id))
                     {
-                        var p = P_photo_db.P_photo.SingleOrDefault(x => x.P_id == product.ProductM.Id);
+                        var p = ent.P_photo.SingleOrDefault(x => x.P_id == product.ProductM.Id);
                         p.Photo = _Photo.Photo;
-                        P_photo_db.Entry(p).State = EntityState.Modified;
-                        P_photo_db.SaveChanges();
+                        ent.Entry(p).State = EntityState.Modified;
+                        ent.SaveChanges();
                     }
                     else
                     {
@@ -261,14 +256,14 @@ namespace WebApp.Controllers
                             P_id = product.ProductM.Id,
                             Photo = _Photo.Photo
                         };
-                        P_photo_db.P_photo.Add(ph);
-                        P_photo_db.SaveChanges();
+                        ent.P_photo.Add(ph);
+                        ent.SaveChanges();
                     }
                     
                 }
 
-                db.Entry(product.ProductM).State = EntityState.Modified;
-                db.SaveChanges();
+                ent.Entry(product.ProductM).State = EntityState.Modified;
+                ent.SaveChanges();
                 return RedirectToAction("Profile", "Companies", new { id = (int) Session["c_id"] });
             }
             return View(product);
@@ -279,14 +274,14 @@ namespace WebApp.Controllers
             if(Session["c_id"] != null)
             {
                 int s_id = (int)Session["c_id"];
-                if(db.Products.Any(x=>x.Id == id))
+                if(ent.Products.Any(x=>x.Id == id))
                 {
-                    var product = db.Products.Find(id);
+                    var product = ent.Products.Find(id);
                     if(product.Cid == s_id)
                     {
                         product.Status = 0;
-                        db.Entry(product).State = EntityState.Modified;
-                        db.SaveChanges();
+                        ent.Entry(product).State = EntityState.Modified;
+                        ent.SaveChanges();
                         TempData["Success"] = "Product has been deleted successfully...";
                         return RedirectToAction("Profile", "Companies", new { id = (int)Session["c_id"] });
                     }
@@ -314,28 +309,28 @@ namespace WebApp.Controllers
 
         public ActionResult Categories(string name)
         {
-            Category cat = category_db.Categories.FirstOrDefault(x=>x.Name == name);
+            Category cat = ent.Categories.FirstOrDefault(x=>x.Name == name);
             List<Category> cats = new List<Category>();
             cats.Add(cat);
-            var brands = brand_db.Brands.Where(x => x.Cate_id == cat.Id).ToList();
+            var brands = ent.Brands.Where(x => x.Cate_id == cat.Id).ToList();
             List<Product> products_temp = new List<Product>();
             List<Model> model_temp = new List<Model>();
             List<P_photo> photos_temp = new List<P_photo>();
 
             foreach (var i in brands)
             {
-                var temp = db.Products.Where(x => x.B_id == i.Id).ToList();
+                var temp = ent.Products.Where(x => x.B_id == i.Id).ToList();
                 products_temp.AddRange(temp);
             }
 
             foreach (var p in products_temp)
             {
-                var temp = product_model_db.Models.Find(p.M_id);
+                var temp = ent.Models.Find(p.M_id);
                 if(temp != null)
                 {
                     model_temp.Add(temp);
                 }
-                var temp1 = P_photo_db.P_photo.FirstOrDefault(x => x.P_id == p.Id);
+                var temp1 = ent.P_photo.FirstOrDefault(x => x.P_id == p.Id);
                 if (temp1 != null)
                 {
                     photos_temp.Add(temp1);
@@ -351,28 +346,28 @@ namespace WebApp.Controllers
                 P_Photos = photos_temp,
                 Categories = GetCategorylist()
             };
-            var c_ps = db.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
+            var c_ps = ent.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
             products.Carousel_ps = c_ps;
             return View("Index", products);
         }
 
         public ActionResult Brands (string name)
         {
-            var brand_temp = brand_db.Brands.FirstOrDefault(x=>x.Name == name);
+            var brand_temp = ent.Brands.FirstOrDefault(x=>x.Name == name);
             List<Brand> brand_t = new List<Brand>();
             brand_t.Add(brand_temp);
-            var products_temp = db.Products.Where(x => x.B_id == brand_temp.Id).ToList();
+            var products_temp = ent.Products.Where(x => x.B_id == brand_temp.Id).ToList();
             List<Model> model_temp = new List<Model>();
             List<P_photo> photos_temp = new List<P_photo>();
 
             foreach (var p in products_temp)
             {
-                var temp = product_model_db.Models.Find(p.M_id);
+                var temp = ent.Models.Find(p.M_id);
                 if (temp != null)
                 {
                     model_temp.Add(temp);
                 }
-                var temp1 = P_photo_db.P_photo.FirstOrDefault(x => x.P_id == p.Id);
+                var temp1 = ent.P_photo.FirstOrDefault(x => x.P_id == p.Id);
                 if (temp1 != null)
                 {
                     photos_temp.Add(temp1);
@@ -387,7 +382,7 @@ namespace WebApp.Controllers
                 P_Photos = photos_temp,
                 Categories = GetCategorylist()
             };
-            var c_ps = db.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
+            var c_ps = ent.Products.Where(x => x.Amount <= 5 && x.Status != 0).ToList();
             products.Carousel_ps = c_ps;
             return View("Index", products);
         }
@@ -397,7 +392,7 @@ namespace WebApp.Controllers
             if (s_str != "")
             {
                 s_str = s_str.Trim().ToLower();
-                var ps = db.Products.ToList();
+                var ps = ent.Products.ToList();
                 List<Product> res = new List<Product>();
                 foreach (var i in ps)
                 {
@@ -415,17 +410,17 @@ namespace WebApp.Controllers
 
                     foreach (var p in res)
                     {
-                        var temp = product_model_db.Models.FirstOrDefault(x => x.Id == p.M_id);
+                        var temp = ent.Models.FirstOrDefault(x => x.Id == p.M_id);
                         if (temp != null)
                         {
                             model_temp.Add(temp);
                         }
-                        var temp1 = P_photo_db.P_photo.FirstOrDefault(x => x.P_id == p.Id);
+                        var temp1 = ent.P_photo.FirstOrDefault(x => x.P_id == p.Id);
                         if (temp1 != null)
                         {
                             photos_temp.Add(temp1);
                         }
-                        var temp2 = brand_db.Brands.FirstOrDefault(x => x.Id == p.Id);
+                        var temp2 = ent.Brands.FirstOrDefault(x => x.Id == p.Id);
                         if (temp2 != null)
                         {
                             brand_t.Add(temp2);
@@ -456,7 +451,7 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                ent.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,0 +1,698 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MyAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Cate_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Up_Category_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="U_id" Type="int" Nullable="false" />
+          <Property Name="P_id" Type="int" />
+          <Property Name="State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ctel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Caddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Avatar" Type="image" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="P_photo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_id" Type="int" Nullable="false" />
+          <Property Name="Photo" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Pdescription" Type="ntext" />
+          <Property Name="Cid" Type="int" Nullable="false" />
+          <Property Name="Created_at" Type="datetime" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="B_id" Type="int" />
+          <Property Name="M_id" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Sold_products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_id" Type="int" Nullable="false" />
+          <Property Name="U_id" Type="int" Nullable="false" />
+          <Property Name="C_id" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="P_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="P_amount" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Lname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Tel" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Avatar" Type="image" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="Brand_id">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="B_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Category_id">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Brand" Type="Self.Brand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Brand">
+              <PropertyRef Name="Cate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_ToTable_1">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ToTable">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_products_ToTable">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Sold_products" Type="Self.Sold_products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sold_products">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_products_ToTable_1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Sold_products" Type="Self.Sold_products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sold_products">
+              <PropertyRef Name="U_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_products_ToTable_2">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Sold_products" Type="Self.Sold_products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sold_products">
+              <PropertyRef Name="C_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Model_id">
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="M_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_id">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="P_photo" Type="Self.P_photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="P_photo">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_id">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="U_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyAppModelStoreContainer">
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Model" EntityType="Self.Model" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="P_photo" EntityType="Self.P_photo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sold_products" EntityType="Self.Sold_products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Brand_id" Association="Self.Brand_id">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="Category_id" Association="Self.Category_id">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Brand" EntitySet="Brand" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_ToTable_1" Association="Self.FK_Comment_ToTable_1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ToTable" Association="Self.FK_Product_ToTable">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_products_ToTable" Association="Self.FK_Sold_products_ToTable">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Sold_products" EntitySet="Sold_products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_products_ToTable_1" Association="Self.FK_Sold_products_ToTable_1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Sold_products" EntitySet="Sold_products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_products_ToTable_2" Association="Self.FK_Sold_products_ToTable_2">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Sold_products" EntitySet="Sold_products" />
+          </AssociationSet>
+          <AssociationSet Name="Model_id" Association="Self.Model_id">
+            <End Role="Model" EntitySet="Model" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="Product_id" Association="Self.Product_id">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="P_photo" EntitySet="P_photo" />
+          </AssociationSet>
+          <AssociationSet Name="User_id" Association="Self.User_id">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cate_id" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="Self.Brand_id" FromRole="Brand" ToRole="Product" />
+          <NavigationProperty Name="Category" Relationship="Self.Category_id" FromRole="Brand" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Up_Category_id" Type="Int32" />
+          <NavigationProperty Name="Brands" Relationship="Self.Category_id" FromRole="Category" ToRole="Brand" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="U_id" Type="Int32" Nullable="false" />
+          <Property Name="P_id" Type="Int32" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Comment_ToTable_1" FromRole="Comment" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.User_id" FromRole="Comment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ctel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Caddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ToTable" FromRole="Company" ToRole="Product" />
+          <NavigationProperty Name="Sold_products" Relationship="Self.FK_Sold_products_ToTable_2" FromRole="Company" ToRole="Sold_products" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.Model_id" FromRole="Model" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="P_photo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_id" Type="Int32" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.Product_id" FromRole="P_photo" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pdescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cid" Type="Int32" Nullable="false" />
+          <Property Name="Created_at" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="B_id" Type="Int32" />
+          <Property Name="M_id" Type="Int32" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Brand" Relationship="Self.Brand_id" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_ToTable_1" FromRole="Product" ToRole="Comment" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_Product_ToTable" FromRole="Product" ToRole="Company" />
+          <NavigationProperty Name="Model" Relationship="Self.Model_id" FromRole="Product" ToRole="Model" />
+          <NavigationProperty Name="P_photo" Relationship="Self.Product_id" FromRole="Product" ToRole="P_photo" />
+          <NavigationProperty Name="Sold_products" Relationship="Self.FK_Sold_products_ToTable" FromRole="Product" ToRole="Sold_products" />
+        </EntityType>
+        <EntityType Name="Sold_products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_id" Type="Int32" Nullable="false" />
+          <Property Name="U_id" Type="Int32" Nullable="false" />
+          <Property Name="C_id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="P_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="P_amount" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_Sold_products_ToTable_2" FromRole="Sold_products" ToRole="Company" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Sold_products_ToTable" FromRole="Sold_products" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Sold_products_ToTable_1" FromRole="Sold_products" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="Self.User_id" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Sold_products" Relationship="Self.FK_Sold_products_ToTable_1" FromRole="User" ToRole="Sold_products" />
+        </EntityType>
+        <Association Name="Brand_id">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="B_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Category_id">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Brand" Type="Self.Brand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Brand">
+              <PropertyRef Name="Cate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_ToTable_1">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_id">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="U_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ToTable">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_products_ToTable_2">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Sold_products" Type="Self.Sold_products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sold_products">
+              <PropertyRef Name="C_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Model_id">
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="M_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_id">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="P_photo" Type="Self.P_photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="P_photo">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_products_ToTable">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Sold_products" Type="Self.Sold_products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sold_products">
+              <PropertyRef Name="P_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_products_ToTable_1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Sold_products" Type="Self.Sold_products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sold_products">
+              <PropertyRef Name="U_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WepAppMyDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Brands" EntityType="Self.Brand" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Models" EntityType="Self.Model" />
+          <EntitySet Name="P_photo" EntityType="Self.P_photo" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Sold_products" EntityType="Self.Sold_products" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="Brand_id" Association="Self.Brand_id">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="Category_id" Association="Self.Category_id">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Brand" EntitySet="Brands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_ToTable_1" Association="Self.FK_Comment_ToTable_1">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="User_id" Association="Self.User_id">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ToTable" Association="Self.FK_Product_ToTable">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_products_ToTable_2" Association="Self.FK_Sold_products_ToTable_2">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Sold_products" EntitySet="Sold_products" />
+          </AssociationSet>
+          <AssociationSet Name="Model_id" Association="Self.Model_id">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="Product_id" Association="Self.Product_id">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="P_photo" EntitySet="P_photo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_products_ToTable" Association="Self.FK_Sold_products_ToTable">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Sold_products" EntitySet="Sold_products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_products_ToTable_1" Association="Self.FK_Sold_products_ToTable_1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Sold_products" EntitySet="Sold_products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyAppModelStoreContainer" CdmEntityContainer="WepAppMyDBEntities">
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="MyAppModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cate_id" ColumnName="Cate_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="MyAppModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Up_Category_id" ColumnName="Up_Category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="MyAppModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="U_id" ColumnName="U_id" />
+                <ScalarProperty Name="P_id" ColumnName="P_id" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="MyAppModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Cname" ColumnName="Cname" />
+                <ScalarProperty Name="Ctel" ColumnName="Ctel" />
+                <ScalarProperty Name="Caddress" ColumnName="Caddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="MyAppModel.Model">
+              <MappingFragment StoreEntitySet="Model">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="P_photo">
+            <EntityTypeMapping TypeName="MyAppModel.P_photo">
+              <MappingFragment StoreEntitySet="P_photo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="P_id" ColumnName="P_id" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MyAppModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Pname" ColumnName="Pname" />
+                <ScalarProperty Name="Pdescription" ColumnName="Pdescription" />
+                <ScalarProperty Name="Cid" ColumnName="Cid" />
+                <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="B_id" ColumnName="B_id" />
+                <ScalarProperty Name="M_id" ColumnName="M_id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sold_products">
+            <EntityTypeMapping TypeName="MyAppModel.Sold_products">
+              <MappingFragment StoreEntitySet="Sold_products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="P_id" ColumnName="P_id" />
+                <ScalarProperty Name="U_id" ColumnName="U_id" />
+                <ScalarProperty Name="C_id" ColumnName="C_id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="P_name" ColumnName="P_name" />
+                <ScalarProperty Name="P_amount" ColumnName="P_amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MyAppModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -17,5 +17,7 @@ namespace WebApp.Models
         public int Id { get; set; }
         public int P_id { get; set; }
         public byte[] Photo { get; set; }
+    
+        public virtual Product Product { get; set; }
     }
 }
