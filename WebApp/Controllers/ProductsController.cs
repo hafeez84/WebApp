@@ -59,11 +59,23 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            List<Category> temp = new List<Category>();
+            temp = GetCategorylist();
+            List<Brand> temp_br = new List<Brand>();
+            temp_br = GetBrandlist();
+            ProductsView pv = new ProductsView
+            {
+                Categories = temp,
+                Product_b = temp_br
+            };
 
             CompanyProductUpload product = new CompanyProductUpload
             {
-                ProductM = ent.Products.Find(id)
+                ProductM = ent.Products.Find(id),
+                Categories = pv
             };
+            
+            
             if (product.ProductM == null)
             {
                 return HttpNotFound();

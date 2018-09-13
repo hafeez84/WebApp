@@ -14,6 +14,6 @@ namespace WebApp.Models
         public Model ProductModelM { get; set; }
         public List<P_photo> P_photos { get; set; }
         public List<Comment> P_Comments { get; set; }
-
+        public ProductsView Categories { get; set; }
     }
 }

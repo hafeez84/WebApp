@@ -5,24 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<div>
+    @Html.Partial("~/Views/Shared/_Categories.cshtml", Model.Categories)
+</div>
 <div class="col-md-9 " style="float:right;">
-    <p>
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
-        @{
-            if (Session["c_id"] != null)
-            {
-                var id = (int)Session["c_id"];
-                if (id == Model.ProductM.Cid)
-                {
-                    @Html.ActionLink("Edit", "Edit", "Products", new { id = Model.ProductM.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Delete", "Delete", "Products", new { id = Model.ProductM.Id }, new { @class = "btn btn-danger product-delete-btn" })
-                }
-            }
-        }
-    </p>
 
     <div class="well">
+        <p>
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
+            @{
+                if (Session["c_id"] != null)
+                {
+                    var id = (int)Session["c_id"];
+                    if (id == Model.ProductM.Cid)
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Products", new { id = Model.ProductM.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "Delete", "Products", new { id = Model.ProductM.Id }, new { @class = "btn btn-danger product-delete-btn" })
+                    }
+                }
+            }
+        </p>
+
         @foreach (var photo in Model.P_photos)
         {
             <img src="data:image;base64,@System.Convert.ToBase64String(photo.Photo)" class="col-md-12" />
@@ -56,8 +59,8 @@
                         <div class="form-group" style="margin-bottom:0;">
                             <div class="">
                                 @Html.HiddenFor(m => m.ProductM.Id)
-                                <textarea cols="200" class="form-control comment-input" placeholder="Comment"  rows="3"></textarea>
-                                <a  class="btn btn-success comment-btn"> Leave a Reaview</a>
+                                <textarea cols="200" class="form-control comment-input" placeholder="Comment" rows="3"></textarea>
+                                <a class="btn btn-success comment-btn"> Leave a Reaview</a>
                             </div>
                         </div>
                     }
