@@ -119,7 +119,7 @@ namespace WebApp.Controllers
             if (Session["u_id"] == null)
             {
                 TempData["Error"] = "Please login to see your Cart...";
-                return RedirectToAction("Index", "Products");
+                return View("_Login");
             }
 
             if (Request.Cookies["cart"] != null)
