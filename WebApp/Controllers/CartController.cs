@@ -116,6 +116,12 @@ namespace WebApp.Controllers
         }
         public ActionResult Cart()
         {
+            if (Session["u_id"] == null)
+            {
+                TempData["Error"] = "Please login to see your Cart...";
+                return RedirectToAction("Index", "Products");
+            }
+
             if (Request.Cookies["cart"] != null)
             {
                 var ps = Request.Cookies["cart"].Value.ToString().Split('|');

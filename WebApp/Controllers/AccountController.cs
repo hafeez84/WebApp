@@ -57,7 +57,7 @@ namespace WebApp.Controllers
         public ActionResult Logout()
         {
             Session.Abandon();
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Index", "Products");
         }
     }
 }

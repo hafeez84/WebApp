@@ -176,7 +176,7 @@ namespace WebApp.Controllers
             if (Session["u_id"] == null )
             {
                 TempData["Error"] = "You must be logged in to do this action !";
-                return RedirectToAction("Index", "Account");
+                return RedirectToAction("Index", "Products");
             }
             else
             {
@@ -188,7 +188,7 @@ namespace WebApp.Controllers
                     ent.Entry(user).State = EntityState.Modified;
                     ent.SaveChanges();
                     Session.Abandon();
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction("Index", "Products");
                 }
                 else
                 {
