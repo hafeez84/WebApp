@@ -76,7 +76,7 @@ namespace WebApp.Controllers
                     };
                     if(cart_pros.ProductsV.Count > 0)
                     {
-                        return PartialView("~/Views/Products/_Cart.cshtml", cart_pros);
+                        return PartialView("~/Views/Users/_Cart.cshtml", cart_pros);
                     }
                     else
                     {
