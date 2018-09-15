@@ -13,11 +13,11 @@ namespace WebContract
         public int Id { get; set; }
         [DataMember]
         [Required]
-        [StringLength(30)]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "The company name is required and must be minimum 2 charachters !")]
         [DisplayName("Company Name")]
         public string Cname { get; set; }
         [DataMember]
-        [StringLength(20)]
+        [StringLength(30, MinimumLength = 9, ErrorMessage = "The Phone number is required and must be minimum 19 numbers !")]
         [DisplayName("Company Phone")]
         public string Ctel { get; set; }
         [DataMember]
@@ -26,6 +26,7 @@ namespace WebContract
         [DataMember]
         [Required]
         [DataType(DataType.Password)]
+        [StringLength(30, MinimumLength = 4, ErrorMessage = "The Password is required and must be minimum 4 characters !")]
         public string Password { get; set; }
         [DataMember]
         [Required]

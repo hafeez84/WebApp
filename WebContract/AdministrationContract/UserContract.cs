@@ -29,6 +29,7 @@ namespace WebContract
         public string Address { get; set; }
         [DataMember]
         [Required]
+        [StringLength(30, MinimumLength = 4, ErrorMessage = "The Password is required and must be minimum 4 characters !")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public byte[] Avatar { get; set; }

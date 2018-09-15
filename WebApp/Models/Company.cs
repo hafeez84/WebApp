@@ -11,7 +11,8 @@ namespace WebApp.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Company
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,8 +23,11 @@ namespace WebApp.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("Name")]
         public string Cname { get; set; }
+        [DisplayName("Comapny Phone")]
         public string Ctel { get; set; }
+        [DisplayName("Address")]
         public string Caddress { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
