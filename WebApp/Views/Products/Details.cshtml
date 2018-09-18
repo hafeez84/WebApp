@@ -111,7 +111,7 @@
         var $a = $(this);
         var c_id = $a.siblings('.cmnt_id').val();
         var pid = $a.siblings('.p_id').val();
-        alert("Are you sure ?");
+        confirm("Are you sure ?");
 
         $.ajax({
             type: "POST",
@@ -127,6 +127,6 @@
 
 
     $('.product-delete-btn').click(function () {
-        alert("Are you sure, you want to delete this product ?");
+        confirm("Are you sure, you want to delete this product ?");
     });
 </script>

@@ -121,41 +121,8 @@ namespace WebApp.Controllers
                 TempData["Error"] = "Please login to see your Cart...";
                 return View("_Login");
             }
-
-            if (Request.Cookies["cart"] != null)
-            {
-                var ps = Request.Cookies["cart"].Value.ToString().Split('|');
-                List<Product> temp = new List<Product>();
-                foreach (var i in ps)
-                {
-                    var p = i.Split(',');
-
-                    if(p[0] != "")
-                    {
-                        int i_int = Convert.ToInt32(p[0]);
-                        int amount = Convert.ToInt32(p[2]);
-                        var new_p = new Product
-                        {
-                            Id = i_int,
-                            Pname = p[1],
-                            Amount = amount,
-                            Status = 1
-                        };
-                        temp.Add(new_p);
-                    }
-                }
-
-                UserProducts cart_pros = new UserProducts
-                {
-                    ProductsV = temp
-                };
-                return PartialView("~/Views/Users/_Cart.cshtml", cart_pros);
-            }
-            else
-            {
-                TempData["Error"] = "Your basket is Empty !";
-                return RedirectToAction("Index", "Products");
-            }
+               else
+                return null;
         }
     }
 }

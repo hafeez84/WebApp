@@ -114,7 +114,6 @@
         var $a = $(this);
         var p_id = $a.siblings('.p_id').val();
         var amount = $a.siblings('.Bought_Amount').val();
-        alert(p_id + ", " + amount);
 
         $.ajax({
             type: "POST",
@@ -152,6 +151,6 @@
     });
 
     $('.p-delete-btn').click(function () {
-        alert("Are you sure, you want to delete your profile ?");
+        confirm("Are you sure, you want to delete your profile ?");
     });
 </script>

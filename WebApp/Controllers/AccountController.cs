@@ -38,7 +38,7 @@ namespace WebApp.Controllers
             if (user_a != null)
             {
                 Session["u_id"] = user_a.Id;
-                Session["name"] = user_a.Fname + " " + user_a.Lname;
+                Session["name"] = user_a.Fname;
                 return RedirectToAction("Index", "Products", new { id = user_a.Id });
             }
             else if(company_a != null)
