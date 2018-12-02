@@ -82,16 +82,21 @@
                         {
                             <li>
                                 @{
-                                    string[] p = Request.Cookies["cart"].Value.ToString().Split('|');
+                                    int id = (int)Session["u_id"];
+
                                     int len = 0;
-                                    foreach (var i in p)
+                                    if (Request.Cookies["cart"] != null)
                                     {
-                                        if (i != "")
+                                        string[] p = Request.Cookies["cart"].Value.ToString().Split('|');
+                                        foreach (var i in p)
                                         {
-                                            len++;
+                                            if (i != "")
+                                            {
+                                                len++;
+                                            }
                                         }
                                     }
-                                    var id = (int)Session["u_id"];
+
                                 }
                                 <a class="glyphicon glyphicon-shopping-cart" href="../../Users/Profile/@id"><span class="badge" id="cart-item-num">@len</span></a>
                             </li>
@@ -100,13 +105,16 @@
                         {
                             <li>
                                 @{ 
-                                    string[] p = Request.Cookies["cart"].Value.ToString().Split('|');
                                     int len = 0;
-                                    foreach(var i in p)
+                                    if (Request.Cookies["cart"] != null)
                                     {
-                                        if (i != "")
+                                        string[] p = Request.Cookies["cart"].Value.ToString().Split('|');
+                                        foreach (var i in p)
                                         {
-                                            len++;
+                                            if (i != "")
+                                            {
+                                                len++;
+                                            }
                                         }
                                     }
                                 }
